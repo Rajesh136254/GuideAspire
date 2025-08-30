@@ -1,485 +1,2279 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GuideAspire</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="icon" href="Homepage1.png" type="image/png" />
-    <script src="https://kit.fontawesome.com/19e8ada8de.js" crossorigin="anonymous"></script>
-    <script defer src="script.js"></script>
-    <style>
-        /* General Styles */
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Career Explorer | GuideAspire</title>
+  <link rel="icon" href="Homepage1.png" type="image/png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+  <style>
+    :root {
+  --primary: #5b21b6;
+  --secondary: #9333ea;
+  --accent: #facc15;
+  --success: #10b981;
+  --danger: #ef4444;
+  --light: #f3f4f6;
+  --dark: #1e293b;
+  --white: #ffffff;
+  --gray: #6b7280;
+  --background: #f9fafb;
+  --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+  --shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  --shadow-hover: 0 10px 24px rgba(0, 0, 0, 0.12);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    background: #f4f4f4;
-    overflow: hidden; /* Prevents entire page scrolling */
+  background: var(--background);
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
 .container {
-    display: flex;
-    width: 100%;
-    height: 100vh; /* Ensures the layout stays within the viewport */
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
 }
 
-/* Sidebar Navigation */
+/* Sidebar */
 .sidebar {
-    width: 200px; /* Increased width */
-    background: linear-gradient(to bottom, #6a11cb, #2575fc);
-    padding: 20px;
-    height: 100vh; /* Fixed full height */
-    color: white;
-    box-shadow: 2px 0px 10px rgba(0,0,0,0.2);
-    position: fixed; /* Keeps sidebar fixed */
-    top: 0;
-    left: 0;
-    overflow-y: auto;
-}
-.sidebar ul {
-    list-style: none;
-    padding: 0;
-}
-.sidebar li {
-    padding: 15px;
-    margin: 10px 0;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 5px;
-    cursor: pointer;
-    text-align: center;
-    transition: 0.3s;
-}
-.sidebar li:hover {
-    background: rgba(255, 255, 255, 0.4);
+  width: 240px;
+  background: var(--white);
+  padding: 20px;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  box-shadow: var(--shadow);
+  z-index: 1000;
+  transition: width 0.3s ease;
 }
 
-/* General reset for list */
-ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 24px;
 }
 
-/* Base style for list items */
-.class-item {
-    padding: 15px 20px;
-    margin: 10px 0;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    transition: all 0.3s ease;
-    color: #333;
-    font-weight: 500;
-    position: relative;
-    overflow: hidden;
+.sidebar-logo {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
 }
 
-/* Hover effect */
-.class-item:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-    background: linear-gradient(145deg, #f0f0f0, #e0e0e0);
+.sidebar-title {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--dark);
+  letter-spacing: 0.02em;
 }
 
-/* Selected item style */
-.class-item.selected {
-    background: linear-gradient(145deg, #007bff, #005bb5);
-    color: white;
-    box-shadow: 0 6px 12px rgba(0, 123, 255, 0.3);
+.back-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  background: var(--light);
+  border-radius: 8px;
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+  margin-bottom: 20px;
+  transition: all 0.2s ease;
 }
 
-/* Add a subtle animation for selection */
-.class-item.selected::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.1);
-    animation: ripple 0.6s ease-out;
+.back-btn:hover {
+  background: var(--primary);
+  color: var(--white);
+  transform: scale(1.02);
 }
 
-@keyframes ripple {
-    from {
-        transform: scale(0);
-        opacity: 1;
-    }
-    to {
-        transform: scale(1);
-        opacity: 0;
-    }
+.category-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px;
+  margin: 6px 0;
+  background: var(--white);
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--dark);
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
 }
+
+.category-item:hover {
+  background: var(--gradient);
+  color: var(--white);
+  box-shadow: var(--shadow);
+  transform: scale(1.02);
+}
+
+.category-item.selected {
+  background: var(--gradient);
+  color: var(--white);
+  font-weight: 600;
+  box-shadow: var(--shadow);
+}
+
+.category-icon {
+  font-size: 1.2rem;
+}
+
+/* Skills Panel */
+.skills-panel {
+  width: 240px;
+  background: var(--white);
+  padding: 20px;
+  height: 100vh;
+  position: fixed;
+  left: 240px;
+  top: 0;
+  box-shadow: var(--shadow);
+  z-index: 999;
+  overflow-y: auto;
+  transition: width 0.3s ease;
+}
+
+.skills-panel h3 {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 16px;
+}
+
+.skill-item {
+  padding: 12px;
+  margin: 4px 0;
+  background: var(--light);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--dark);
+  transition: all 0.2s ease;
+}
+
+.skill-item:hover {
+  background: var(--primary);
+  color: var(--white);
+  transform: scale(1.02);
+}
+
+.skill-item.active {
+  background: var(--gradient);
+  color: var(--white);
+  font-weight: 600;
+}
+
 /* Main Content */
 .main-content {
-    flex: 1;
-    padding: 20px;
-    margin-left: 250px; /* Adjusted to match the increased sidebar width */
-    overflow-y: auto;
+  flex: 1;
+  margin-left: 240px;
+  padding: 20px;
+  background: var(--background);
+  position: relative;
+  overflow-y: auto;
+  transition: margin-left 0.3s ease;
 }
 
-.top-bar {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 15px;
+/* Skills Toggle Button */
+.skills-toggle-btn {
+  position: fixed;
+  left: 240px;
+  top: 20px;
+  background: var(--primary);
+  color: var(--white);
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  z-index: 1000;
+  transition: all 0.2s ease;
 }
 
-#language-select {
-    padding: 10px;
-    font-size: 16px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
+.skills-toggle-btn:hover {
+  background: var(--secondary);
+  transform: scale(1.02);
 }
 
-/* Days Scroll */
+/* Profile Section */
+.profile-section {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 220px;
+  background: var(--white);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  z-index: 100;
+  transition: all 0.2s ease;
+}
+
+.profile-display {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.profile-display:hover {
+  background: var(--light);
+  border-radius: 12px;
+}
+
+.profile-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid var(--primary);
+}
+
+.profile-info {
+  flex: 1;
+}
+
+.profile-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--dark);
+  letter-spacing: 0.01em;
+}
+
+.profile-email {
+  font-size: 0.7rem;
+  color: var(--gray);
+}
+
+.profile-toggle {
+  font-size: 0.7rem;
+  color: var(--primary);
+  transition: transform 0.2s ease;
+}
+
+.profile-dropdown.active + .profile-toggle {
+  transform: rotate(180deg);
+}
+
+.profile-dropdown {
+  display: none;
+  padding: 10px;
+  background: var(--white);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  margin: 6px;
+  transition: opacity 0.2s ease;
+}
+
+.profile-dropdown.active {
+  display: block;
+  opacity: 1;
+}
+
+.progress-summary {
+  font-size: 0.75rem;
+  color: var(--dark);
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+
+.progress-bar {
+  height: 4px;
+  background: var(--gray);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: var(--success);
+  transition: width 0.3s ease;
+}
+
+.profile-dropdown button {
+  width: 100%;
+  padding: 6px;
+  background: none;
+  border: none;
+  text-align: left;
+  color: var(--dark);
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.profile-dropdown button:hover {
+  background: var(--light);
+  color: var(--primary);
+  transform: translateX(2px);
+}
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 2000;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal.active {
+  display: flex;
+}
+
+.modal-content {
+  background: var(--white);
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 460px;
+  width: 90%;
+  box-shadow: var(--shadow-hover);
+  position: relative;
+}
+
+.modal-content h2 {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 14px;
+}
+
+.modal-content label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--dark);
+  margin-bottom: 5px;
+  display: block;
+}
+
+.modal-content input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid var(--gray);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  transition: border-color 0.2s ease;
+}
+
+.modal-content input:focus {
+  border-color: var(--primary);
+  outline: none;
+}
+
+.modal-content button[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  background: var(--gradient);
+  color: var(--white);
+  border: none;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 14px;
+  transition: all 0.2s ease;
+}
+
+.modal-content button[type="submit"]:hover {
+  background: linear-gradient(135deg, var(--secondary), var(--primary));
+  transform: scale(1.02);
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  color: var(--gray);
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.close-btn:hover {
+  color: var(--dark);
+}
+
+#profilePictureInput {
+  display: none;
+}
+
+.profile-picture-label {
+  display: block;
+  padding: 8px;
+  background: var(--light);
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--primary);
+  margin: 6px 0;
+  transition: all 0.2s ease;
+}
+
+.profile-picture-label:hover {
+  background: var(--primary);
+  color: var(--white);
+  transform: scale(1.02);
+}
+
+/* Toast Notification */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 10px 20px;
+  background: var(--success);
+  color: var(--white);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  font-size: 0.85rem;
+  font-weight: 500;
+  display: none;
+  z-index: 3000;
+  transition: all 0.3s ease;
+}
+
+.toast.show {
+  display: block;
+}
+
+/* Job Explorer Mode */
+.job-explorer-mode {
+  margin-top: 60px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.section-title {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--dark);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  letter-spacing: 0.02em;
+}
+
+.jobs-count {
+  background: var(--accent);
+  color: var(--dark);
+  padding: 5px 14px;
+  border-radius: 16px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.jobs-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.job-card {
+  background: var(--white);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+  border: 2px solid var(--primary);
+  transition: all 0.2s ease;
+  opacity: 1;
+  min-height: 280px;
+}
+
+.job-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--secondary);
+}
+
+.job-title {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 10px;
+  letter-spacing: 0.01em;
+}
+
+.job-details {
+  margin: 14px 0;
+}
+
+.detail-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 10px;
+  font-size: 0.85rem;
+  color: var(--dark);
+}
+
+.detail-icon {
+  color: var(--secondary);
+  margin-right: 6px;
+  margin-top: 2px;
+  font-size: 1rem;
+}
+
+.detail-title {
+  font-weight: 500;
+  margin-right: 3px;
+}
+
+.skills-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 14px 0;
+}
+
+.skill-tag {
+  background: var(--light);
+  color: var(--secondary);
+  padding: 5px 10px;
+  border-radius: 16px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.skill-tag:hover {
+  background: var(--secondary);
+  color: var(--white);
+  transform: scale(1.05);
+}
+
+.explore-btn {
+  width: 100%;
+  padding: 10px;
+  background: var(--gradient);
+  color: var(--white);
+  border: none;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.explore-btn:hover {
+  background: linear-gradient(135deg, var(--secondary), var(--primary));
+  transform: scale(1.02);
+  box-shadow: var(--shadow);
+}
+
+/* Learning Path Mode */
+.learning-path-mode {
+  display: none;
+  margin-top: 60px;
+}
+
+.path-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.path-title {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--dark);
+  letter-spacing: 0.02em;
+}
+
+.back-to-jobs {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: var(--light);
+  border-radius: 8px;
+  color: var(--dark);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.back-to-jobs:hover {
+  background: var(--primary);
+  color: var(--white);
+  transform: scale(1.02);
+}
+
+/* Language Toggle */
+.language-toggle {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.language-btn {
+  padding: 6px 14px;
+  border: none;
+  border-radius: 8px;
+  background: var(--light);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--dark);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.language-btn.active {
+  background: var(--gradient);
+  color: var(--white);
+}
+
+.language-btn:hover {
+  background: var(--gradient);
+  color: var(--white);
+  transform: scale(1.02);
+}
+
+/* Days Navigation */
 .days-container {
-    max-width: 100%;
-    overflow-x: auto; /* Enables scrolling */
-    white-space: nowrap;
-    background: white;
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 0px 2px 10px rgba(0,0,0,0.1);
-    position: relative;
+  background: var(--white);
+  border-radius: 12px;
+  padding: 14px;
+  box-shadow: var(--shadow);
+  margin-bottom: 20px;
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) var(--light);
+  -webkit-overflow-scrolling: touch;
 }
-#days-scroll {
-    display: flex;
-    overflow-x: auto; /* Enables horizontal scrolling */
-    overflow-y: hidden;
-    white-space: nowrap;
-    max-width: 100%;
-    padding: 10px;
-    background-color: #f5f5f5;
-    border-radius: 10px;
+
+.days-container::-webkit-scrollbar {
+  height: 8px;
+}
+
+.days-container::-webkit-scrollbar-track {
+  background: var(--light);
+  border-radius: 4px;
+}
+
+.days-container::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 4px;
+}
+
+.days-scroll {
+  display: flex;
+  gap: 12px;
+  padding-bottom: 8px;
 }
 
 .day-item {
-    padding: 10px 20px;
-    margin: 5px;
-    background-color: #007bff;
-    color: white;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: 0.3s;
+  flex: 0 0 140px;
+  padding: 14px;
+  border-radius: 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--gray);
+  color: var(--dark);
+  position: relative;
+  min-height: 80px;
 }
 
 .day-item:hover {
-    background-color: #0056b3;
+  transform: scale(1.05);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--primary);
 }
 
-.locked {
-    background-color: #ccc !important;
-    cursor: not-allowed;
-    opacity: 0.5;
-    pointer-events: none;
+/* Ensure completed days maintain their color */
+.day-item.completed {
+  background: var(--success); /* Keep completed days green */
+  color: var(--white);
+  border-color: var(--success);
 }
 
-.completed {
-    background-color: #28a745 !important;
+.day-item.completed::after {
+  content: "✅";
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-size: 1rem;
 }
 
-.unlocked {
-    background-color: #ffc107 !important;
+.day-item.unlocked {
+  background: var(--light); /* Light gray for unlocked days */
+  color: var(--dark); /* Readable text color */
+  border: 1px solid var(--primary);
 }
 
+.day-item.locked {
+  background: var(--dark); /* Dark gray for locked days */
+  color: var(--white); /* White text for contrast */
+  border: 1px solid var(--dark);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
 
+/* Ensure active day maintains its color */
+.day-item.active {
+  background: var(--primary); /* Keep active day purple */
+  border: 2px solid var(--secondary);
+  color: var(--white);
+  box-shadow: 0 0 0 3px rgba(91, 33, 182, 0.2);
+}
+
+.day-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  letter-spacing: 0.01em;
+}
+
+.day-topic {
+  font-size: 0.8rem;
+  line-height: 1.4;
+  white-space: normal;
+  color: inherit;
+}
 
 /* Video Section */
-#topic-name {
+.video-section {
+  background: var(--white);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+  margin-bottom: 20px;
+}
+
+#topicName {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--dark);
+  text-align: center;
+  margin-bottom: 14px;
+  letter-spacing: 0.02em;
+}
+
+.video-container {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  margin-bottom: 24px;
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  padding: 10px 20px;
+  background: var(--gradient);
+  color: var(--white);
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  transition: all 0.2s ease;
+  min-width: 140px;
+}
+
+.action-btn:hover {
+  background: linear-gradient(135deg, var(--secondary), var(--primary));
+  transform: scale(1.02);
+  box-shadow: var(--shadow);
+}
+
+.action-btn.complete {
+  background: var(--success);
+}
+
+.action-btn.complete:hover {
+  background: #059669;
+  transform: scale(1.02);
+}
+
+.action-btn.next {
+  background: var(--accent);
+  color: var(--dark);
+}
+
+.action-btn.next:hover {
+  background: #eab308;
+  transform: scale(1.02);
+}
+
+/* Resources Section */
+.resources-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.resource-card {
+  background: var(--white);
+  border-radius: 12px;
+  padding: 14px;
+  box-shadow: var(--shadow);
+  transition: all 0.2s ease;
+}
+
+.resource-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+
+.resource-title {
+  font-family: "Poppins", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 6px;
+}
+
+.resource-btn {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 6px 14px;
+  background: var(--primary);
+  color: var(--white);
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.resource-btn:hover {
+  background: var(--secondary);
+  transform: scale(1.02);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .sidebar {
+    width: 200px;
+  }
+
+  .skills-panel {
+    width: 200px;
+    left: 200px;
+  }
+
+  .main-content {
+    margin-left: 400px;
+  }
+
+  .day-item {
+    flex: 0 0 120px;
+  }
+
+  .skills-toggle-btn {
+    left: 200px;
+  }
+}
+
+@media (max-width: 900px) {
+  .sidebar {
+    width: 70px;
+    padding: 14px;
+  }
+
+  .sidebar-title, .category-item span {
+    display: none;
+  }
+
+  .category-item {
+    justify-content: center;
+    padding: 10px;
+  }
+
+  .skills-panel {
+    width: 70px;
+    left: 70px;
+    padding: 10px;
+  }
+
+  .skills-panel h3, .skill-item span {
+    display: none;
+  }
+
+  .skill-item {
+    padding: 8px;
     text-align: center;
-    font-size: 24px;
-    margin-bottom: 10px;
+  }
+
+  .main-content {
+    margin-left: 140px;
+  }
+
+  .day-item {
+    flex: 0 0 100px;
+    min-height: 70px;
+  }
+
+  .day-title {
+    font-size: 0.85rem;
+  }
+
+  .day-topic {
+    font-size: 0.7rem;
+  }
+
+  .skills-toggle-btn {
+    left: 70px;
+  }
 }
 
-iframe {
-    width: 100%;
-    height: 550px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
-    margin-top: 10px; /* Creates space between the scrolling days and the video frame */
+@media (max-width: 600px) {
+  .sidebar {
+    width: 50px;
+    padding: 10px;
+  }
+
+  .skills-panel {
+    width: 50px;
+    left: 50px;
+    padding: 8px;
+  }
+
+  .main-content {
+    margin-left: 100px;
+    padding: 14px;
+  }
+
+  .profile-section {
+    width: 160px;
+    top: 6px;
+    right: 6px;
+  }
+
+  .profile-name {
+    font-size: 0.75rem;
+  }
+
+  .profile-email {
+    font-size: 0.6rem;
+  }
+
+  .job-card {
+    padding: 14px;
+  }
+
+  .job-title {
+    font-size: 1.1rem;
+  }
+
+  .day-item {
+    flex: 0 0 90px;
+    min-height: 60px;
+  }
+
+  .day-title {
+    font-size: 0.8rem;
+  }
+
+  .day-topic {
+    font-size: 0.65rem;
+  }
+
+  .action-btn {
+    min-width: 120px;
+    padding: 8px 16px;
+    font-size: 0.8rem;
+  }
+
+  .video-section {
+    padding: 14px;
+  }
+
+  #topicName {
+    font-size: 1.2rem;
+  }
+
+  .skills-toggle-btn {
+    left: 50px;
+    padding: 6px 8px;
+    font-size: 0.8rem;
+  }
 }
-
-/* Links & Button */
-.links-section {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
-}
-.links-section a, .links-section button {
-    padding: 10px 15px;
-    background: #2575fc;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.3s;
-    text-decoration: none;
-}
-.links-section button:hover, .links-section a:hover {
-    background: #6a11cb;
-}
-/* Sidebar Styling */
-.sidenav {
-            width: 200px;
-            background: linear-gradient(145deg, #2c3e50, #34495e);
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            box-shadow: 2px 0 15px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Back Link Styling */
-        .backsection {
-            display: flex;
-            align-items: center;
-            padding: 12px 15px;
-            background-color: rgba(255, 255, 255, 0.1);
-            color: #ecf0f1;
-            text-decoration: none;
-            border-radius: 8px;
-            transition: all 0.4s ease;
-            font-size: 14px;
-            margin-bottom: 20px;
-            width: 100%;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .backsection i {
-            margin-right: 10px;
-            font-size: 12px;
-            transition: transform 0.4s ease;
-        }
-
-        .backsection:hover {
-            background-color: rgba(26, 188, 156, 0.8);
-            transform: translateX(10px);
-            box-shadow: 0 4px 15px rgba(26, 188, 156, 0.3);
-        }
-
-        .backsection:hover i {
-            transform: translateX(-5px);
-        }
-
-        /* Guide Head Styling */
-        .GuideHead {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: #ecf0f1;
-            text-align: left;
-            margin-top: 10px;
-            padding: 10px 0;
-            position: relative;
-            width: 100%;
-            overflow: hidden;
-        }
-
-        .GuideHead::before {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, #1abc9c, #3498db);
-            bottom: 0;
-            left: -100%;
-            transition: left 0.5s ease;
-        }
-
-        .GuideHead:hover::before {
-            left: 0;
-        }
-
-        .GuideHead span {
-            display: inline-block;
-            transition: transform 0.4s ease;
-        }
-
-        .GuideHead:hover span {
-            transform: translateX(10px);
-        }
-
-
-    </style>
+  </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Left Navigation -->
-        <nav class="sidebar">
-            <a href="CourseSelect.htm" class="backsection"><i class="fa-solid fa-arrow-left"></i>  Go to LevelSelection</a>
-             <h1 class="GuideHead">GuideAspire</h1>
-            <ul>
-                <li class="class-item" data-class="13">First Year</li>
-                <li class="class-item" data-class="14">Second Year</li>
-                <li class="class-item" data-class="15">Third Year</li>
-                <li class="class-item" data-class="16">Final Year</li>
-                
-            </ul>
-        </nav>
-        
-        <!-- Main Content -->
-        <div class="main-content">
-            <!-- Top Section: Language Selection -->
-            <div class="top-bar">
-                <select id="language-select">
-                    <option value="english">English</option>
-                    <option value="telugu">Telugu</option>
-                </select>
-            </div>
-            
-            <!-- Days Navigation -->
-            <div class="days-container">
-                <div class="days-scroll" id="days-scroll">
-                    <!-- Days will be generated dynamically -->
-                </div>
-            </div>
-            
-            <!-- Video Section -->
-            <h2 id="topic-name">Topic Name</h2>
-            <iframe id="video-frame" width="560" height="315" src="" frameborder="0" allowfullscreen></iframe>
-            
-            <!-- Exercise and Project Links -->
-            <div class="links-section">
-                <a id="exercise-link" href="#" target="_blank">Go to Exercise</a>
-                <a id="project-link" href="#" target="_blank">Go to Project</a>
-                <button id="complete-btn">Mark Day as Complete</button>
-            </div>
-        </div>
+  <div class="container">
+    <!-- Sidebar -->
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <img src="Homepage1.png" alt="Logo" class="sidebar-logo" />
+        <h1 class="sidebar-title">Career Explorer</h1>
+      </div>
+      <a href="CourseSelect.htm" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Back
+      </a>
+      <div class="category-item selected" data-category="engineering">
+        <i class="fas fa-cogs category-icon"></i>
+        <span>Engineering</span>
+      </div>
+      <div class="category-item" data-category="medical">
+        <i class="fas fa-heartbeat category-icon"></i>
+        <span>Medical</span>
+      </div>
+      <div class="category-item" data-category="commerce">
+        <i class="fas fa-chart-line category-icon"></i>
+        <span>Commerce</span>
+      </div>
+      <div class="category-item" data-category="arts">
+        <i class="fas fa-paint-brush category-icon"></i>
+        <span>Arts</span>
+      </div>
+      <div class="category-item" data-category="entrepreneurship">
+        <i class="fas fa-lightbulb category-icon"></i>
+        <span>Entrepreneurship</span>
+      </div>
+      <div class="category-item" data-category="government">
+        <i class="fas fa-landmark category-icon"></i>
+        <span>Government</span>
+      </div>
+    </nav>
+
+    <!-- Skills Panel -->
+    <div class="skills-panel" id="skillsPanel">
+      <h3>Skills</h3>
+      <div id="skillsList"></div>
     </div>
 
-    <script>
-    document.addEventListener("DOMContentLoaded", function () {
-    const daysContainer = document.getElementById("days-scroll");
-    const videoFrame = document.getElementById("video-frame");
-    const topicName = document.getElementById("topic-name");
-    const exerciseLink = document.getElementById("exercise-link");
-    const projectLink = document.getElementById("project-link");
-    const completeBtn = document.getElementById("complete-btn");
-    const languageSelect = document.getElementById("language-select");
-    const classItems = document.querySelectorAll(".class-item");
-    const userEmail = localStorage.getItem("userEmail") || "guest";
-    
-    let selectedClass = 13;
-    let selectedDay = 1;
-    let progress = JSON.parse(localStorage.getItem(`progress_${userEmail}`)) || {};
+    <!-- Skills Toggle Button -->
+    <button class="skills-toggle-btn" id="skillsToggleBtn">
+      <i class="fas fa-bars"></i> Skills
+    </button>
 
-    const topics = {
-        13: ["Introduction to Learning", "Basic Shapes", "Numbers", "Alphabet", "Colors"],
-        14: ["Patterns", "Addition", "Subtraction", "Time", "Money"],
-        15: ["Multiplication", "Division", "Measurement", "Fractions", "Graphs"],
-        16: ["Decimals", "Percentages", "Geometry", "Algebra", "Equations"],
-        
-    };
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Profile Section -->
+      <div class="profile-section" id="profileSection">
+        <div class="profile-display" id="profileDisplay">
+          <img src="https://ui-avatars.com/api/?name=U&background=5b21b6&color=fff&rounded=true&size=32" alt="Profile" class="profile-icon" id="profileIcon" />
+          <div class="profile-info">
+            <span class="profile-name" id="userName">Loading...</span>
+            <span class="profile-email" id="userEmailDisplay">Loading...</span>
+          </div>
+          <i class="fas fa-chevron-down profile-toggle" id="profileDropdownToggle"></i>
+        </div>
+        <div class="profile-dropdown" id="profileDropdown">
+          <div class="progress-summary" id="progressSummary">Progress: Loading...</div>
+          <div class="progress-bar">
+            <div class="progress-bar-fill" id="progressBarFill" style="width: 0%"></div>
+          </div>
+          <button id="editProfileBtn">Edit Profile</button>
+          <button id="changePictureBtn">Change Picture</button>
+          <input type="file" id="profilePictureInput" accept="image/*" />
+          <button id="logoutBtn">Logout</button>
+        </div>
+      </div>
 
-    const exerciseLinks = {
-        13: ["https://exercise1.com", "https://exercise2.com"],
-        14: ["https://exercise3.com", "https://exercise4.com"],
-        15: ["https://exercise1.com", "https://exercise2.com"],
-        16: ["https://exercise3.com", "https://exercise4.com"]
-    
-    };
+      <!-- Edit Profile Modal -->
+      <div class="modal" id="editProfileModal">
+        <div class="modal-content">
+          <button class="close-btn" id="closeModalBtn">×</button>
+          <h2>Edit Profile</h2>
+          <form id="editProfileForm">
+            <label for="editName">Name</label>
+            <input type="text" id="editName" name="name" required />
+            <label for="editEmail">Email</label>
+            <input type="email" id="editEmail" name="email" disabled />
+            <label for="editPassword">New Password (optional)</label>
+            <input type="password" id="editPassword" name="password" placeholder="Leave blank to keep current" />
+            <button type="submit">Save Changes</button>
+          </form>
+        </div>
+      </div>
 
-    const projectLinks = {
-        13: ["https://project1.com", "https://project2.com"],
-        14: ["https://project3.com", "https://project4.com"],
-        15: ["https://exercise1.com", "https://exercise2.com"],
-        16: ["https://exercise3.com", "https://exercise4.com"]
-    };
+      <!-- Toast Notification -->
+      <div class="toast" id="toast">Action Successful!</div>
 
-    function updateDays() {
-        daysContainer.innerHTML = "";
-        let currentProgress = progress[selectedClass] || 1; // Ensure day 1 is always unlocked
-    
-        for (let i = 1; i <= 50; i++) {
-            const day = document.createElement("div");
-            day.classList.add("day-item");
-            day.textContent = `Day ${i}`;
-    
-            if (i < currentProgress) {
-                day.classList.add("completed");
-                day.innerHTML += " ⭐";
-            } else if (i === currentProgress) {
-                day.classList.add("unlocked");
-            } else {
-                day.classList.add("locked");
-            }
-    
-            day.addEventListener("click", () => {
-                if (!day.classList.contains("locked")) {
-                    loadDay(i);
-                }
-            });
-    
-            daysContainer.appendChild(day);
-        }
+      <!-- Job Explorer Mode -->
+      <div class="job-explorer-mode" id="jobExplorerMode">
+        <div class="section-header">
+          <h1 class="section-title">
+            <i class="fas fa-cogs"></i> Engineering Jobs
+          </h1>
+          <span class="jobs-count" id="jobsCount">0 Jobs</span>
+        </div>
+        <div class="jobs-container" id="jobsContainer"></div>
+      </div>
+
+      <!-- Learning Path Mode -->
+      <div class="learning-path-mode" id="learningPathMode">
+        <div class="path-header">
+          <h1 class="path-title" id="pathTitle">Learning Path</h1>
+          <a href="#" class="back-to-jobs" id="backToJobs">
+            <i class="fas fa-arrow-left"></i> Back to Jobs
+          </a>
+        </div>
+        <div class="language-toggle">
+          <button class="language-btn active" data-lang="english">English</button>
+          <button class="language-btn" data-lang="telugu">Telugu</button>
+        </div>
+        <div class="days-container">
+          <div class="days-scroll" id="daysScroll"></div>
+        </div>
+        <div class="video-section">
+          <h2 id="topicName">Select a Day to Begin</h2>
+          <div class="video-container">
+            <iframe id="videoFrame" src="" frameborder="0" allowfullscreen></iframe>
+          </div>
+          <div class="action-buttons">
+            <a id="materialLink" href="#" target="_blank" class="action-btn">View Materials</a>
+            <a id="exerciseLink" href="#" target="_blank" class="action-btn">Start Exercises</a>
+            <a id="projectLink" href="#" target="_blank" class="action-btn">View Project</a>
+            <button id="completeBtn" class="action-btn complete">Mark Complete</button>
+            <button id="nextDayBtn" class="action-btn next">Next Day</button>
+          </div>
+        </div>
+        <div class="resources-section" id="resourcesSection"></div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+  // DOM Elements
+  const jobExplorerMode = document.getElementById("jobExplorerMode");
+  const learningPathMode = document.getElementById("learningPathMode");
+  const jobsContainer = document.getElementById("jobsContainer");
+  const jobsCount = document.getElementById("jobsCount");
+  const backToJobs = document.getElementById("backToJobs");
+  const pathTitle = document.getElementById("pathTitle");
+  const daysScroll = document.getElementById("daysScroll");
+  const topicName = document.getElementById("topicName");
+  const videoFrame = document.getElementById("videoFrame");
+  const materialLink = document.getElementById("materialLink");
+  const exerciseLink = document.getElementById("exerciseLink");
+  const projectLink = document.getElementById("projectLink");
+  const completeBtn = document.getElementById("completeBtn");
+  const nextDayBtn = document.getElementById("nextDayBtn");
+  const categoryItems = document.querySelectorAll(".category-item");
+  const languageButtons = document.querySelectorAll(".language-btn");
+  const profileSection = document.getElementById("profileSection");
+  const profileDisplay = document.getElementById("profileDisplay");
+  const profileDropdown = document.getElementById("profileDropdown");
+  const userName = document.getElementById("userName");
+  const userEmailDisplay = document.getElementById("userEmailDisplay");
+  const progressSummary = document.getElementById("progressSummary");
+  const progressBarFill = document.getElementById("progressBarFill");
+  const editProfileBtn = document.getElementById("editProfileBtn");
+  const changePictureBtn = document.getElementById("changePictureBtn");
+  const profilePictureInput = document.getElementById("profilePictureInput");
+  const editProfileModal = document.getElementById("editProfileModal");
+  const closeModalBtn = document.getElementById("closeModalBtn");
+  const editProfileForm = document.getElementById("editProfileForm");
+  const editName = document.getElementById("editName");
+  const editEmail = document.getElementById("editEmail");
+  const editPassword = document.getElementById("editPassword");
+  const logoutBtn = document.getElementById("logoutBtn");
+  const toast = document.getElementById("toast");
+  const skillsPanel = document.getElementById("skillsPanel");
+  const skillsList = document.getElementById("skillsList");
+  const mainContent = document.querySelector(".main-content");
+  const sidebar = document.querySelector(".sidebar");
+  const skillsToggleBtn = document.getElementById("skillsToggleBtn");
+
+  // State
+  let currentCategory = "engineering";
+  let currentJobId = null;
+  let currentDay = 1;
+  let selectedLanguage = "english";
+  let currentSkill = null;
+  let progress = {};
+  let isSkillsPanelVisible = false;
+
+  // Validate User
+  const userEmail = localStorage.getItem("userEmail") || "test@example.com";
+  if (!userEmail || userEmail.trim() === "") {
+    showToast("Please log in to continue!", false);
+    setTimeout(() => (window.location.href = "/login"), 1000);
+    return;
+  }
+
+  // Initially hide skills panel
+  skillsPanel.style.display = "none";
+
+  // Data
+  const jobsData = {
+    engineering: [
+      {
+        id: "software-engineer",
+        title: "Software Engineer",
+        role: "Builds software applications.",
+        industries: "Tech, AI, Startups",
+        skills: ["Python", "JavaScript", "Databases", "System Design"],
+        days: 80,
+        description: "Learn software engineering in 80 days."
+      },
+      {
+        id: "data-scientist",
+        title: "Data Scientist",
+        role: "Analyzes data for insights.",
+        industries: "Finance, Tech",
+        skills: ["Python", "Statistics", "Machine Learning", "Data Visualization"],
+        days: 80,
+        description: "Master data science in 80 days."
+      },
+      {
+        id: "data-scientist",
+        title: "Data Scientist",
+        role: "Analyzes data for insights.",
+        industries: "Finance, Tech",
+        skills: ["Python", "Statistics", "Machine Learning", "Data Visualization"],
+        days: 80,
+        description: "Master data science in 80 days."
+      },
+      {
+        id: "data-scientist",
+        title: "Data Scientist",
+        role: "Analyzes data for insights.",
+        industries: "Finance, Tech",
+        skills: ["Python", "Statistics", "Machine Learning", "Data Visualization"],
+        days: 80,
+        description: "Master data science in 80 days."
+      },
+      {
+        id: "data-scientist",
+        title: "Data Scientist",
+        role: "Analyzes data for insights.",
+        industries: "Finance, Tech",
+        skills: ["Python", "Statistics", "Machine Learning", "Data Visualization"],
+        days: 80,
+        description: "Master data science in 80 days."
+      },
+      {
+        id: "data-scientist",
+        title: "Data Scientist",
+        role: "Analyzes data for insights.",
+        industries: "Finance, Tech",
+        skills: ["Python", "Statistics", "Machine Learning", "Data Visualization"],
+        days: 80,
+        description: "Master data science in 80 days."
+      }
+    ],
+    medical: [
+      {
+        id: "doctor",
+        title: "Doctor",
+        role: "Treats patients.",
+        industries: "Hospitals, Clinics",
+        skills: ["Anatomy", "Diagnosis", "Pharmacology", "Patient Care"],
+        days: 80,
+        description: "Explore medicine in 80 days."
+      },
+      {
+        id: "doctor",
+        title: "Doctor",
+        role: "Treats patients.",
+        industries: "Hospitals, Clinics",
+        skills: ["Anatomy", "Diagnosis", "Pharmacology", "Patient Care"],
+        days: 80,
+        description: "Explore medicine in 80 days."
+      },
+      {
+        id: "doctor",
+        title: "Doctor",
+        role: "Treats patients.",
+        industries: "Hospitals, Clinics",
+        skills: ["Anatomy", "Diagnosis", "Pharmacology", "Patient Care"],
+        days: 80,
+        description: "Explore medicine in 80 days."
+      },
+      {
+        id: "doctor",
+        title: "Doctor",
+        role: "Treats patients.",
+        industries: "Hospitals, Clinics",
+        skills: ["Anatomy", "Diagnosis", "Pharmacology", "Patient Care"],
+        days: 80,
+        description: "Explore medicine in 80 days."
+      }
+
+    ],
+    commerce: [
+      {
+        id: "financial-analyst",
+        title: "Financial Analyst",
+        role: "Guides investments.",
+        industries: "Banking, Finance",
+        skills: ["Financial Modeling", "Market Analysis", "Excel", "Risk Management"],
+        days: 80,
+        description: "Learn finance in 80 days."
+      }
+    ],
+    arts: [
+      {
+        id: "graphic-designer",
+        title: "Graphic Designer",
+        role: "Creates visuals.",
+        industries: "Media, Advertising",
+        skills: ["Photoshop", "Illustrator", "Typography", "UI Design"],
+        days: 80,
+        description: "Master design in 80 days."
+      }
+    ],
+    entrepreneurship: [
+      {
+        id: "tech-founder",
+        title: "Tech Founder",
+        role: "Leads startups.",
+        industries: "Tech, E-commerce",
+        skills: ["Business Planning", "Fundraising", "Product Management", "Marketing"],
+        days: 80,
+        description: "Launch startups in 80 days."
+      }
+    ],
+    government: [
+      {
+        id: "ias-officer",
+        title: "IAS Officer",
+        role: "Manages policies.",
+        industries: "Government",
+        skills: ["Public Administration", "Policy Analysis", "Ethics", "Current Affairs"],
+        days: 80,
+        description: "Prepare for IAS in 80 days."
+      }
+    ]
+  };
+
+  const learningPaths = {
+    "software-engineer": {
+      title: "Software Engineer Path",
+      days: 80,
+      skills: {
+        Python: [
+          {
+            title: "Python - Day 1: Introduction to Python",
+            videos: {
+              english: "https://www.youtube.com/embed/kqtD5dpn9C8?rel=0",
+              telugu: "https://www.youtube.com/embed/3RBFpAlrNk4?rel=0"
+            },
+            material: "#",
+            exercise: "#",
+            project: "#"
+          },
+          {
+            title: "Python - Day 2: Variables and Data Types",
+            videos: {
+              english: "https://www.youtube.com/embed/HGOBQPFzWKo?rel=0",
+              telugu: "https://www.youtube.com/embed/5vZ9c4e2YgM?rel=0"
+            },
+            material: "#",
+            exercise: "#",
+            project: "#"
+          },
+          ...Array.from({ length: 18 }, (_, i) => ({
+            title: `Python - Day ${i + 3}`,
+            videos: {
+              english: "https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0",
+              telugu: "https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0"
+            },
+            material: "#",
+            exercise: "#",
+            project: "#"
+          }))
+        ],
+        JavaScript: [
+          {
+            title: "JavaScript - Day 1: Introduction to JavaScript",
+            videos: {
+              english: "https://www.youtube.com/embed/W6NZfCO5SIk?rel=0",
+              telugu: "https://www.youtube.com/embed/1vZ9c4e6YmR?rel=0"
+            },
+            material: "#",
+            exercise: "#",
+            project: "#"
+          },
+          {
+            title: "JavaScript - Day 2: Variables and Scope",
+            videos: {
+              english: "https://www.youtube.com/embed/9emXNzqCK0I?rel=0",
+              telugu: "https://www.youtube.com/embed/2vZ9c4e7YnS?rel=0"
+            },
+            material: "#",
+            exercise: "#",
+            project: "#"
+          },
+          ...Array.from({ length: 18 }, (_, i) => ({
+            title: `JavaScript - Day ${i + 3}`,
+            videos: {
+              english: "https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0",
+              telugu: "https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0"
+            },
+            material: "#",
+            exercise: "#",
+            project: "#"
+          }))
+        ],
+        Databases: [
+          {
+            title: "Databases - Day 1: Introduction to Databases",
+            videos: {
+              english: "https://www.youtube.com/embed/pqNCD_5rB6Y?rel=0",
+              telugu: "https://www.youtube.com/embed/6vZ9c4f1YrW?rel=0"
+            },
+            material: "#",
+            exercise: "#",
+            project: "#"
+          },
+          {
+            title: "Databases - Day 2: SQL Basics",
+            videos: {
+              english: "https://www.youtube.com/embed/7S_tz1z_5bA?rel=0",
+              telugu: "https://www.youtube.com/embed/7vZ9c4f2YsX?rel=0"
+            },
+            material: "#",
+            exercise: "#",
+            project: "#"
+          },
+          ...Array.from({ length: 18 }, (_, i) => ({
+            title: `Databases - Day ${i + 3}`,
+            videos: {
+              english: "https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0",
+              telugu: "https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0"
+            },
+            material: "#",
+            exercise: "#",
+            project: "#"
+          }))
+        ],
+        "System Design": [
+          {
+            title: "System Design - Day 1: System Design Basics",
+            videos: {
+              english: "https://www.youtube.com/embed/3tY2m9dgbjQ?rel=0",
+              telugu: "https://www.youtube.com/embed/1vZ9c4f6YwB?rel=0"
+            },
+            material: "#",
+            exercise: "#",
+            project: "#"
+          },
+          {
+            title: "System Design - Day 2: Scalability",
+            videos: {
+              english: "https://www.youtube.com/embed/REB_eMPkVQQ?rel=0",
+              telugu: "https://www.youtube.com/embed/2vZ9c4f7YxC?rel=0"
+            },
+            material: "#",
+            exercise: "#",
+            project: "#"
+          },
+          ...Array.from({ length: 18 }, (_, i) => ({
+            title: `System Design - Day ${i + 3}`,
+            videos: {
+              english: "https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0",
+              telugu: "https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0"
+            },
+            material: "#",
+            exercise: "#",
+            project: "#"
+          }))
+        ]
+      }
+    },
+    "data-scientist": {
+      title: "Data Scientist Path",
+      days: 80,
+      skills: {
+        Python: Array.from({ length: 20 }, (_, i) => ({
+          title: `Python - Day ${i + 1}`,
+          videos: {
+            english: "https://www.youtube.com/embed/ua-CiDNNj30?rel=0",
+            telugu: "https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0"
+          },
+          material: "#",
+          exercise: "#",
+          project: "#"
+        })),
+        Statistics: Array.from({ length: 20 }, (_, i) => ({
+          title: `Statistics - Day ${i + 1}`,
+          videos: {
+            english: "https://www.youtube.com/embed/uhxtUt_-GyM?rel=0",
+            telugu: "https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0"
+          },
+          material: "#",
+          exercise: "#",
+          project: "#"
+        })),
+        "Machine Learning": Array.from({ length: 20 }, (_, i) => ({
+          title: `Machine Learning - Day ${i + 1}`,
+          videos: {
+            english: "https://www.youtube.com/embed/GwIo3gDZCVQ?rel=0",
+            telugu: "https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0"
+          },
+          material: "#",
+          exercise: "#",
+          project: "#"
+        })),
+        "Data Visualization": Array.from({ length: 20 }, (_, i) => ({
+          title: `Data Visualization - Day ${i + 1}`,
+          videos: {
+            english: "https://www.youtube.com/embed/5qap5aO4i9A?rel=0",
+            telugu: "https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0"
+          },
+          material: "#",
+          exercise: "#",
+          project: "#"
+        }))
+      }
+    },
+    "doctor": {
+      title: "Doctor Path",
+      days: 80,
+      skills: {
+        Anatomy: Array.from({ length: 20 }, (_, i) => ({
+          title: `Anatomy - Day ${i + 1}`,
+          videos: {
+            english: "https://www.youtube.com/embed/UAWp5ii9QhQ?rel=0",
+            telugu: "https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0"
+          },
+          material: "#",
+          exercise: "#",
+          project: "#"
+        })),
+        Diagnosis: Array.from({ length: 20 }, (_, i) => ({
+          title: `Diagnosis - Day ${i + 1}`,
+          videos: {
+            english: "https://www.youtube.com/embed/UAWp5ii9QhQ?rel=0",
+            telugu: "https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0"
+          },
+          material: "#",
+          exercise: "#",
+          project: "#"
+        })),
+        Pharmacology: Array.from({ length: 20 }, (_, i) => ({
+          title: `Pharmacology - Day ${i + 1}`,
+          videos: {
+            english: "https://www.youtube.com/embed/UAWp5ii9QhQ?rel=0",
+            telugu: "https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0"
+          },
+          material: "#",
+          exercise: "#",
+          project: "#"
+        })),
+        "Patient Care": Array.from({ length: 20 }, (_, i) => ({
+          title: `Patient Care - Day ${i + 1}`,
+          videos: {
+            english: "https://www.youtube.com/embed/UAWp5ii9QhQ?rel=0",
+            telugu: "https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0"
+          },
+          material: "#",
+          exercise: "#",
+          project: "#"
+        }))
+      }
+    },
+    "financial-analyst": {
+      title: "Financial Analyst Path",
+      days: 80,
+      skills: {
+        "Financial Modeling": Array.from({ length: 20 }, (_, i) => ({
+          title: `Financial Modeling - Day ${i + 1}`,
+          videos: {
+            english: "https://www.youtube.com/embed/8I0XgZYX_5k?rel=0",
+            telugu: "https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0"
+          },
+          material: "#",
+          exercise: "#",
+          project: "#"
+        })),
+        "Market Analysis": Array.from({ length: 20 }, (_, i) => ({
+          title: `Market Analysis - Day ${i + 1}`,
+          videos: {
+            english: "https://www.youtube.com/embed/8I0XgZYX_5k?rel=0",
+            telugu: "https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0"
+          },
+          material: "#",
+          exercise: "#",
+          project: "#"
+        })),
+        Excel: Array.from({ length: 20 }, (_, i) => ({
+          title: `Excel - Day ${i + 1}`,
+          videos: {
+            english: "https://www.youtube.com/embed/8I0XgZYX_5k?rel=0",
+            telugu: "https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0"
+          },
+          material: "#",
+          exercise: "#",
+          project: "#"
+        })),
+        "Risk Management": Array.from({ length: 20 }, (_, i) => ({
+          title: `Risk Management - Day ${i + 1}`,
+          videos: {
+            english: "https://www.youtube.com/embed/8I0XgZYX_5k?rel=0",
+            telugu: "https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0"
+          },
+          material: "#",
+          exercise: "#",
+          project: "#"
+        }))
+      }
+    },
+    "graphic-designer": {
+      title: "Graphic Designer Path",
+      days: 80,
+      skills: {
+        Photoshop: Array.from({ length: 20 }, (_, i) => ({
+          title: `Photoshop - Day ${i + 1}`,
+          videos: {
+            english: "https://www.youtube.com/embed/a5KYlHNKQB8?rel=0",
+            telugu: "https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0"
+          },
+          material: "#",
+          exercise: "#",
+          project: "#"
+        })),
+        Illustrator: Array.from({ length: 20 }, (_, i) => ({
+          title: `Illustrator - Day ${i + 1}`,
+          videos: {
+            english: "https://www.youtube.com/embed/a5KYlHNKQB8?rel=0",
+            telugu: "https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0"
+          },
+          material: "#",
+          exercise: "#",
+          project: "#"
+        })),
+        Typography: Array.from({ length: 20 }, (_, i) => ({
+          title: `Typography - Day ${i + 1}`,
+          videos: {
+            english: "https://www.youtube.com/embed/a5KYlHNKQB8?rel=0",
+            telugu: "https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0"
+          },
+          material: "#",
+          exercise: "#",
+          project: "#"
+        })),
+        "UI Design": Array.from({ length: 20 }, (_, i) => ({
+          title: `UI Design - Day ${i + 1}`,
+          videos: {
+            english: "https://www.youtube.com/embed/a5KYlHNKQB8?rel=0",
+            telugu: "https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0"
+          },
+          material: "#",
+          exercise: "#",
+          project: "#"
+        }))
+      }
+    },
+    "tech-founder": {
+      title: "Tech Founder Path",
+      days: 80,
+      skills: {
+        "Business Planning": Array.from({ length: 20 }, (_, i) => ({
+          title: `Business Planning - Day ${i + 1}`,
+          videos: {
+            english: "https://www.youtube.com/embed/0CDXJ6bMkMY?rel=0",
+            telugu: "https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0"
+          },
+          material: "#",
+          exercise: "#",
+          project: "#"
+        })),
+        Fundraising: Array.from({ length: 20 }, (_, i) => ({
+          title: `Fundraising - Day ${i + 1}`,
+          videos: {
+            english: "https://www.youtube.com/embed/0CDXJ6bMkMY?rel=0",
+            telugu: "https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0"
+          },
+          material: "#",
+          exercise: "#",
+          project: "#"
+        })),
+        "Product Management": Array.from({ length: 20 }, (_, i) => ({
+          title: `Product Management - Day ${i + 1}`,
+          videos: {
+            english: "https://www.youtube.com/embed/0CDXJ6bMkMY?rel=0",
+            telugu: "https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0"
+          },
+          material: "#",
+          exercise: "#",
+          project: "#"
+        })),
+        Marketing: Array.from({ length: 20 }, (_, i) => ({
+          title: `Marketing - Day ${i + 1}`,
+          videos: {
+            english: "https://www.youtube.com/embed/0CDXJ6bMkMY?rel=0",
+            telugu: "https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0"
+          },
+          material: "#",
+          exercise: "#",
+          project: "#"
+        }))
+      }
+    },
+    "ias-officer": {
+      title: "IAS Officer Path",
+      days: 80,
+      skills: {
+        "Public Administration": Array.from({ length: 20 }, (_, i) => ({
+          title: `Public Administration - Day ${i + 1}`,
+          videos: {
+            english: "https://www.youtube.com/embed/9g3mx9dX3F4?rel=0",
+            telugu: "https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0"
+          },
+          material: "#",
+          exercise: "#",
+          project: "#"
+        })),
+        "Policy Analysis": Array.from({ length: 20 }, (_, i) => ({
+          title: `Policy Analysis - Day ${i + 1}`,
+          videos: {
+            english: "https://www.youtube.com/embed/9g3mx9dX3F4?rel=0",
+            telugu: "https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0"
+          },
+          material: "#",
+          exercise: "#",
+          project: "#"
+        })),
+        Ethics: Array.from({ length: 20 }, (_, i) => ({
+          title: `Ethics - Day ${i + 1}`,
+          videos: {
+            english: "https://www.youtube.com/embed/9g3mx9dX3F4?rel=0",
+            telugu: "https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0"
+          },
+          material: "#",
+          exercise: "#",
+          project: "#"
+        })),
+        "Current Affairs": Array.from({ length: 20 }, (_, i) => ({
+          title: `Current Affairs - Day ${i + 1}`,
+          videos: {
+            english: "https://www.youtube.com/embed/9g3mx9dX3F4?rel=0",
+            telugu: "https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0"
+          },
+          material: "#",
+          exercise: "#",
+          project: "#"
+        }))
+      }
     }
-    
+  };
 
-    function loadDay(day) {
-        selectedDay = day;
-        topicName.textContent = `Class ${selectedClass} - ${topics[selectedClass][(day - 1) % topics[selectedClass].length]}`;
-        videoFrame.src = getVideoURL(selectedClass, day);
-        exerciseLink.href = exerciseLinks[selectedClass] ? exerciseLinks[selectedClass][(day - 1) % exerciseLinks[selectedClass].length] : "#";
-        projectLink.href = projectLinks[selectedClass] ? projectLinks[selectedClass][(day - 1) % projectLinks[selectedClass].length] : "#";
+  // Utility Functions
+  function showToast(message, success = true) {
+    toast.textContent = message;
+    toast.style.background = success ? "var(--success)" : "var(--danger)";
+    toast.classList.add("show");
+    gsap.fromTo(toast, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.3 });
+    setTimeout(() => {
+      gsap.to(toast, {
+        opacity: 0,
+        y: 20,
+        duration: 0.3,
+        onComplete: () => toast.classList.remove("show")
+      });
+    }, 3000);
+  }
+
+  // Toggle Skills Panel Visibility
+  function toggleSkillsPanel(show) {
+    isSkillsPanelVisible = show;
+    skillsPanel.style.display = show ? "block" : "none";
+    skillsToggleBtn.innerHTML = show ? `<i class="fas fa-times"></i> Close Skills` : `<i class="fas fa-bars"></i> Skills`;
+    // Adjust main-content margin only, do not change sidebar width
+    if (show) {
+      mainContent.style.marginLeft = "480px"; // Sidebar (240px) + Skills Panel (240px)
+    } else {
+      mainContent.style.marginLeft = "240px"; // Only Sidebar (240px)
     }
+    gsap.to(skillsPanel, {
+      opacity: show ? 1 : 0,
+      x: show ? 0 : -20,
+      duration: 0.3,
+      ease: "power2.out"
+    });
+    gsap.to(mainContent, {
+      marginLeft: show ? "480px" : "240px",
+      duration: 0.3,
+      ease: "power2.out"
+    });
+  }
 
-    function getVideoURL(classNum, dayNum) {
-        const lang = languageSelect.value;
-        const baseURL = "https://www.youtube.com/embed/";
-        const videoIDs = {
-            english: ["dQw4w9WgXcQ", "3JZ_D3ELwOQ", "tgbNymZ7vqY"], 
-            telugu: ["rYEDA3JcQqw", "kJQP7kiw5Fk", "vTIIMJ9tUc8"] 
+  // Profile Management
+  async function fetchUserProfile() {
+    try {
+      const data = {
+        name: localStorage.getItem("userName") || "User",
+        profilePicture: localStorage.getItem("profilePicture") || null
+      };
+      userName.textContent = data.name;
+      userEmailDisplay.textContent = userEmail;
+      editName.value = data.name;
+      editEmail.value = userEmail;
+      profileIcon.src = data.profilePicture || `https://ui-avatars.com/api/?name=${data.name.charAt(0)}&background=5b21b6&color=fff&rounded=true&size=32`;
+    } catch (error) {
+      console.error("Profile fetch error:", error);
+      showToast("Failed to load profile.", false);
+      userName.textContent = "User";
+      userEmailDisplay.textContent = userEmail;
+    }
+  }
+
+  profileDisplay.addEventListener("click", (e) => {
+    e.stopPropagation();
+    profileDropdown.classList.toggle("active");
+    gsap.to(profileDropdown, {
+      opacity: profileDropdown.classList.contains("active") ? 1 : 0,
+      y: profileDropdown.classList.contains("active") ? 0 : -10,
+      duration: 0.2
+    });
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!profileSection.contains(e.target)) {
+      profileDropdown.classList.remove("active");
+      gsap.to(profileDropdown, { opacity: 0, y: -10, duration: 0.2 });
+    }
+  });
+
+  changePictureBtn.addEventListener("click", () => {
+    profilePictureInput.click();
+  });
+
+  profilePictureInput.addEventListener("change", async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      try {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          const profilePicture = event.target.result;
+          localStorage.setItem("profilePicture", profilePicture);
+          profileIcon.src = profilePicture;
+          showToast("Picture updated!");
+          profileDropdown.classList.remove("active");
         };
-        return `${baseURL}${videoIDs[lang][(classNum + dayNum) % videoIDs[lang].length]}`;
+        reader.readAsDataURL(file);
+      } catch (error) {
+        console.error("Picture upload error:", error);
+        showToast("Failed to update picture.", false);
+      }
+    }
+  });
+
+  editProfileBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    editProfileModal.classList.add("active");
+    profileDropdown.classList.remove("active");
+    gsap.from(".modal-content", { scale: 0.95, opacity: 0, duration: 0.2 });
+  });
+
+  closeModalBtn.addEventListener("click", () => {
+    editProfileModal.classList.remove("active");
+    gsap.to(".modal-content", { scale: 0.95, opacity: 0, duration: 0.2 });
+  });
+
+  editProfileForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const name = editName.value.trim();
+    const password = editPassword.value.trim();
+    if (!name) {
+      showToast("Name is required!", false);
+      return;
+    }
+    try {
+      localStorage.setItem("userName", name);
+      userName.textContent = name;
+      profileIcon.src = `https://ui-avatars.com/api/?name=${name.charAt(0)}&background=5b21b6&color=fff&rounded=true&size=32`;
+      showToast("Profile updated!");
+      editProfileModal.classList.remove("active");
+    } catch (error) {
+      console.error("Profile update error:", error);
+      showToast("Failed to update profile.", false);
+    }
+  });
+
+  logoutBtn.addEventListener("click", () => {
+    localStorage.removeItem("userEmail");
+    localStorage.removeItem("userName");
+    localStorage.removeItem("profilePicture");
+    showToast("Logged out!", true);
+    setTimeout(() => (window.location.href = "/login"), 1000);
+  });
+
+  // Progress Management
+  function fetchProgress() {
+    try {
+      const progressData = JSON.parse(localStorage.getItem(`progress_${userEmail}_${currentCategory}_${currentJobId}`)) || {};
+      progress[currentCategory] = progressData;
+      loadDays(currentJobId);
+      fetchProgressSummary();
+    } catch (error) {
+      console.error("Progress fetch error:", error);
+      showToast("Failed to load progress.", false);
+    }
+  }
+
+  function saveProgress(dayNumber) {
+    try {
+      if (!progress[currentCategory]) {
+        progress[currentCategory] = {};
+      }
+      if (!progress[currentCategory][currentJobId]) {
+        progress[currentCategory][currentJobId] = {};
+      }
+      if (!progress[currentCategory][currentJobId][currentSkill]) {
+        progress[currentCategory][currentJobId][currentSkill] = [];
+      }
+      if (!progress[currentCategory][currentJobId][currentSkill].includes(dayNumber)) {
+        progress[currentCategory][currentJobId][currentSkill].push(dayNumber);
+        localStorage.setItem(`progress_${userEmail}_${currentCategory}_${currentJobId}`, JSON.stringify(progress[currentCategory]));
+        showToast("Progress saved!");
+        confetti({
+          particleCount: 50,
+          spread: 70,
+          origin: { y: 0.6 }
+        });
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error("Progress save error:", error);
+      showToast("Failed to save progress.", false);
+      return false;
+    }
+  }
+
+  function fetchProgressSummary() {
+    try {
+      let summary = "Progress:<br>";
+      let totalCompleted = 0;
+      let totalDays = 0;
+      for (const category in jobsData) {
+        let categoryCompleted = 0;
+        jobsData[category].forEach(job => {
+          const progressData = JSON.parse(localStorage.getItem(`progress_${userEmail}_${category}_${job.id}`)) || {};
+          let jobCompleted = 0;
+          Object.values(progressData[job.id] || {}).forEach(skillDays => {
+            jobCompleted += skillDays.length;
+          });
+          categoryCompleted += jobCompleted;
+          totalDays += job.days;
+        });
+        totalCompleted += categoryCompleted;
+        summary += `${category.charAt(0).toUpperCase() + category.slice(1)}: ${categoryCompleted}/${jobsData[category][0].days} days<br>`;
+      }
+      progressSummary.innerHTML = summary;
+      const progressPercentage = totalDays ? (totalCompleted / totalDays) * 100 : 0;
+      progressBarFill.style.width = `${progressPercentage.toFixed(1)}%`;
+    } catch (error) {
+      console.error("Progress summary error:", error);
+      showToast("Failed to load progress summary.", false);
+    }
+  }
+
+  // Load Jobs
+  function loadJobs(category) {
+    currentCategory = category;
+    jobsContainer.innerHTML = "";
+    const jobs = jobsData[category] || [];
+    jobsCount.textContent = `${jobs.length} Job${jobs.length !== 1 ? "s" : ""}`;
+
+    const iconClass = document.querySelector(`.category-item[data-category="${category}"] .category-icon`).className;
+    document.querySelector(".section-title").innerHTML = `<i class="${iconClass}"></i> ${category.charAt(0).toUpperCase() + category.slice(1)} Jobs`;
+
+    jobs.forEach((job, index) => {
+      const jobCard = document.createElement("div");
+      jobCard.className = "job-card";
+      jobCard.style.opacity = "1";
+      jobCard.innerHTML = `
+        <h2 class="job-title">${job.title}</h2>
+        <div class="job-details">
+          <div class="detail-item">
+            <i class="fas fa-info-circle detail-icon"></i>
+            <div>
+              <span class="detail-title">Role:</span> ${job.role}
+            </div>
+          </div>
+          <div class="detail-item">
+            <i class="fas fa-building detail-icon"></i>
+            <div>
+              <span class="detail-title">Industries:</span> ${job.industries}
+            </div>
+          </div>
+        </div>
+        <div class="skills-container">
+          ${job.skills.map(skill => `<span class="skill-tag">${skill}</span>`).join("")}
+        </div>
+        <button class="explore-btn" data-job-id="${job.id}">
+          Explore ${job.days}-Day Path
+        </button>
+      `;
+      jobsContainer.appendChild(jobCard);
+      gsap.from(jobCard, {
+        opacity: 0,
+        y: 20,
+        duration: 0.4,
+        delay: index * 0.1,
+        ease: "power2.out"
+      });
+    });
+
+    document.querySelectorAll(".explore-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        currentJobId = btn.getAttribute("data-job-id");
+        showLearningPath(currentJobId);
+      });
+    });
+
+    categoryItems.forEach(item => item.classList.remove("selected"));
+    document.querySelector(`.category-item[data-category="${category}"]`).classList.add("selected");
+  }
+
+  // Load Skills
+  function loadSkills(jobId) {
+  const job = jobsData[currentCategory].find(j => j.id === jobId);
+  if (!job) return;
+
+  skillsList.innerHTML = "";
+  job.skills.forEach(skill => {
+    const skillItem = document.createElement("div");
+    skillItem.className = "skill-item";
+    skillItem.textContent = skill;
+    skillItem.setAttribute("data-skill", skill);
+    if (skill === currentSkill) {
+      skillItem.classList.add("active");
+    }
+    skillItem.addEventListener("click", () => {
+      currentSkill = skill;
+      currentDay = 1;
+      loadDays(jobId); // Load days when skill is selected
+      loadDayContent(jobId, currentDay);
+      document.querySelectorAll(".skill-item").forEach(item => item.classList.remove("active"));
+      skillItem.classList.add("active");
+    });
+    skillsList.appendChild(skillItem);
+  });
+}
+  // Show Learning Path
+  async function showLearningPath(jobId) {
+    currentJobId = jobId;
+    const path = learningPaths[jobId];
+    if (!path) {
+      showToast("Learning path not found!", false);
+      return;
     }
 
-   completeBtn.addEventListener("click", function () {
-    if (!progress[selectedClass] || progress[selectedClass] < selectedDay + 1) {
-        progress[selectedClass] = selectedDay + 1;
-        localStorage.setItem(`progress_${userEmail}`, JSON.stringify(progress));
-        updateDays();
+    jobExplorerMode.style.display = "none";
+    learningPathMode.style.display = "block";
+    toggleSkillsPanel(true); // Show skills panel by default
+    pathTitle.textContent = path.title;
+    currentSkill = Object.keys(path.skills)[0];
+    fetchProgress();
+    loadSkills(jobId);
+    loadDayContent(jobId, currentDay);
+    gsap.from(learningPathMode, { opacity: 0, y: 20, duration: 0.4, ease: "power2.out" });
+  }
+
+  // Show Job Explorer
+  function showJobExplorer() {
+    learningPathMode.style.display = "none";
+    jobExplorerMode.style.display = "block";
+    toggleSkillsPanel(false); // Hide skills panel
+    currentJobId = null;
+    currentDay = 1;
+    currentSkill = null;
+    loadJobs(currentCategory);
+    gsap.from(jobExplorerMode, { opacity: 0, y: 20, duration: 0.4, ease: "power2.out" });
+  }
+
+  // Load Days
+  function loadDays(jobId) {
+  const path = learningPaths[jobId];
+  if (!path || !currentSkill) return;
+
+  daysScroll.innerHTML = "";
+  const completedDays = progress[currentCategory]?.[jobId]?.[currentSkill] || [];
+  const skillDays = path.skills[currentSkill];
+
+  for (let i = 1; i <= 20; i++) {
+    const dayData = skillDays[i - 1];
+    if (!dayData) {
+      console.warn(`Day ${i} data missing for skill ${currentSkill}`);
+      continue;
     }
-});
+    const day = document.createElement("div");
+    day.className = "day-item";
+    const topic = dayData.title || `Day ${i}`;
+    day.innerHTML = `
+      <div class="day-title">Day ${i}</div>
+      <div class="day-topic">${topic}</div>
+    `;
 
+    if (completedDays.includes(i)) {
+      day.classList.add("completed");
+    } else if (i <= (Math.max(...completedDays, 0) + 1)) {
+      day.classList.add("unlocked");
+    } else {
+      day.classList.add("locked");
+    }
 
-    classItems.forEach(item => {
-        item.addEventListener("click", function () {
-            selectedClass = parseInt(this.getAttribute("data-class"));
-            selectedDay = 1; 
-            updateDays();
-            loadDay(1);
+    if (i === currentDay) {
+      day.classList.add("active");
+    }
+
+    day.addEventListener("click", () => {
+      if (!day.classList.contains("locked")) {
+        currentDay = i;
+        loadDayContent(jobId, i);
+        document.querySelectorAll(".day-item").forEach(item => item.classList.remove("active"));
+        day.classList.add("active");
+        daysScroll.scrollTo({
+          left: day.offsetLeft - 20,
+          behavior: "smooth"
         });
+      }
     });
 
-    languageSelect.addEventListener("change", function () {
-        loadDay(selectedDay);
-    });
+    daysScroll.appendChild(day);
+  }
+}
 
-    updateDays();
-    loadDay(1);
+  // Load Day Content
+  function loadDayContent(jobId, dayNumber) {
+    const path = learningPaths[jobId];
+    if (!path || !currentSkill) return;
+
+    const dayData = path.skills[currentSkill][dayNumber - 1];
+    if (!dayData) {
+      showToast("Day content not found!", false);
+      return;
+    }
+
+    topicName.textContent = dayData.title;
+    videoFrame.src = dayData.videos[selectedLanguage];
+    materialLink.href = dayData.material;
+    exerciseLink.href = dayData.exercise;
+    projectLink.href = dayData.project;
+
+    const completedDays = progress[currentCategory]?.[jobId]?.[currentSkill] || [];
+    completeBtn.disabled = completedDays.includes(dayNumber);
+    completeBtn.style.opacity = completedDays.includes(dayNumber) ? 0.6 : 1;
+    nextDayBtn.style.display = dayNumber < path.skills[currentSkill].length ? "block" : "none";
+
+    gsap.from(".video-section", { opacity: 0, y: 20, duration: 0.4, ease: "power2.out" });
+  }
+
+  // Event Listeners
+  categoryItems.forEach(item => {
+    item.addEventListener("click", () => {
+      const category = item.getAttribute("data-category");
+      loadJobs(category);
+    });
+  });
+  languageButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      selectedLanguage = btn.getAttribute("data-lang");
+      languageButtons.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      if (currentJobId && currentDay) {
+        loadDayContent(currentJobId, currentDay);
+      }
+    });
+  });
+
+  skillsToggleBtn.addEventListener("click", () => {
+    toggleSkillsPanel(!isSkillsPanelVisible);
+  });
+
+  backToJobs.addEventListener("click", (e) => {
+    e.preventDefault();
+    showJobExplorer();
+  });
+
+  completeBtn.addEventListener("click", () => {
+    const progressSaved = saveProgress(currentDay);
+    if (progressSaved) {
+      loadDays(currentJobId);
+      loadDayContent(currentJobId, currentDay);
+      fetchProgressSummary();
+    }
+  });
+
+  nextDayBtn.addEventListener("click", () => {
+    const path = learningPaths[currentJobId];
+    if (currentDay < path.skills[currentSkill].length) {
+      currentDay++;
+      loadDays(currentJobId);
+      loadDayContent(currentJobId, currentDay);
+      document.querySelectorAll(".day-item").forEach(item => item.classList.remove("active"));
+      const activeDay = document.querySelector(`.day-item:nth-child(${currentDay})`);
+      activeDay.classList.add("active");
+      daysScroll.scrollTo({
+        left: activeDay.offsetLeft - 20,
+        behavior: "smooth"
+      });
+    }
+  });
+
+  // Initial Load
+  loadJobs(currentCategory);
+  fetchUserProfile();
+  fetchProgressSummary();
 });
-
-// code for stylings change of side class list
-document.querySelectorAll('.class-item').forEach(item => {
-    item.addEventListener('click', function() {
-        // Remove the 'selected' class from all items
-        document.querySelectorAll('.class-item').forEach(innerItem => {
-            innerItem.classList.remove('selected');
-        });
-
-        // Add the 'selected' class to the clicked item
-        this.classList.add('selected');
-
-        // Log the selected item's data-class attribute
-        const selectedClass = this.getAttribute('data-class');
-        console.log('Selected Class:', selectedClass);
-    });
-});
-
-    </script>
+  </script>
 </body>
 </html>

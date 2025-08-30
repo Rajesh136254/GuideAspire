@@ -1,504 +1,439 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GuideAspire</title>
-    <link rel="stylesheet" href="styles.css">
-    <script defer src="script.js"></script>
-    <link rel="icon" href="Homepage1.png" type="image/png" />
-    <script src="https://kit.fontawesome.com/19e8ada8de.js" crossorigin="anonymous"></script>
-    <style>
-        /* General Styles */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    background: #f4f4f4;
-    overflow: hidden; /* Prevents entire page scrolling */
-}
-
-.container {
-    display: flex;
-    width: 100%;
-    height: 100vh; /* Ensures the layout stays within the viewport */
-}
-
-/* Sidebar Navigation */
-.sidebar {
-    width: 200px; /* Increased width */
-    background: linear-gradient(to bottom, #6a11cb, #2575fc);
-    padding: 20px;
-    height: 100vh; /* Fixed full height */
-    color: white;
-    box-shadow: 2px 0px 10px rgba(0,0,0,0.2);
-    position: fixed; /* Keeps sidebar fixed */
-    top: 0;
-    left: 0;
-    overflow-y: auto;
-}
-.sidebar ul {
-    list-style: none;
-    padding: 0;
-}
-.sidebar li {
-    padding: 15px;
-    margin: 10px 0;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 5px;
-    cursor: pointer;
-    text-align: center;
-    transition: 0.3s;
-}
-.sidebar li:hover {
-    background: rgba(255, 255, 255, 0.4);
-}
-
-/* General reset for list */
-ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-}
-
-/* Base style for list items */
-.class-item {
-    padding: 15px 20px;
-    margin: 10px 0;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    transition: all 0.3s ease;
-    color: #333;
-    font-weight: 500;
-    position: relative;
-    overflow: hidden;
-}
-
-/* Hover effect */
-.class-item:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-    background: linear-gradient(145deg, #f0f0f0, #e0e0e0);
-}
-
-/* Selected item style */
-.class-item.selected {
-    background: linear-gradient(145deg, #007bff, #005bb5);
-    color: white;
-    box-shadow: 0 6px 12px rgba(0, 123, 255, 0.3);
-}
-
-/* Add a subtle animation for selection */
-.class-item.selected::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.1);
-    animation: ripple 0.8s ease-out;
-}
-
-@keyframes ripple {
-    from {
-        transform: scale(0);
-        opacity: 1;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Summer Special - GuideAspire</title>
+  <style>
+    :root {
+      --bg-color: linear-gradient(to bottom right, #e6f3ff, #f3e8ff);
+      --card-bg: #ffffff;
+      --text-color: #4b5563;
+      --header-color: #1e40af;
+      --button-bg: #3b82f6;
+      --button-hover: #2563eb;
+      --completed-bg: #22c55e;
+      --error-color: #dc2626;
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --border-color: #e5e7eb;
     }
-    to {
-        transform: scale(1);
-        opacity: 0;
+    [data-theme="night"] {
+      --bg-color: linear-gradient(to bottom right, #1e293b, #334155);
+      --card-bg: #2d3748;
+      --text-color: #d1d5db;
+      --header-color: #60a5fa;
+      --button-bg: #4b9bff;
+      --button-hover: #3b82f6;
+      --completed-bg: #34d399;
+      --error-color: #f87171;
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      --border-color: #4b5563;
     }
-}
-/* Main Content */
-.main-content {
-    flex: 1;
-    padding: 20px;
-    margin-left: 250px; /* Adjusted to match the increased sidebar width */
-    overflow-y: auto;
-}
-
-.top-bar {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 15px;
-}
-
-#language-select {
-    padding: 10px;
-    font-size: 16px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-}
-
-/* Days Scroll */
-.days-container {
-    max-width: 100%;
-    overflow-x: auto; /* Enables scrolling */
-    white-space: nowrap;
-    background: white;
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 0px 2px 10px rgba(0,0,0,0.1);
-    position: relative;
-}
-#days-scroll {
-    display: flex;
-    overflow-x: auto; /* Enables horizontal scrolling */
-    overflow-y: hidden;
-    white-space: nowrap;
-    max-width: 100%;
-    padding: 10px;
-    background-color: #f5f5f5;
-    border-radius: 10px;
-}
-
-.day-item {
-    padding: 10px 20px;
-    margin: 5px;
-    background-color: #007bff;
-    color: white;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.day-item:hover {
-    background-color: #0056b3;
-}
-
-.locked {
-    background-color: #ccc !important;
-    cursor: not-allowed;
-    opacity: 0.5;
-    pointer-events: none;
-}
-
-.completed {
-    background-color: #28a745 !important;
-}
-
-.unlocked {
-    background-color: #ffc107 !important;
-}
-
-
-
-/* Video Section */
-#topic-name {
-    text-align: center;
-    font-size: 24px;
-    margin-bottom: 10px;
-}
-
-iframe {
-    width: 100%;
-    height: 550px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
-    margin-top: 10px; /* Creates space between the scrolling days and the video frame */
-}
-
-/* Links & Button */
-.links-section {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
-}
-.links-section a, .links-section button {
-    padding: 10px 15px;
-    background: #2575fc;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.3s;
-    text-decoration: none;
-}
-.links-section button:hover, .links-section a:hover {
-    background: #6a11cb;
-}
-
-  /* Sidebar Styling */
-  .sidenav {
-            width: 200px;
-            background: linear-gradient(145deg, #2c3e50, #34495e);
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            box-shadow: 2px 0 15px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Back Link Styling */
-        .backsection {
-            display: flex;
-            align-items: center;
-            padding: 12px 15px;
-            background-color: rgba(255, 255, 255, 0.1);
-            color: #ecf0f1;
-            text-decoration: none;
-            border-radius: 8px;
-            transition: all 0.4s ease;
-            font-size: 14px;
-            margin-bottom: 20px;
-            width: 100%;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .backsection i {
-            margin-right: 10px;
-            font-size: 12px;
-            transition: transform 0.4s ease;
-        }
-
-        .backsection:hover {
-            background-color: rgba(26, 188, 156, 0.8);
-            transform: translateX(10px);
-            box-shadow: 0 4px 15px rgba(26, 188, 156, 0.3);
-        }
-
-        .backsection:hover i {
-            transform: translateX(-5px);
-        }
-
-        /* Guide Head Styling */
-        .GuideHead {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: #ecf0f1;
-            text-align: left;
-            margin-top: 10px;
-            padding: 10px 0;
-            position: relative;
-            width: 100%;
-            overflow: hidden;
-        }
-
-        .GuideHead::before {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, #1abc9c, #3498db);
-            bottom: 0;
-            left: -100%;
-            transition: left 0.5s ease;
-        }
-
-        .GuideHead:hover::before {
-            left: 0;
-        }
-
-        .GuideHead span {
-            display: inline-block;
-            transition: transform 0.4s ease;
-        }
-
-        .GuideHead:hover span {
-            transform: translateX(10px);
-        }
-
-    </style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: var(--bg-color);
+      min-height: 100vh;
+      padding: 20px;
+      color: var(--text-color);
+      transition: background 0.3s, color 0.3s;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+      position: relative;
+    }
+    header h1 {
+      font-size: clamp(25px,2.5vw,40px);
+      color: var(--header-color);
+      animation: fadeIn 1s ease-in;
+    }
+    header p {
+      font-size: 1.2rem;
+      margin: 10px 0;
+    }
+    .theme-toggle {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      padding: 8px 16px;
+      background: var(--button-bg);
+      color: white;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .theme-toggle:hover {
+      background: var(--button-hover);
+    }
+    .progress-bar {
+      width: 100%;
+      background: var(--border-color);
+      border-radius: 10px;
+      height: 20px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      background: var(--button-bg);
+      height: 100%;
+      transition: width 0.3s;
+    }
+    .task-card {
+      background: var(--card-bg);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+      transition: transform 0.3s;
+    }
+    .task-card:hover {
+      transform: scale(1.02);
+    }
+    .task-header {
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+    .task-header h2 {
+      font-size: 1.5rem;
+      color: var(--header-color);
+      margin: 0;
+    }
+    .task-header button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 20px;
+      font-size: 1rem;
+      cursor: pointer;
+      background: var(--button-bg);
+      color: white;
+      transition: background 0.3s;
+    }
+    .task-header button.completed {
+      background: var(--completed-bg);
+    }
+    .task-header button:not(.completed):hover {
+      background: var(--button-hover);
+    }
+    .task-details {
+      padding: 0 20px 20px;
+      display: none;
+      border-top: 1px solid var(--border-color);
+      animation: slideDown 0.3s ease-out;
+    }
+    .task-details.active {
+      display: block;
+    }
+    .task-details p {
+      margin: 10px 0;
+    }
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    .video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    footer {
+      text-align: center;
+      margin-top: 40px;
+    }
+    .loading {
+      text-align: center;
+      font-size: 1.2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+    .spinner {
+      border: 4px solid var(--border-color);
+      border-top: 4px solid var(--button-bg);
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      animation: spin 1s linear infinite;
+    }
+    .error {
+      text-align: center;
+      font-size: 1.2rem;
+      color: var(--error-color);
+      display: none;
+    }
+    .error button {
+      padding: 8px 16px;
+      background: var(--button-bg);
+      color: white;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+    .error button:hover {
+      background: var(--button-hover);
+    }
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 10px 20px;
+      background: var(--completed-bg);
+      color: white;
+      border-radius: 8px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      z-index: 1000;
+    }
+    .toast.error {
+      background: var(--error-color);
+    }
+    .toast.show {
+      opacity: 1;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @media (max-width: 768px) {
+      header p { font-size: 1rem; }
+      .task-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+      .task-header button { align-self: flex-end; }
+      .theme-toggle { top: 0; right: 0; }
+    }
+    @media (max-width: 480px) {
+      .task-header h2 { font-size: 1.2rem; }
+      .task-details p { font-size: 0.9rem; }
+      .progress-bar { height: 15px; }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Left Navigation -->
-         
-        <nav class="sidebar">
-            
-                <a href="CourseSelect.htm" class="backsection"><i class="fa-solid fa-arrow-left"></i>  Go to LevelSelection</a>
-                <h1 class="GuideHead">GuideAspire</h1>
-            
-            <ul>
-                <li class="class-item" data-class="1">Summer Special</li>
-                
-            </ul>
-        </nav>
-        
-        <!-- Main Content -->
-        <div class="main-content">
-            <!-- Top Section: Language Selection -->
-            <div class="top-bar">
-                <select id="language-select">
-                    <option value="english">English</option>
-                    <option value="telugu">Telugu</option>
-                </select>
-            </div>
-            
-            <!-- Days Navigation -->
-            <div class="days-container">
-                <div class="days-scroll" id="days-scroll">
-                    <!-- Days will be generated dynamically -->
-                </div>
-            </div>
-            
-            <!-- Video Section -->
-            <h2 id="topic-name">Topic Name</h2>
-            <iframe id="video-frame" width="560" height="315" src="" frameborder="0" allowfullscreen></iframe>
-            
-            <!-- Exercise and Project Links -->
-            <div class="links-section">
-                <a id="exercise-link" href="#" target="_blank">Go to Exercise</a>
-                <a id="project-link" href="#" target="_blank">Go to Project</a>
-                <button id="complete-btn">Mark Day as Complete</button>
-            </div>
-        </div>
+  <div class="container">
+    <header>
+      <h1>Summer Special - GuideAspire</h1>
+      <p>25 Days of Career Exploration for Your Dream Job</p>
+      <button class="theme-toggle" aria-label="Toggle theme">🌙 Night Mode</button>
+    </header>
+    <div class="progress-bar">
+      <div class="progress-bar-fill" id="progress-bar-fill" style="width: 0%"></div>
     </div>
+    <div id="task-list"></div>
+    <div id="loading" class="loading">
+      <div class="spinner"></div>Loading...
+    </div>
+    <div id="error" class="error">
+      Failed to load progress. <button onclick="fetchProgress()">Retry</button>
+    </div>
+    <div id="toast" class="toast"></div>
+    <footer>
+      <p id="progress">Progress: 0 / 25 days completed</p>
+      <p>© 2025 GuideAspire. All rights reserved.</p>
+    </footer>
+  </div>
+  <script>
+    // Configuration
+    const userEmail = localStorage.getItem("userEmail") || (window.location.href = "/login");
+    const category = "summer_special";
+    const jobId = "summer2025";
+    const apiBaseUrl = "http://localhost:3000";
+    const language = "english"; // Default language
 
-    <script>
-        
-document.addEventListener("DOMContentLoaded", function () {
-    const daysContainer = document.getElementById("days-scroll");
-    const videoFrame = document.getElementById("video-frame");
-    const topicName = document.getElementById("topic-name");
-    const exerciseLink = document.getElementById("exercise-link");
-    const projectLink = document.getElementById("project-link");
-    const completeBtn = document.getElementById("complete-btn");
-    const languageSelect = document.getElementById("language-select");
-    const classItems = document.querySelectorAll(".class-item");
-    const userEmail = localStorage.getItem("userEmail"); // Ensure this is set during login
+    // DOM elements
+    const taskList = document.getElementById("task-list");
+    const loading = document.getElementById("loading");
+    const error = document.getElementById("error");
+    const progressText = document.getElementById("progress");
+    const progressBarFill = document.getElementById("progress-bar-fill");
+    const themeToggle = document.querySelector(".theme-toggle");
+    const toast = document.getElementById("toast");
 
-    if (!userEmail) {
-        alert("Please log in to track your progress.");
-        window.location.href = "/login";
-        return;
+    // State
+    let progress = [];
+    let programDays = [];
+
+    // Theme handling
+    function setTheme(theme) {
+      document.body.dataset.theme = theme;
+      themeToggle.textContent = theme === "night" ? "☀️ Daylight Mode" : "🌙 Night Mode";
+      themeToggle.setAttribute("aria-label", `Switch to ${theme === "night" ? "daylight" : "night"} mode`);
+      localStorage.setItem("theme", theme);
     }
 
-    let selectedClass = 1;
-    let selectedDay = 1;
-    let progress = {};
+    themeToggle.addEventListener("click", () => {
+      const currentTheme = document.body.dataset.theme || "daylight";
+      setTheme(currentTheme === "daylight" ? "night" : "daylight");
+    });
 
-    const topics = {
-        1: ["Introduction to Learning", "Basic Shapes", "Numbers", "Alphabet", "Colors"],
-        2: ["Patterns", "Addition", "Subtraction", "Time", "Money"],
-        3: ["Multiplication", "Division", "Measurement", "Fractions", "Graphs"],
-        4: ["Decimals", "Percentages", "Geometry", "Algebra", "Equations"],
-        5: ["Advanced Algebra", "Trigonometry", "Probability", "Statistics", "Logical Reasoning"]
-    };
+    // Initialize theme
+    const savedTheme = localStorage.getItem("theme") || "daylight";
+    setTheme(savedTheme);
 
-    const exerciseLinks = {
-        1: ["https://exercise1.com", "https://exercise2.com"],
-        2: ["https://exercise3.com", "https://exercise4.com"]
-    };
+    // Toast notification
+    function showToast(message, isError = false) {
+      toast.textContent = message;
+      toast.className = `toast ${isError ? "error" : ""} show`;
+      setTimeout(() => {
+        toast.className = "toast";
+      }, 3000);
+    }
 
-    const projectLinks = {
-        1: ["https://project1.com", "https://project2.com"],
-        2: ["https://project3.com", "https://project4.com"]
-    };
+    // Fetch program days
+    async function fetchProgramDays() {
+      loading.style.display = "flex";
+      error.style.display = "none";
+      try {
+        programDays = [];
+        for (let day = 1; day <= 25; day++) {
+          // Fetch content
+          const contentResponse = await fetch(`${apiBaseUrl}/api/summer/content/${category}/${day}`);
+          if (!contentResponse.ok) throw new Error(`Failed to fetch content for day ${day}`);
+          const content = await contentResponse.json();
 
-    // Fetch progress from the database
+          // Fetch video
+          const videoResponse = await fetch(`${apiBaseUrl}/api/summer/video/${category}/${day}/${language}`);
+          if (!videoResponse.ok) throw new Error(`Failed to fetch video for day ${day}`);
+          const video = await videoResponse.json();
+
+          programDays.push({
+            day,
+            role: content.role || `Role for Day ${day}`,
+            task: content.task || `Task for Day ${day}`,
+            youtube: video.youtube_id ? `https://www.youtube.com/embed/${video.youtube_id}` : "",
+            practical: content.practical || `Practical session for Day ${day}`
+          });
+        }
+        console.log("Fetched program days:", programDays);
+        renderTasks();
+        loading.style.display = "none";
+      } catch (err) {
+        console.error("Error fetching program days:", err);
+        error.style.display = "block";
+        loading.style.display = "none";
+        showToast("Failed to load tasks and videos.", true);
+      }
+    }
+
+    // Fetch progress
     async function fetchProgress() {
-        try {
-            const response = await fetch(`/progress/${userEmail}/${selectedClass}`);
-            const completedDays = await response.json();
-            progress[selectedClass] = completedDays.length > 0 ? Math.max(...completedDays) + 1 : 1;
-            updateDays();
-        } catch (error) {
-            console.error("Error fetching progress:", error);
-        }
+      loading.style.display = "flex";
+      error.style.display = "none";
+      try {
+        const response = await fetch(`${apiBaseUrl}/summer-progress/${encodeURIComponent(userEmail)}/${category}/${jobId}`);
+        if (!response.ok) throw new Error("Failed to fetch progress");
+        const data = await response.json();
+        progress = Array.isArray(data) ? data : [];
+        renderTasks();
+        updateProgress();
+        loading.style.display = "none";
+      } catch (err) {
+        console.error("Error fetching progress:", err);
+        error.style.display = "block";
+        loading.style.display = "none";
+        showToast("Failed to load progress.", true);
+      }
     }
 
-    function updateDays() {
-        daysContainer.innerHTML = "";
-        let currentProgress = progress[selectedClass] || 1; // Ensure day 1 is always unlocked
-
-        for (let i = 1; i <= 20; i++) {
-            const day = document.createElement("div");
-            day.classList.add("day-item");
-            day.textContent = `Day ${i}`;
-
-            if (i < currentProgress) {
-                day.classList.add("completed");
-                day.innerHTML += " ⭐";
-            } else if (i === currentProgress) {
-                day.classList.add("unlocked");
-            } else {
-                day.classList.add("locked");
-            }
-
-            day.addEventListener("click", () => {
-                if (!day.classList.contains("locked")) {
-                    loadDay(i);
-                }
-            });
-
-            daysContainer.appendChild(day);
-        }
-    }
-
-    function loadDay(day) {
-        selectedDay = day;
-        topicName.textContent = `Class ${selectedClass} - ${topics[selectedClass][(day - 1) % topics[selectedClass].length]}`;
-        videoFrame.src = getVideoURL(selectedClass, day);
-        exerciseLink.href = exerciseLinks[selectedClass] ? exerciseLinks[selectedClass][(day - 1) % exerciseLinks[selectedClass].length] : "#";
-        projectLink.href = projectLinks[selectedClass] ? projectLinks[selectedClass][(day - 1) % projectLinks[selectedClass].length] : "#";
-    }
-
-    function getVideoURL(classNum, dayNum) {
-        const lang = languageSelect.value;
-        const baseURL = "https://www.youtube.com/embed/";
-        const videoIDs = {
-            english: ["dQw4w9WgXcQ", "3JZ_D3ELwOQ", "tgbNymZ7vqY"],
-            telugu: ["rYEDA3JcQqw", "kJQP7kiw5Fk", "vTIIMJ9tUc8"]
-        };
-        return `${baseURL}${videoIDs[lang][(classNum + dayNum) % videoIDs[lang].length]}`;
-    }
-
-    completeBtn.addEventListener("click", async function () {
-        if (!progress[selectedClass] || progress[selectedClass] < selectedDay + 1) {
-            progress[selectedClass] = selectedDay + 1;
-            try {
-                await fetch('/progress', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email: userEmail, classNumber: selectedClass, dayNumber: selectedDay })
-                });
-                updateDays();
-            } catch (error) {
-                console.error("Error saving progress:", error);
-            }
-        }
-    });
-
-    classItems.forEach(item => {
-        item.addEventListener("click", function () {
-            selectedClass = parseInt(this.getAttribute("data-class"));
-            selectedDay = 1;
-            fetchProgress();
-            loadDay(1);
+    // Save progress
+    async function saveProgress(day) {
+      try {
+        const response = await fetch(`${apiBaseUrl}/summer-progress`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: userEmail, category, jobId, dayNumber: day }),
         });
+        if (!response.ok) throw new Error("Failed to save progress");
+        const data = await response.json();
+        progress = Array.isArray(data.completedDays) ? data.completedDays : progress;
+        renderTasks();
+        updateProgress();
+        error.style.display = "none";
+        showToast(`Day ${day} ${progress.includes(day) ? "marked as complete" : "unmarked"}!`);
+      } catch (err) {
+        console.error("Error saving progress:", err);
+        error.style.display = "block";
+        showToast("Failed to save progress.", true);
+      }
+    }
+
+    // Render tasks
+    function renderTasks() {
+      taskList.innerHTML = "";
+      programDays.forEach(({ day, role, task, youtube, practical }) => {
+        const card = document.createElement("div");
+        card.className = "task-card";
+        card.innerHTML = `
+          <div class="task-header" role="button" aria-expanded="false" aria-controls="details-${day}">
+            <h2>Day ${day}: ${role}</h2>
+            <button class="${progress.includes(day) ? "completed" : ""}" aria-label="${progress.includes(day) ? "Unmark Day " + day + " as complete" : "Mark Day " + day + " as complete"}">
+              ${progress.includes(day) ? "Completed" : "Mark Complete"}
+            </button>
+          </div>
+          <div class="task-details" id="details-${day}">
+            <p><strong>Task:</strong> ${task}</p>
+            ${youtube ? `
+              <div class="video-container">
+                <iframe src="${youtube}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="Tutorial for Day ${day}"></iframe>
+              </div>
+            ` : '<p><strong>Error:</strong> Video not available for this day.</p>'}
+            <p><strong>Practical Session:</strong></p>
+            <p>${practical.replace(/\n/g, "<br>")}</p>
+          </div>
+        `;
+        const header = card.querySelector(".task-header");
+        const details = card.querySelector(".task-details");
+        const button = card.querySelector("button");
+        header.addEventListener("click", (e) => {
+          if (e.target !== button) {
+            const isExpanded = details.classList.toggle("active");
+            header.setAttribute("aria-expanded", isExpanded);
+          }
+        });
+        button.addEventListener("click", () => saveProgress(day));
+        taskList.appendChild(card);
+      });
+    }
+
+    // Update progress
+    function updateProgress() {
+      progressText.textContent = `Progress: ${progress.length} / 25 days completed`;
+      progressBarFill.style.width = `${(progress.length / 25) * 100}%`;
+    }
+
+    // Keyboard navigation
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        const focused = document.activeElement;
+        if (focused.classList.contains("task-header") && !focused.querySelector("button").contains(e.target)) {
+          focused.click();
+        }
+      }
     });
 
-    languageSelect.addEventListener("change", function () {
-        loadDay(selectedDay);
-    });
-
+    // Initialize
+    fetchProgramDays();
     fetchProgress();
-    loadDay(1);
-});
-
-// code for stylings change of side class list
-document.querySelectorAll('.class-item').forEach(item => {
-    item.addEventListener('click', function() {
-        // Remove the 'selected' class from all items
-        document.querySelectorAll('.class-item').forEach(innerItem => {
-            innerItem.classList.remove('selected');
-        });
-
-        // Add the 'selected' class to the clicked item
-        this.classList.add('selected');
-
-        // Log the selected item's data-class attribute
-        const selectedClass = this.getAttribute('data-class');
-        console.log('Selected Class:', selectedClass);
-    });
-});
-    </script>
+  </script>
 </body>
 </html>

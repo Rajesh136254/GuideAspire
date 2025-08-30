@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GuideAspire Pricing - Lifetime Access</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" as="style" onload="this.rel='stylesheet'">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f9fafb;
+      color: #1f2937;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(to bottom right, #4f46e5, #7c3aed);
+      color: white;
+      text-align: center;
+      padding: 80px 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+
+    header p {
+      font-size: 1.125rem;
+      max-width: 600px;
+      margin: 0 auto 24px;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      background: white;
+      color: #4f46e5;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background: #f3f4f6;
+    }
+
+    /* Pricing Section */
+    #pricing {
+      padding: 80px 16px;
+      background: white;
+      text-align: center;
+    }
+
+    #pricing h2 {
+      font-size: 2.25rem;
+      font-weight: 700;
+      margin-bottom: 48px;
+    }
+
+    .pricing-card {
+      max-width: 400px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      padding: 32px;
+      position: relative;
+      transition: transform 0.3s ease;
+    }
+
+    .pricing-card:hover {
+      transform: scale(1.05);
+    }
+
+    .pricing-card .badge {
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: #10b981;
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-bottom-left-radius: 8px;
+    }
+
+    .pricing-card h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .pricing-card .price {
+      font-size: 3rem;
+      font-weight: 800;
+      margin: 24px 0;
+    }
+
+    .pricing-card .price span {
+      font-size: 1rem;
+      color: #6b7280;
+    }
+
+    .pricing-card .btn-primary {
+      width: 100%;
+      background: linear-gradient(to right, #4f46e5, #7c3aed);
+      color: white;
+      padding: 12px;
+      margin-bottom: 24px;
+    }
+
+    .pricing-card .btn-primary:hover {
+      background: linear-gradient(to right, #4338ca, #6d28d9);
+    }
+
+    .pricing-card ul {
+      list-style: none;
+      text-align: left;
+    }
+
+    .pricing-card li {
+      display: flex;
+      align-items: center;
+      margin-bottom: 12px;
+      font-size: 1rem;
+    }
+
+    .pricing-card svg {
+      width: 20px;
+      height: 20px;
+      color: #10b981;
+      margin-right: 8px;
+    }
+
+    /* Features Section */
+    #features {
+      padding: 80px 16px;
+      background: #f9fafb;
+      text-align: center;
+    }
+
+    #features h2 {
+      font-size: 2.25rem;
+      font-weight: 700;
+      margin-bottom: 48px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 24px;
+    }
+
+    .feature-card {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: box-shadow 0.3s ease;
+    }
+
+    .feature-card:hover {
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .feature-card svg {
+      width: 48px;
+      height: 48px;
+      color: #4f46e5;
+      margin-bottom: 16px;
+    }
+
+    .feature-card h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .feature-card p {
+      color: #6b7280;
+    }
+
+    /* Testimonials Section */
+    #testimonials {
+      padding: 80px 16px;
+      background: white;
+      text-align: center;
+    }
+
+    #testimonials h2 {
+      font-size: 2.25rem;
+      font-weight: 700;
+      margin-bottom: 48px;
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 24px;
+    }
+
+    .testimonial-card {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .testimonial-card p {
+      color: #6b7280;
+      font-style: italic;
+      margin-bottom: 16px;
+    }
+
+    .testimonial-card .author {
+      display: flex;
+      align-items: center;
+    }
+
+    .testimonial-card img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 12px;
+    }
+
+    .testimonial-card .author-name {
+      font-weight: 600;
+    }
+
+    .testimonial-card .author-role {
+      font-size: 0.875rem;
+      color: #6b7280;
+    }
+
+    /* FAQ Section */
+    #faq {
+      padding: 80px 16px;
+      background: #f9fafb;
+      text-align: center;
+    }
+
+    #faq h2 {
+      font-size: 2.25rem;
+      font-weight: 700;
+      margin-bottom: 48px;
+    }
+
+    .faq-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid #e5e7eb;
+      padding: 16px 0;
+      cursor: pointer;
+    }
+
+    .faq-item h3 {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      color: #6b7280;
+      transition: max-height 0.3s ease;
+    }
+
+    .faq-item.active .faq-answer {
+      max-height: 200px;
+    }
+
+    /* Footer */
+    footer {
+      background: linear-gradient(to right, #4f46e5, #7c3aed);
+      color: white;
+      text-align: center;
+      padding: 64px 16px;
+    }
+
+    footer h2 {
+      font-size: 2.25rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    footer p {
+      font-size: 1.125rem;
+      max-width: 600px;
+      margin: 0 auto 24px;
+    }
+
+    /* Sticky CTA */
+    .sticky-cta {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #4f46e5;
+      color: white;
+      padding: 16px;
+      text-align: center;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .sticky-cta p {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .sticky-cta .btn-primary {
+      background: white;
+      color: #4f46e5;
+      padding: 8px 16px;
+    }
+
+    @media (max-width: 768px) {
+      .sticky-cta {
+        display: block;
+      }
+
+      header h1 {
+        font-size: 2rem;
+      }
+
+      header p, footer p {
+        font-size: 1rem;
+      }
+
+      #pricing h2, #features h2, #testimonials h2, #faq h2, footer h2 {
+        font-size: 1.75rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div className="container">
+      <h1>Empower Your Future with GuideAspire</h1>
+      <p>Lifetime access to all features for just <strong>₹899 (~$10.74 USD)</strong>.</p>
+      <a href="#pricing" class="btn-primary">Get Started Today</a>
+    </div>
+  </header>
+
+  <!-- Pricing Section -->
+  <section id="pricing">
+    <div class="container">
+      <h2>One Plan, Unlimited Possibilities</h2>
+      <div class="pricing-card">
+        <div class="badge">Best Value</div>
+        <h3>Lifetime Access</h3>
+        <p class="text-gray-600">One-time payment, unlock all features forever</p>
+        <div class="price">₹899 <span>/ lifetime ≈ $10.74 USD</span></div>
+        <a href="#" class="btn-primary">Get Lifetime Access Now</a>
+        <ul>
+          <li>
+            <svg fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+            </svg>
+            Unlimited access to all premium guides
+          </li>
+          <li>
+            <svg fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+            </svg>
+            Exclusive content updates for life
+          </li>
+          <li>
+            <svg fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+            </svg>
+            24/7 priority customer support
+          </li>
+          <li>
+            <svg fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+            </svg>
+            Vibrant community membership
+          </li>
+          <li>
+            <svg fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+            </svg>
+            30-day money-back guarantee
+          </li>
+        </ul>
+      </div>
+      <p class="text-center text-gray-600 mt-6">Trusted by over 10,000+ users worldwide</p>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features">
+    <div class="container">
+      <h2>Why Choose GuideAspire?</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3-.512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+          </svg>
+          <h3>In-Depth Guides</h3>
+          <p>Master your skills with comprehensive, expert-crafted guides.</p>
+        </div>
+        <div class="feature-card">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.992" />
+          </svg>
+          <h3>Lifetime Updates</h3>
+          <p>Stay ahead with exclusive content updates at no extra cost.</p>
+        </div>
+        <div class="feature-card">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+          </svg>
+          <h3>Community & Support</h3>
+          <p>Join a thriving community with 24/7 priority support.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section id="testimonials">
+    <div class="container">
+      <h2>Loved by Our Users</h2>
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <p>"GuideAspire is a steal at ₹899! The guides are world-class, and the community is amazing."</p>
+          <div class="author">
+            <img src="https://i.pravatar.cc/40?img=1" alt="Priya Sharma">
+            <div>
+              <div class="author-name">Priya Sharma</div>
+              <div class="author-role">Entrepreneur</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <p>"The lifetime access gave me confidence to invest. It’s worth every rupee!"</p>
+          <div class="author">
+            <img src="https://i.pravatar.cc/40?img=2" alt="Rahul Verma">
+            <div>
+              <div class="author-name">Rahul Verma</div>
+              <div class="author-role">Student</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <p>"I’ve never seen such value. The updates keep me ahead of the curve."</p>
+          <div class="author">
+            <img src="https://i.pravatar.cc/40?img=3" alt="Anita Patel">
+            <div>
+              <div class="author-name">Anita Patel</div>
+              <div class="author-role">Freelancer</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq">
+    <div class="container">
+      <h2>Frequently Asked Questions</h2>
+      <div class="faq-container">
+        <div class="faq-item">
+          <h3>What does lifetime access include?</h3>
+          <div class="faq-answer">Lifetime access includes all current and future premium guides, exclusive content updates, 24/7 priority support, and community membership.</div>
+        </div>
+        <div class="faq-item">
+          <h3>Is there a refund policy?</h3>
+          <div class="faq-answer">Yes, we offer a 30-day money-back guarantee if you’re not completely satisfied.</div>
+        </div>
+        <div class="faq-item">
+          <h3>How do I access the content?</h3>
+          <div class="faq-answer">After payment, you’ll receive instant access to all features via your account dashboard.</div>
+        </div>
+        <div class="faq-item">
+          <h3>Are there any hidden fees?</h3>
+          <div class="faq-answer">No, the ₹899 one-time payment covers everything. No recurring fees or hidden costs.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <h2>Start Your Journey Today</h2>
+      <p>Join thousands of users with lifetime access for just <strong>₹899 (~$10.74 USD)</strong>.</p>
+      <a href="#pricing" class="btn-primary">Get Lifetime Access</a>
+    </div>
+  </footer>
+
+  <!-- Sticky CTA -->
+  <div class="sticky-cta">
+    <p>Lifetime Access for ₹899 (~$10.74)</p>
+    <a href="#pricing" class="btn-primary">Get Started</a>
+  </div>
+
+  <script>
+    // FAQ Toggle
+    document.querySelectorAll('.faq-item').forEach(item => {
+      item.addEventListener('click', () => {
+        item.classList.toggle('active');
+      });
+    });
+
+    // Smooth Scroll for Pricing Links
+    document.querySelectorAll('a[href="#pricing"]').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.querySelector('#pricing').scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+</body>
+</html>

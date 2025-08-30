@@ -189,49 +189,48 @@
     <script src="GuideAspire.js"></script>
     <script>
       document.getElementById("loginForm").addEventListener("submit", async (e) => {
-        e.preventDefault();
-  
-        const email = document.getElementById("email").value.trim();
-        const password = document.getElementById("password").value;
-  
-        if (!email || !password) {
-          alert("Please fill in all fields.");
-          return;
-        }
-  
-        try {
-          const response = await fetch("http://localhost:4000/login", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email, password }),
-          });
-  
-          const text = await response.text();
-          console.log("Raw response:", text);
-  
-          if (!response.ok) {
-            let errorMessage = "Login failed.";
-            try {
-              const data = JSON.parse(text);
-              errorMessage = data.message || errorMessage;
-            } catch {
-              console.error("Non-JSON response:", text);
-              errorMessage = "Server error. Please try again.";
-            }
-            throw new Error(errorMessage);
-          }
-  
-          const data = JSON.parse(text);
-          // Store email in localStorage
-          localStorage.setItem("userEmail", email);
-          console.log("Stored userEmail in localStorage:", email);
-          alert("Login successful! Redirecting to course selection...");
-          window.location.href = "/course-select"; // Redirect to CourseSelect.htm
-        } catch (err) {
-          console.error("Login error:", err);
-          alert(err.message || "An error occurred. Please try again.");
-        }
-      });
+  e.preventDefault();
+
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+
+  if (!email || !password) {
+    alert("Please fill in all fields.");
+    return;
+  }
+
+  try {
+    const response = await fetch("http://localhost:3000/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const text = await response.text();
+    console.log("Raw response:", text);
+
+    if (!response.ok) {
+      let errorMessage = "Login failed.";
+      try {
+        const data = JSON.parse(text);
+        errorMessage = data.message || errorMessage;
+      } catch {
+        console.error("Non-JSON response:", text);
+        errorMessage = "Server error. Please try again.";
+      }
+      throw new Error(errorMessage);
+    }
+
+    const data = JSON.parse(text);
+    localStorage.setItem("userEmail", email);
+    console.log("Stored userEmail in localStorage:", email);
+    alert("Login successful! Redirecting to course selection...");
+    window.location.href = "/course-select";
+  } catch (err) {
+    console.error("Login error:", err);
+    alert(err.message || "An error occurred. Please try again.");
+  }
+});
     </script>
   </body>
 

@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - GuideAspire</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/19e8ada8de.js" crossorigin="anonymous"></script>
+    <style>
+        /* Custom Scrollbar for horizontal scrolling */
+        .horizontal-scroll::-webkit-scrollbar {
+            height: 8px;
+        }
+        .horizontal-scroll::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        .horizontal-scroll::-webkit-scrollbar-thumb {
+            background: #6a11cb;
+            border-radius: 4px;
+        }
+        .horizontal-scroll::-webkit-scrollbar-thumb:hover {
+            background: #2575fc;
+        }
+        /* Style for class buttons */
+        .class-item {
+            background-color: #ffffff;
+            color: #374151;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease-in-out;
+        }
+        .class-item:hover {
+            background-color: #e5e7eb;
+        }
+        /* Style for selected class */
+        .class-item.bg-blue-500.text-white {
+            background-color: #3b82f6;
+            color: #ffffff;
+            font-weight: 600;
+            border: 2px solid #1e40af;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+        /* Style for day buttons */
+        .day-item {
+            background-color: #ffffff;
+            color: #374151;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease-in-out;
+        }
+        .day-item:hover {
+            background-color: #e5e7eb;
+        }
+        /* Style for selected day */
+        .day-item.bg-blue-500.text-white {
+            background-color: #3b82f6;
+            color: #ffffff;
+            font-weight: 600;
+            border: 2px solid #1e40af;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans">
+    <div class="min-h-screen">
+        <!-- Top Navigation Bar -->
+        <nav class="bg-gradient-to-r from-purple-600 to-blue-500 p-4 shadow-lg">
+            <div class="container mx-auto flex items-center justify-between">
+                <h1 class="text-2xl font-bold text-white">GuideAspire Admin Dashboard</h1>
+                <div class="flex space-x-4">
+                    <select id="section" class="p-2 rounded-lg bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-300">
+                        <option value="">Select Section</option>
+                    </select>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="container mx-auto p-6">
+            <!-- Classes Selection -->
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold text-gray-800 mb-3">Select Class</h2>
+                <div id="class-list" class="flex space-x-4 overflow-x-auto horizontal-scroll pb-2">
+                    <!-- Classes will be populated here -->
+                </div>
+            </div>
+
+            <!-- Days Selection -->
+            <div class="mb-6">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-3">Select Day</h2>
+                    <div class="flex space-x-2">
+                        <input id="new-day-number" type="number" min="1" max="50" class="p-2 border rounded-lg" placeholder="Day number">
+                        <button id="add-day" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition flex items-center">
+                            <i class="fas fa-plus mr-2"></i>Add Day
+                        </button>
+                    </div>
+                </div>
+                <div id="day-list" class="flex space-x-4 overflow-x-auto horizontal-scroll pb-2">
+                    <!-- Days will be populated here -->
+                </div>
+            </div>
+
+            <!-- Content Input Form -->
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">Day Content</h2>
+                <div class="space-y-4" id="content-form">
+                    <!-- Fields will be dynamically loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const apiBase = 'http://localhost:3000/api/admin';
+
+        async function loadSections() {
+            try {
+                const res = await fetch(`${apiBase}/sections`);
+                if (!res.ok) {
+                    throw new Error(`HTTP error! Status: ${res.status}`);
+                }
+                const sections = await res.json();
+                if (!Array.isArray(sections)) {
+                    throw new Error('Received invalid sections data');
+                }
+                const select = document.getElementById('section');
+                select.innerHTML = '<option value="">Select Section</option>' + 
+                    sections.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
+                if (sections.length > 0) {
+                    select.value = sections[0].id;
+                    loadClasses(sections[0].id);
+                }
+            } catch (err) {
+                console.error('Error loading sections:', err);
+                alert(`Failed to load sections: ${err.message}`);
+                document.getElementById('section').innerHTML = '<option value="">Error loading sections</option>';
+            }
+        }
+
+        async function loadClasses(sectionId) {
+            try {
+                const res = await fetch(`${apiBase}/classes/${sectionId}`);
+                if (!res.ok) {
+                    throw new Error(`HTTP error! Status: ${res.status}`);
+                }
+                const classes = await res.json();
+                const classList = document.getElementById('class-list');
+                classList.innerHTML = classes.map(c => `
+                    <button data-id="${c.id}" class="class-item bg-white px-4 py-2 rounded-lg shadow hover:bg-blue-100 transition">${c.name}</button>
+                `).join('');
+                if (classes.length > 0) {
+                    const firstClass = classList.querySelector('.class-item');
+                    firstClass.classList.add('bg-blue-500', 'text-white');
+                    loadDays(classes[0].id);
+                }
+                classList.querySelectorAll('.class-item').forEach(item => {
+                    item.addEventListener('click', () => {
+                        classList.querySelectorAll('.class-item').forEach(i => i.classList.remove('bg-blue-500', 'text-white'));
+                        item.classList.add('bg-blue-500', 'text-white');
+                        loadDays(item.dataset.id);
+                    });
+                });
+            } catch (err) {
+                console.error('Error loading classes:', err);
+                alert(`Failed to load classes: ${err.message}`);
+            }
+        }
+
+        async function loadDays(classId) {
+            try {
+                const res = await fetch(`${apiBase}/days/${classId}`);
+                const days = await res.json();
+                const dayList = document.getElementById('day-list');
+                dayList.innerHTML = days.map(d => `
+                    <button data-id="${d.id}" class="day-item bg-white px-4 py-2 rounded-lg shadow hover:bg-blue-100 transition">Day ${d.day_number}</button>
+                `).join('');
+                if (days.length > 0) {
+                    const firstDay = dayList.querySelector('.day-item');
+                    firstDay.classList.add('bg-blue-500', 'text-white');
+                    loadContent(days[0].id);
+                }
+                dayList.querySelectorAll('.day-item').forEach(item => {
+                    item.addEventListener('click', () => {
+                        dayList.querySelectorAll('.day-item').forEach(i => i.classList.remove('bg-blue-500', 'text-white'));
+                        item.classList.add('bg-blue-500', 'text-white');
+                        loadContent(item.dataset.id);
+                    });
+                });
+            } catch (err) {
+                console.error('Error loading days:', err);
+                alert('Failed to load days.');
+            }
+        }
+
+        async function loadContent(dayId) {
+            try {
+                const selectedSection = document.getElementById('section').value;
+                const sectionRes = await fetch(`${apiBase}/sections`);
+                const sections = await sectionRes.json();
+                const currentSection = sections.find(s => s.id == selectedSection);
+                const isSummer = currentSection && currentSection.name.toLowerCase() === 'summer';
+
+                let res;
+                if (isSummer) {
+                    const selectedDay = document.getElementById('day-list').querySelector('.day-item.bg-blue-500');
+                    const dayNumber = selectedDay ? selectedDay.textContent.replace('Day ', '') : '1';
+                    res = await fetch(`${apiBase}/summer/content/${dayNumber}`);
+                } else {
+                    res = await fetch(`${apiBase}/content/${dayId}`);
+                }
+                const { day, videos } = await res.json();
+                const eng = videos.find(v => v.language === 'english');
+                const tel = videos.find(v => v.language === 'telugu');
+
+                const form = document.getElementById('content-form');
+                form.innerHTML = isSummer ? `
+                    <div>
+                        <label for="role" class="block text-gray-700 font-medium">Role</label>
+                        <input id="role" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300" placeholder="Enter role" value="${day.role || ''}">
+                    </div>
+                    <div>
+                        <label for="task" class="block text-gray-700 font-medium">Task</label>
+                        <input id="task" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300" placeholder="Enter task" value="${day.task || ''}">
+                    </div>
+                    <div>
+                        <label for="practical" class="block text-gray-700 font-medium">Practical</label>
+                        <input id="practical" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300" placeholder="Enter practical" value="${day.practical || ''}">
+                    </div>
+                    <div>
+                        <label for="topic" class="block text-gray-700 font-medium">Topic (optional)</label>
+                        <input id="topic" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300" placeholder="Enter topic" value="${day.topic || ''}">
+                    </div>
+                    <div>
+                        <label for="quiz" class="block text-gray-700 font-medium">Quiz Link (optional)</label>
+                        <input id="quiz" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300" placeholder="Enter quiz link" value="${day.quiz_link || ''}">
+                    </div>
+                    <div>
+                        <label for="project" class="block text-gray-700 font-medium">Project Link (optional)</label>
+                        <input id="project" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300" placeholder="Enter project link" value="${day.project_link || ''}">
+                    </div>
+                    <div>
+                        <label for="english-youtube" class="block text-gray-700 font-medium">English YouTube Link</label>
+                        <input id="english-youtube" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300" placeholder="Enter English YouTube link" value="${eng ? eng.youtube_id : ''}">
+                    </div>
+                    <div>
+                        <label for="telugu-youtube" class="block text-gray-700 font-medium">Telugu YouTube Link</label>
+                        <input id="telugu-youtube" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300" placeholder="Enter Telugu YouTube link" value="${tel ? tel.youtube_id : ''}">
+                    </div>
+                    <button onclick="saveDay()" class="w-full bg-purple-500 text-white px-4 py-2 rounded-lg hover:bg-purple-600 transition">Save Day Details</button>
+                ` : `
+                    <div>
+                        <label for="topic" class="block text-gray-700 font-medium">Topic</label>
+                        <input id="topic" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300" placeholder="Enter topic" value="${day.topic || ''}">
+                    </div>
+                    <div>
+                        <label for="quiz" class="block text-gray-700 font-medium">Quiz Link</label>
+                        <input id="quiz" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300" placeholder="Enter quiz link" value="${day.quiz_link || ''}">
+                    </div>
+                    <div>
+                        <label for="project" class="block text-gray-700 font-medium">Project Link</label>
+                        <input id="project" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300" placeholder="Enter project link" value="${day.project_link || ''}">
+                    </div>
+                    <div>
+                        <label for="english-youtube" class="block text-gray-700 font-medium">English YouTube Link</label>
+                        <input id="english-youtube" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300" placeholder="Enter English YouTube link" value="${eng ? eng.youtube_id : ''}">
+                    </div>
+                    <div>
+                        <label for="telugu-youtube" class="block text-gray-700 font-medium">Telugu YouTube Link</label>
+                        <input id="telugu-youtube" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300" placeholder="Enter Telugu YouTube link" value="${tel ? tel.youtube_id : ''}">
+                    </div>
+                    <button onclick="saveDay()" class="w-full bg-purple-500 text-white px-4 py-2 rounded-lg hover:bg-purple-600 transition">Save Day Details</button>
+                `;
+            } catch (err) {
+                console.error('Error loading content:', err);
+                alert('Failed to load content.');
+            }
+        }
+
+async function saveDay() {
+    const dayId = document.getElementById('day-list').querySelector('.day-item.bg-blue-500')?.dataset.id;
+    if (!dayId) {
+        alert('Please select a day.');
+        return;
+    }
+    const selectedSection = document.getElementById('section').value;
+    const sectionRes = await fetch(`${apiBase}/sections`);
+    const sections = await sectionRes.json();
+    const currentSection = sections.find(s => s.id == selectedSection);
+    const isSummer = currentSection && currentSection.name.toLowerCase() === 'summer';
+
+    if (isSummer) {
+        const role = document.getElementById('role').value;
+        const task = document.getElementById('task').value;
+        const practical = document.getElementById('practical').value;
+        const topic = document.getElementById('topic').value;
+        const quiz = document.getElementById('quiz').value;
+        const project = document.getElementById('project').value;
+        const englishYoutube = document.getElementById('english-youtube').value;
+        const teluguYoutube = document.getElementById('telugu-youtube').value;
+
+        try {
+            const selectedDay = document.getElementById('day-list').querySelector('.day-item.bg-blue-500');
+            const dayNumber = selectedDay ? selectedDay.textContent.replace('Day ', '') : '1';
+            const res = await fetch(`${apiBase}/summer/content/${dayNumber}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ category: 'summer', role, task, practical, topic, quiz_link: quiz, project_link: project })
+            });
+            if (!res.ok) {
+                throw new Error('Failed to save summer content.');
+            }
+
+            // Save Summer Special videos
+            if (englishYoutube) {
+                await fetch(`${apiBase}/summer/video/${dayNumber}/english`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ youtube_link: englishYoutube })
+                });
+            }
+            if (teluguYoutube) {
+                await fetch(`${apiBase}/summer/video/${dayNumber}/telugu`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ youtube_link: teluguYoutube })
+                });
+            }
+
+            alert('Day details saved!');
+        } catch (err) {
+            console.error('Error saving summer content:', err);
+            alert('Failed to save summer content.');
+        }
+    } else {
+        const topic = document.getElementById('topic').value;
+        const quiz = document.getElementById('quiz').value;
+        const project = document.getElementById('project').value;
+        const englishYoutube = document.getElementById('english-youtube').value;
+        const teluguYoutube = document.getElementById('telugu-youtube').value;
+
+        try {
+            const res = await fetch(`${apiBase}/day/${dayId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ topic, quiz_link: quiz, project_link: project })
+            });
+            if (!res.ok) {
+                throw new Error('Failed to save day details.');
+            }
+
+            // Save videos for non-Summer sections
+            if (englishYoutube) {
+                await fetch(`${apiBase}/video/${dayId}/english`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ youtube_link: englishYoutube })
+                });
+            }
+            if (teluguYoutube) {
+                await fetch(`${apiBase}/video/${dayId}/telugu`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ youtube_link: teluguYoutube })
+                });
+            }
+
+            alert('Day details saved!');
+        } catch (err) {
+            console.error('Error saving day:', err);
+            alert('Failed to save day details.');
+        }
+    }
+}
+
+        async function addDay() {
+            const classId = document.getElementById('class-list').querySelector('.class-item.bg-blue-500')?.dataset.id;
+            if (!classId) {
+                alert('Please select a class.');
+                return;
+            }
+            const dayNumber = document.getElementById('new-day-number').value;
+            if (!dayNumber || dayNumber < 1 || dayNumber > 50) {
+                alert('Please enter a valid day number (1-50).');
+                return;
+            }
+            try {
+                const res = await fetch(`${apiBase}/day`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ class_id: classId, day_number: dayNumber })
+                });
+                if (res.ok) {
+                    const { day_number } = await res.json();
+                    alert(`Day ${day_number} added!`);
+                    loadDays(classId);
+                } else {
+                    throw new Error('Failed to add day.');
+                }
+            } catch (err) {
+                console.error('Error adding day:', err);
+                alert('Failed to add day.');
+            }
+        }
+
+        document.getElementById('section').addEventListener('change', e => {
+            if (e.target.value) loadClasses(e.target.value);
+        });
+        document.getElementById('add-day').addEventListener('click', addDay);
+
+        loadSections();
+    </script>
+</body>
+</html>

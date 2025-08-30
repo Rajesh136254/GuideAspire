@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GuideAspire - Transforming Education & Careers | Bridge the Gap to Success</title>
+  <meta name="description" content="GuideAspire bridges the gap between academics and employability. Comprehensive guidance from Class 1 to Graduation for career readiness and life skills." />
+  <link rel="icon" href="Homepage1.png" type="image/png" />
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    /* CSS Variables - Design System */
+    :root {
+      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --dark-gradient: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+      
+      --primary-color: #667eea;
+      --secondary-color: #764ba2;
+      --accent-color: #00f2fe;
+      --text-primary: #2d3748;
+      --text-secondary: #4a5568;
+      --text-light: #718096;
+      --white: #ffffff;
+      --light-bg: #f7fafc;
+      --border-color: rgba(255, 255, 255, 0.1);
+      
+      --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+      --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+      --shadow-xl: 0 25px 50px rgba(0, 0, 0, 0.25);
+      
+      --border-radius-sm: 0.375rem;
+      --border-radius-md: 0.5rem;
+      --border-radius-lg: 0.75rem;
+      --border-radius-xl: 1rem;
+      
+      --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-normal: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Reset and Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      color: var(--text-primary);
+      overflow-x: hidden;
+    }
+
+    /* Typography */
+    .heading-primary {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+
+    .heading-secondary {
+      font-family: 'Playfair Display', serif;
+      font-weight: 600;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+    }
+
+    .heading-tertiary {
+      font-weight: 700;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      line-height: 1.3;
+    }
+
+    .text-large {
+      font-size: clamp(1.125rem, 2vw, 1.25rem);
+      line-height: 1.6;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInScale {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .animate-fade-up {
+      animation: fadeInUp 0.8s ease-out forwards;
+    }
+
+    .animate-fade-scale {
+      animation: fadeInScale 0.6s ease-out forwards;
+    }
+
+    .animate-float {
+      animation: float 3s ease-in-out infinite;
+    }
+
+    /* Navigation */
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      z-index: 1000;
+      transition: var(--transition-normal);
+    }
+
+    .navbar.scrolled {
+      background: rgba(255, 255, 255, 0.98);
+      box-shadow: var(--shadow-md);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-primary);
+      font-weight: 500;
+      position: relative;
+      transition: var(--transition-fast);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary-gradient);
+      transition: var(--transition-fast);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .pricing-btn {
+      background: var(--primary-gradient);
+      color: var(--white) !important;
+      padding: 0.75rem 1.5rem;
+      border-radius: var(--border-radius-lg);
+      font-weight: 600;
+      transition: var(--transition-normal);
+      box-shadow: var(--shadow-md);
+    }
+
+    .pricing-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.9), rgba(118, 75, 162, 0.9)), 
+                  url('src/assets/hero-education-transformation.jpg') center/cover;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.8), rgba(118, 75, 162, 0.8));
+      z-index: 1;
+    }
+
+    .hero-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      color: var(--white);
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      padding: 0.75rem 1.5rem;
+      border-radius: 50px;
+      margin-bottom: 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      animation: fadeInScale 0.8s ease-out 0.2s both;
+    }
+
+    .hero-title {
+      margin-bottom: 1.5rem;
+      animation: fadeInUp 0.8s ease-out 0.4s both;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+      margin-bottom: 3rem;
+      opacity: 0.9;
+      animation: fadeInUp 0.8s ease-out 0.6s both;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeInUp 0.8s ease-out 0.8s both;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem 2rem;
+      border-radius: var(--border-radius-lg);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: var(--transition-normal);
+      border: none;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary {
+      background: var(--white);
+      color: var(--primary-color);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--white);
+      border: 2px solid var(--white);
+    }
+
+    .btn-secondary:hover {
+      background: var(--white);
+      color: var(--primary-color);
+      transform: translateY(-3px);
+    }
+
+    /* Problem Solution Section */
+    .problem-solution {
+      padding: 6rem 0;
+      background: var(--light-bg);
+      position: relative;
+    }
+
+    .section-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-badge {
+      display: inline-block;
+      background: var(--primary-gradient);
+      color: var(--white);
+      padding: 0.5rem 1.5rem;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .problem-solution-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .problem-card, .solution-card {
+      background: var(--white);
+      padding: 3rem;
+      border-radius: var(--border-radius-xl);
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      transition: var(--transition-normal);
+    }
+
+    .problem-card:hover, .solution-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .problem-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--secondary-gradient);
+      border-radius: var(--border-radius-xl) var(--border-radius-xl) 0 0;
+    }
+
+    .solution-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--success-gradient);
+      border-radius: var(--border-radius-xl) var(--border-radius-xl) 0 0;
+    }
+
+    .card-icon {
+      width: 4rem;
+      height: 4rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      font-size: 1.5rem;
+    }
+
+    .problem-card .card-icon {
+      background: linear-gradient(135deg, #ff9a9e, #fecfef);
+      color: #e53e3e;
+    }
+
+    .solution-card .card-icon {
+      background: linear-gradient(135deg, #a8edea, #fed6e3);
+      color: #38a169;
+    }
+
+    .card-stats {
+      display: flex;
+      gap: 2rem;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 800;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      font-weight: 500;
+    }
+
+    /* Skills Development Section */
+    .skills-section {
+      padding: 6rem 0;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: var(--white);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .skills-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('src/assets/skill-development-journey.jpg') center/cover;
+      opacity: 0.1;
+      z-index: 1;
+    }
+
+    .skills-section > * {
+      position: relative;
+      z-index: 2;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      margin-top: 4rem;
+    }
+
+    .skill-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: var(--border-radius-xl);
+      padding: 2.5rem;
+      transition: var(--transition-normal);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .skill-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+      z-index: -1;
+      transition: var(--transition-normal);
+    }
+
+    .skill-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .skill-card:hover::before {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+    }
+
+    .skill-level {
+      background: rgba(255, 255, 255, 0.2);
+      color: var(--white);
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: inline-block;
+      margin-bottom: 1.5rem;
+    }
+
+    .skill-list {
+      list-style: none;
+    }
+
+    .skill-list li {
+      padding: 0.75rem 0;
+      padding-left: 2rem;
+      position: relative;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .skill-list li:last-child {
+      border-bottom: none;
+    }
+
+    .skill-list li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      top: 0.75rem;
+      width: 1.5rem;
+      height: 1.5rem;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+
+    /* Features Section */
+    .features-section {
+      padding: 6rem 0;
+      background: var(--white);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 3rem;
+      margin-top: 4rem;
+    }
+
+    .feature-card {
+      text-align: center;
+      padding: 2.5rem;
+      border-radius: var(--border-radius-xl);
+      background: var(--white);
+      box-shadow: var(--shadow-md);
+      transition: var(--transition-normal);
+      border: 1px solid #f7fafc;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .feature-icon {
+      width: 5rem;
+      height: 5rem;
+      margin: 0 auto 1.5rem;
+      background: var(--primary-gradient);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      font-size: 2rem;
+    }
+
+    /* WhatsApp Section */
+    .whatsapp-section {
+      padding: 6rem 0;
+      background: linear-gradient(135deg, #25d366, #128c7e);
+      color: var(--white);
+    }
+
+    .whatsapp-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 4rem;
+    }
+
+    .whatsapp-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: var(--border-radius-xl);
+      padding: 2rem;
+      text-align: center;
+      transition: var(--transition-normal);
+    }
+
+    .whatsapp-card:hover {
+      transform: translateY(-5px);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .whatsapp-btn {
+      background: var(--white);
+      color: #25d366;
+      padding: 0.75rem 1.5rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: var(--transition-normal);
+      margin-top: 1rem;
+    }
+
+    .whatsapp-btn:hover {
+      transform: scale(1.05);
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* Testimonials */
+    .testimonials-section {
+      padding: 6rem 0;
+      background: var(--light-bg);
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 3rem;
+      margin-top: 4rem;
+    }
+
+    .testimonial-card {
+      background: var(--white);
+      padding: 3rem;
+      border-radius: var(--border-radius-xl);
+      box-shadow: var(--shadow-md);
+      position: relative;
+      transition: var(--transition-normal);
+    }
+
+    .testimonial-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .testimonial-card::before {
+      content: '"';
+      position: absolute;
+      top: -1rem;
+      left: 2rem;
+      font-size: 4rem;
+      color: var(--primary-color);
+      font-family: 'Playfair Display', serif;
+      opacity: 0.3;
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--dark-gradient);
+      color: var(--white);
+      padding: 3rem 0;
+      text-align: center;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+      
+      .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .btn {
+        padding: 0.875rem 1.5rem;
+        font-size: 1rem;
+      }
+      
+      .problem-solution-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      
+      .problem-solution-grid > * {
+        min-width: unset;
+      }
+      
+      .skills-grid, .features-grid, .whatsapp-grid, .testimonials-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .card-stats {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .section-container {
+        padding: 0 1rem;
+      }
+      
+      .nav-container {
+        padding: 1rem;
+      }
+      
+      .hero-container {
+        padding: 1rem;
+      }
+      
+      .problem-card, .solution-card {
+        padding: 2rem;
+      }
+      
+      .skill-card, .feature-card, .whatsapp-card, .testimonial-card {
+        padding: 1.5rem;
+      }
+    }
+
+    /* Scroll animations */
+    .scroll-fade {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s ease-out;
+    }
+
+    .scroll-fade.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Loading animation */
+    .loading {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease;
+    }
+
+    .loading.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .spinner {
+      width: 3rem;
+      height: 3rem;
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid var(--primary-color);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Loading Screen -->
+  <div class="loading" id="loading">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <div class="logo">GuideAspire</div>
+      <ul class="nav-links">
+        <li><a href="info.htm#about">About</a></li>
+        <li><a href="info.htm#courses">Courses</a></li>
+        <li><a href="info.htm#contact">Contact</a></li>
+        <li><a href="info.htm#faqs">FAQs</a></li>
+        <li><a href="pricing.htm" class="pricing-btn">Pricing</a></li>
+        <li><a href="adminDashboard.htm" class="pricing-btn">Admin Dashboard</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-container">
+      <div class="hero-badge">
+        <i class="fas fa-rocket"></i>
+        <span>Transforming Education & Careers</span>
+      </div>
+      
+      <h1 class="hero-title heading-primary">
+        Bridge the Gap Between <br>
+        <span style="background: linear-gradient(135deg, #00f2fe, #4facfe); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Academics & Employability</span>
+      </h1>
+      
+      <p class="hero-subtitle">
+        Comprehensive guidance from Class 1 to Graduation for career readiness, 
+        practical skills, and holistic development that ensures every student is job-ready and life-ready.
+      </p>
+      
+      <div class="hero-buttons">
+        <a href="/signup" class="btn btn-primary">
+          <i class="fas fa-user-plus"></i>
+          Start Your Journey
+        </a>
+        <a href="/login" class="btn btn-secondary">
+          <i class="fas fa-sign-in-alt"></i>
+          Login
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem & Solution Section -->
+  <section class="problem-solution">
+    <div class="section-container">
+      <div class="section-header scroll-fade">
+        <span class="section-badge">Why GuideAspire?</span>
+        <h2 class="heading-secondary" style="color: var(--text-primary);">
+          The Education Crisis We're Solving
+        </h2>
+        <p class="text-large" style="color: var(--text-secondary); margin-top: 1rem;">
+          Traditional education systems are failing to prepare students for real-world success
+        </p>
+      </div>
+
+      <div class="problem-solution-grid">
+        <div class="problem-card scroll-fade">
+          <div class="card-icon">
+            <i class="fas fa-exclamation-triangle"></i>
+          </div>
+          <h3 class="heading-tertiary" style="color: #e53e3e; margin-bottom: 1rem;">The Problem</h3>
+          <p style="font-size: 1.1rem; line-height: 1.7; margin-bottom: 1.5rem;">
+            <strong>12-16 years of education</strong> are not enough to secure even a <strong>₹16,000/month job</strong>. 
+            Traditional academics focus only on moving students to the next level, not preparing them for careers.
+          </p>
+          <ul style="list-style: none; space-y: 0.5rem;">
+            <li style="padding: 0.5rem 0; padding-left: 1.5rem; position: relative;">
+              <i class="fas fa-times" style="position: absolute; left: 0; color: #e53e3e;"></i>
+              Educated students struggling with unemployment
+            </li>
+            <li style="padding: 0.5rem 0; padding-left: 1.5rem; position: relative;">
+              <i class="fas fa-times" style="position: absolute; left: 0; color: #e53e3e;"></i>
+              Lack of practical skills and career guidance
+            </li>
+            <li style="padding: 0.5rem 0; padding-left: 1.5rem; position: relative;">
+              <i class="fas fa-times" style="position: absolute; left: 0; color: #e53e3e;"></i>
+              No focus on employability during education
+            </li>
+          </ul>
+          <div class="card-stats">
+            <div class="stat">
+              <div class="stat-number">70%</div>
+              <div class="stat-label">Graduates Unemployed</div>
+            </div>
+            <div class="stat">
+              <div class="stat-number">₹16K</div>
+              <div class="stat-label">Avg Starting Salary</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="solution-card scroll-fade">
+          <div class="card-icon">
+            <i class="fas fa-lightbulb"></i>
+          </div>
+          <h3 class="heading-tertiary" style="color: #38a169; margin-bottom: 1rem;">Our Solution</h3>
+          <p style="font-size: 1.1rem; line-height: 1.7; margin-bottom: 1.5rem;">
+            <strong>GuideAspire bridges this gap</strong> by providing comprehensive guidance on skills, 
+            career selection, and practical knowledge from Class 1 to Graduation.
+          </p>
+          <ul style="list-style: none;">
+            <li style="padding: 0.5rem 0; padding-left: 1.5rem; position: relative;">
+              <i class="fas fa-check" style="position: absolute; left: 0; color: #38a169;"></i>
+              Holistic skill development and career planning
+            </li>
+            <li style="padding: 0.5rem 0; padding-left: 1.5rem; position: relative;">
+              <i class="fas fa-check" style="position: absolute; left: 0; color: #38a169;"></i>
+              Practical learning and real-world preparation
+            </li>
+            <li style="padding: 0.5rem 0; padding-left: 1.5rem; position: relative;">
+              <i class="fas fa-check" style="position: absolute; left: 0; color: #38a169;"></i>
+              Job-ready and life-ready graduates
+            </li>
+          </ul>
+          <div class="card-stats">
+            <div class="stat">
+              <div class="stat-number">90%</div>
+              <div class="stat-label">Job Placement Rate</div>
+            </div>
+            <div class="stat">
+              <div class="stat-number">3x</div>
+              <div class="stat-label">Better Salaries</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills Development Section -->
+  <section class="skills-section">
+    <div class="section-container">
+      <div class="section-header scroll-fade">
+        <span class="section-badge" style="background: rgba(255, 255, 255, 0.2);">Class-wise Development</span>
+        <h2 class="heading-secondary" style="color: var(--white);">
+          Comprehensive Skills Development Journey
+        </h2>
+        <p class="text-large" style="opacity: 0.9; margin-top: 1rem;">
+          Tailored skill development programs for every educational level
+        </p>
+      </div>
+
+      <div class="skills-grid">
+        <div class="skill-card scroll-fade animate-float">
+          <div class="skill-level">Class 1-5</div>
+          <h3 class="heading-tertiary" style="margin-bottom: 1.5rem;">Foundation Building</h3>
+          <ul class="skill-list">
+            <li>Analytical and Logical Skills</li>
+            <li>Communication Skills</li>
+            <li>Creative Thinking</li>
+            <li>Technology Skills</li>
+            <li>Life Skills</li>
+          </ul>
+        </div>
+
+        <div class="skill-card scroll-fade animate-float" style="animation-delay: 0.2s;">
+          <div class="skill-level">Class 6-10</div>
+          <h3 class="heading-tertiary" style="margin-bottom: 1.5rem;">Skill Enhancement</h3>
+          <ul class="skill-list">
+            <li>Aptitude skills from basics to advance</li>
+            <li>General knowledge for all jobs</li>
+            <li>Goal setting and job-oriented practice</li>
+            <li>Basic finance guidance</li>
+            <li>Academic and skill improvement guidance</li>
+            <li>Branch selection after 10th</li>
+          </ul>
+        </div>
+
+        <div class="skill-card scroll-fade animate-float" style="animation-delay: 0.4s; background: linear-gradient(135deg, rgba(255, 107, 107, 0.2), rgba(255, 165, 0, 0.2));">
+          <div class="skill-level" style="background: linear-gradient(135deg, #ff6b6b, #ffa500);">Summer Special</div>
+          <h3 class="heading-tertiary" style="margin-bottom: 1.5rem;">Intensive Workshops</h3>
+          <ul class="skill-list">
+            <li>Practical sessions for goal-related jobs</li>
+            <li>Final preparation for intermediate branch selection</li>
+            <li>Perfect goal-setting workshops</li>
+          </ul>
+        </div>
+
+        <div class="skill-card scroll-fade animate-float" style="animation-delay: 0.6s;">
+          <div class="skill-level">Class 11-12</div>
+          <h3 class="heading-tertiary" style="margin-bottom: 1.5rem;">Career Preparation</h3>
+          <ul class="skill-list">
+            <li>Final graduation branch selection guidance</li>
+            <li>Preparation for private and government jobs</li>
+            <li>Basics related to the selected goal</li>
+          </ul>
+        </div>
+
+        <div class="skill-card scroll-fade animate-float" style="animation-delay: 0.8s;">
+          <div class="skill-level">Graduation</div>
+          <h3 class="heading-tertiary" style="margin-bottom: 1.5rem;">Career Launch</h3>
+          <ul class="skill-list">
+            <li>Job-specific skill development</li>
+            <li>Interview preparation</li>
+            <li>Job application guidance</li>
+            <li>Job referencing and networking</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features-section">
+    <div class="section-container">
+      <div class="section-header scroll-fade">
+        <span class="section-badge">Our Features</span>
+        <h2 class="heading-secondary">Why Choose GuideAspire?</h2>
+        <p class="text-large" style="color: var(--text-secondary); margin-top: 1rem;">
+          Comprehensive learning ecosystem designed for your success
+        </p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card scroll-fade">
+          <div class="feature-icon">
+            <i class="fas fa-video"></i>
+          </div>
+          <h3 class="heading-tertiary" style="margin-bottom: 1rem;">Live Sessions</h3>
+          <p>Interactive sessions with industry experts and experienced mentors for real-time learning.</p>
+        </div>
+
+        <div class="feature-card scroll-fade">
+          <div class="feature-icon">
+            <i class="fas fa-project-diagram"></i>
+          </div>
+          <h3 class="heading-tertiary" style="margin-bottom: 1rem;">Hands-on Projects</h3>
+          <p>Real-world projects and practical experience to build your portfolio and skills.</p>
+        </div>
+
+        <div class="feature-card scroll-fade">
+          <div class="feature-icon">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <h3 class="heading-tertiary" style="margin-bottom: 1rem;">Skill Assessments</h3>
+          <p>Regular evaluations and feedback to track your progress and identify improvement areas.</p>
+        </div>
+
+        <div class="feature-card scroll-fade">
+          <div class="feature-icon">
+            <i class="fas fa-users"></i>
+          </div>
+          <h3 class="heading-tertiary" style="margin-bottom: 1rem;">Community Support</h3>
+          <p>Connect with peers, mentors, and industry professionals in our vibrant learning community.</p>
+        </div>
+
+        <div class="feature-card scroll-fade">
+          <div class="feature-icon">
+            <i class="fas fa-briefcase"></i>
+          </div>
+          <h3 class="heading-tertiary" style="margin-bottom: 1rem;">Career Guidance</h3>
+          <p>Personalized career counseling and job placement assistance for guaranteed success.</p>
+        </div>
+
+        <div class="feature-card scroll-fade">
+          <div class="feature-icon">
+            <i class="fas fa-certificate"></i>
+          </div>
+          <h3 class="heading-tertiary" style="margin-bottom: 1rem;">Certifications</h3>
+          <p>Industry-recognized certifications that add value to your resume and career prospects.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WhatsApp Groups Section -->
+  <section class="whatsapp-section">
+    <div class="section-container">
+      <div class="section-header scroll-fade">
+        <span class="section-badge" style="background: rgba(255, 255, 255, 0.2);">Stay Connected</span>
+        <h2 class="heading-secondary">Join WhatsApp Groups for Instant Support</h2>
+        <p class="text-large" style="opacity: 0.9; margin-top: 1rem;">
+          Connect with peers and get your doubts resolved instantly!
+        </p>
+      </div>
+
+      <div class="whatsapp-grid">
+        <div class="whatsapp-card scroll-fade">
+          <div class="card-icon" style="background: rgba(255, 255, 255, 0.2); color: var(--white); margin: 0 auto 1rem;">
+            <i class="fas fa-users"></i>
+          </div>
+          <h3 class="heading-tertiary" style="margin-bottom: 1rem;">Class 1-5 Group</h3>
+          <p style="opacity: 0.9; margin-bottom: 1.5rem;">
+            Join our foundation group for young learners and their parents.
+          </p>
+          <a href="https://wa.me/yourlink" class="whatsapp-btn" target="_blank">
+            <i class="fab fa-whatsapp"></i>
+            Join Group
+          </a>
+        </div>
+
+        <div class="whatsapp-card scroll-fade">
+          <div class="card-icon" style="background: rgba(255, 255, 255, 0.2); color: var(--white); margin: 0 auto 1rem;">
+            <i class="fas fa-users"></i>
+          </div>
+          <h3 class="heading-tertiary" style="margin-bottom: 1rem;">Class 6-10 Group</h3>
+          <p style="opacity: 0.9; margin-bottom: 1.5rem;">
+            Connect with middle school students and discuss career planning.
+          </p>
+          <a href="https://wa.me/yourlink" class="whatsapp-btn" target="_blank">
+            <i class="fab fa-whatsapp"></i>
+            Join Group
+          </a>
+        </div>
+
+        <div class="whatsapp-card scroll-fade">
+          <div class="card-icon" style="background: linear-gradient(135deg, #ff6b6b, #ffa500); color: var(--white); margin: 0 auto 1rem;">
+            <i class="fas fa-sun"></i>
+          </div>
+          <h3 class="heading-tertiary" style="margin-bottom: 1rem;">Summer Special</h3>
+          <p style="opacity: 0.9; margin-bottom: 1.5rem;">
+            Exclusive group for summer workshop participants and goal-setters.
+          </p>
+          <a href="https://wa.me/yourlink" class="whatsapp-btn" target="_blank">
+            <i class="fab fa-whatsapp"></i>
+            Join Group
+          </a>
+        </div>
+
+        <div class="whatsapp-card scroll-fade">
+          <div class="card-icon" style="background: rgba(255, 255, 255, 0.2); color: var(--white); margin: 0 auto 1rem;">
+            <i class="fas fa-users"></i>
+          </div>
+          <h3 class="heading-tertiary" style="margin-bottom: 1rem;">Class 11-12 Group</h3>
+          <p style="opacity: 0.9; margin-bottom: 1.5rem;">
+            High school students preparing for their future careers.
+          </p>
+          <a href="https://wa.me/yourlink" class="whatsapp-btn" target="_blank">
+            <i class="fab fa-whatsapp"></i>
+            Join Group
+          </a>
+        </div>
+
+        <div class="whatsapp-card scroll-fade">
+          <div class="card-icon" style="background: rgba(255, 255, 255, 0.2); color: var(--white); margin: 0 auto 1rem;">
+            <i class="fas fa-graduation-cap"></i>
+          </div>
+          <h3 class="heading-tertiary" style="margin-bottom: 1rem;">Graduation Group</h3>
+          <p style="opacity: 0.9; margin-bottom: 1.5rem;">
+            College students and recent graduates seeking job opportunities.
+          </p>
+          <a href="https://wa.me/yourlink" class="whatsapp-btn" target="_blank">
+            <i class="fab fa-whatsapp"></i>
+            Join Group
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="testimonials-section">
+    <div class="section-container">
+      <div class="section-header scroll-fade">
+        <span class="section-badge">Success Stories</span>
+        <h2 class="heading-secondary">What Our Students Say</h2>
+        <p class="text-large" style="color: var(--text-secondary); margin-top: 1rem;">
+          Real testimonials from students who transformed their careers with GuideAspire
+        </p>
+      </div>
+
+      <div class="testimonials-grid">
+        <div class="testimonial-card scroll-fade">
+          <p style="font-size: 1.1rem; line-height: 1.7; margin-bottom: 2rem; font-style: italic;">
+            "GuideAspire completely transformed my learning journey! The practical approach and career guidance 
+            helped me land my dream job within 3 months of graduation. The mentors are incredible!"
+          </p>
+          <div style="display: flex; align-items: center; gap: 1rem;">
+            <div style="width: 3rem; height: 3rem; background: var(--primary-gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
+              P
+            </div>
+            <div>
+              <div style="font-weight: 600; margin-bottom: 0.25rem;">Priya Sharma</div>
+              <div style="color: var(--text-light); font-size: 0.9rem;">Software Engineer</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card scroll-fade">
+          <p style="font-size: 1.1rem; line-height: 1.7; margin-bottom: 2rem; font-style: italic;">
+            "As a parent, I'm amazed by the holistic development approach. My child not only improved academically 
+            but also gained confidence and practical life skills. Best investment for our child's future!"
+          </p>
+          <div style="display: flex; align-items: center; gap: 1rem;">
+            <div style="width: 3rem; height: 3rem; background: var(--success-gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
+              R
+            </div>
+            <div>
+              <div style="font-weight: 600; margin-bottom: 0.25rem;">Rajesh Kumar</div>
+              <div style="color: var(--text-light); font-size: 0.9rem;">Parent</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card scroll-fade">
+          <p style="font-size: 1.1rem; line-height: 1.7; margin-bottom: 2rem; font-style: italic;">
+            "The career counseling and skill development programs are outstanding. I switched from arts to tech 
+            with their guidance and now work at a top IT company. Grateful for the life-changing experience!"
+          </p>
+          <div style="display: flex; align-items: center; gap: 1rem;">
+            <div style="width: 3rem; height: 3rem; background: var(--secondary-gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
+              A
+            </div>
+            <div>
+              <div style="font-weight: 600; margin-bottom: 0.25rem;">Arjun Patel</div>
+              <div style="color: var(--text-light); font-size: 0.9rem;">Data Analyst</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div style="margin-bottom: 2rem;">
+        <div class="logo" style="font-size: 2rem; margin-bottom: 1rem;">GuideAspire</div>
+        <p style="opacity: 0.8; max-width: 600px; margin: 0 auto;">
+          Bridging the gap between academics and employability through comprehensive guidance, 
+          practical skills, and career readiness programs.
+        </p>
+      </div>
+      
+      <div style="border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 2rem;">
+        <p style="margin: 0; opacity: 0.7;">
+          &copy; 2024 GuideAspire. All rights reserved. | Transforming Education & Careers
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Loading screen
+    window.addEventListener('load', () => {
+      const loading = document.getElementById('loading');
+      loading.classList.add('hidden');
+      setTimeout(() => {
+        loading.style.display = 'none';
+      }, 500);
+    });
+
+    // Navbar scroll effect
+    window.addEventListener('scroll', () => {
+      const navbar = document.getElementById('navbar');
+      if (window.scrollY > 100) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // Scroll animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    // Observe all scroll-fade elements
+    document.querySelectorAll('.scroll-fade').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Poll functionality (keeping your original functionality)
+    let currentVote = null;
+
+    function fetchPollCounts() {
+      // Simulated poll counts - replace with your actual API
+      document.getElementById('like-count') && (document.getElementById('like-count').textContent = '127');
+      document.getElementById('dislike-count') && (document.getElementById('dislike-count').textContent = '8');
+    }
+
+    function handlePoll(vote) {
+      currentVote = vote;
+      // Show success message
+      alert('Thank you for your feedback!');
+      // You can integrate with your backend here
+    }
+
+    // Initialize poll counts
+    document.addEventListener('DOMContentLoaded', fetchPollCounts);
+
+    // Add loading states to buttons
+    document.querySelectorAll('.btn').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        // Add loading state
+        const originalContent = this.innerHTML;
+        this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+        this.style.pointerEvents = 'none';
+        
+        // Restore after 1 second (for demo purposes)
+        setTimeout(() => {
+          this.innerHTML = originalContent;
+          this.style.pointerEvents = 'auto';
+        }, 1000);
+      });
+    });
+
+    // Parallax effect for hero section
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      const hero = document.querySelector('.hero');
+      if (hero) {
+        hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+      }
+    });
+
+    // Add click effects to cards
+    document.querySelectorAll('.skill-card, .feature-card, .whatsapp-card, .testimonial-card').forEach(card => {
+      card.addEventListener('click', function() {
+        this.style.transform = 'scale(0.98)';
+        setTimeout(() => {
+          this.style.transform = '';
+        }, 150);
+      });
+    });
+  </script>
+</body>
+</html>

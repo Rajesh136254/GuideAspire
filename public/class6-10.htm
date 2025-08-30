@@ -1,483 +1,1723 @@
-
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GuideAspire</title>
-    <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="Homepage1.png" type="image/png" />
-    <script src="https://kit.fontawesome.com/19e8ada8de.js" crossorigin="anonymous"></script>
-    <script defer src="script.js"></script>
+    <script
+      src="https://kit.fontawesome.com/19e8ada8de.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* General Styles */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    background: #f4f4f4;
-    overflow: hidden; /* Prevents entire page scrolling */
-}
-
-.container {
-    display: flex;
-    width: 100%;
-    height: 100vh; /* Ensures the layout stays within the viewport */
-}
-
-/* Sidebar Navigation */
-.sidebar {
-    width: 200px; /* Increased width */
-    background: linear-gradient(to bottom, #6a11cb, #2575fc);
-    padding: 20px;
-    height: 100vh; /* Fixed full height */
-    color: white;
-    box-shadow: 2px 0px 10px rgba(0,0,0,0.2);
-    position: fixed; /* Keeps sidebar fixed */
-    top: 0;
-    left: 0;
-    overflow-y: auto;
-}
-.sidebar ul {
-    list-style: none;
-    padding: 0;
-}
-.sidebar li {
-    padding: 15px;
-    margin: 10px 0;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 5px;
-    cursor: pointer;
-    text-align: center;
-    transition: 0.3s;
-}
-.sidebar li:hover {
-    background: rgba(255, 255, 255, 0.4);
-}
-
-/* General reset for list */
-ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-}
-
-/* Base style for list items */
-.class-item {
-    padding: 15px 20px;
-    margin: 10px 0;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    transition: all 0.3s ease;
-    color: #333;
-    font-weight: 500;
-    position: relative;
-    overflow: hidden;
-}
-
-/* Hover effect */
-.class-item:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-    background: linear-gradient(145deg, #f0f0f0, #e0e0e0);
-}
-
-/* Selected item style */
-.class-item.selected {
-    background: linear-gradient(145deg, #007bff, #005bb5);
-    color: white;
-    box-shadow: 0 6px 12px rgba(0, 123, 255, 0.3);
-}
-
-/* Add a subtle animation for selection */
-.class-item.selected::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.1);
-    animation: ripple 0.6s ease-out;
-}
-
-@keyframes ripple {
-    from {
-        transform: scale(0);
-        opacity: 1;
-    }
-    to {
-        transform: scale(1);
-        opacity: 0;
-    }
-}
-
-/* Main Content */
-.main-content {
-    flex: 1;
-    padding: 20px;
-    margin-left: 250px; /* Adjusted to match the increased sidebar width */
-    overflow-y: auto;
-}
-
-.top-bar {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 15px;
-}
-
-#language-select {
-    padding: 10px;
-    font-size: 16px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-}
-
-/* Days Scroll */
-.days-container {
-    max-width: 100%;
-    overflow-x: auto; /* Enables scrolling */
-    white-space: nowrap;
-    background: white;
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 0px 2px 10px rgba(0,0,0,0.1);
-    position: relative;
-}
-#days-scroll {
-    display: flex;
-    overflow-x: auto; /* Enables horizontal scrolling */
-    overflow-y: hidden;
-    white-space: nowrap;
-    max-width: 100%;
-    padding: 10px;
-    background-color: #f5f5f5;
-    border-radius: 10px;
-}
-
-.day-item {
-    padding: 10px 20px;
-    margin: 5px;
-    background-color: #007bff;
-    color: white;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.day-item:hover {
-    background-color: #0056b3;
-}
-
-.locked {
-    background-color: #ccc !important;
-    cursor: not-allowed;
-    opacity: 0.5;
-    pointer-events: none;
-}
-
-.completed {
-    background-color: #28a745 !important;
-}
-
-.unlocked {
-    background-color: #ffc107 !important;
-}
-
-
-
-/* Video Section */
-#topic-name {
-    text-align: center;
-    font-size: 24px;
-    margin-bottom: 10px;
-}
-
-iframe {
-    width: 100%;
-    height: 550px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
-    margin-top: 10px; /* Creates space between the scrolling days and the video frame */
-}
-
-/* Links & Button */
-.links-section {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
-}
-.links-section a, .links-section button {
-    padding: 10px 15px;
-    background: #2575fc;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.3s;
-    text-decoration: none;
-}
-.links-section button:hover, .links-section a:hover {
-    background: #6a11cb;
-}
-
-/* Sidebar Styling */
-.sidenav {
-            width: 200px;
-            background: linear-gradient(145deg, #2c3e50, #34495e);
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            box-shadow: 2px 0 15px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Back Link Styling */
-        .backsection {
-            display: flex;
-            align-items: center;
-            padding: 12px 15px;
-            background-color: rgba(255, 255, 255, 0.1);
-            color: #ecf0f1;
-            text-decoration: none;
-            border-radius: 8px;
-            transition: all 0.4s ease;
-            font-size: 14px;
-            margin-bottom: 20px;
-            width: 100%;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .backsection i {
-            margin-right: 10px;
-            font-size: 12px;
-            transition: transform 0.4s ease;
-        }
-
-        .backsection:hover {
-            background-color: rgba(26, 188, 156, 0.8);
-            transform: translateX(10px);
-            box-shadow: 0 4px 15px rgba(26, 188, 156, 0.3);
-        }
-
-        .backsection:hover i {
-            transform: translateX(-5px);
-        }
-
-        /* Guide Head Styling */
-        .GuideHead {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: #ecf0f1;
-            text-align: left;
-            margin-top: 10px;
-            padding: 10px 0;
-            position: relative;
-            width: 100%;
-            overflow: hidden;
-        }
-
-        .GuideHead::before {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, #1abc9c, #3498db);
-            bottom: 0;
-            left: -100%;
-            transition: left 0.5s ease;
-        }
-
-        .GuideHead:hover::before {
-            left: 0;
-        }
-
-        .GuideHead span {
-            display: inline-block;
-            transition: transform 0.4s ease;
-        }
-
-        .GuideHead:hover span {
-            transform: translateX(10px);
-        }
-
-    </style>
-</head>
-<body>
-    <div class="container">
-        <!-- Left Navigation -->
-        <nav class="sidebar">
-            <a href="CourseSelect.htm" class="backsection"><i class="fa-solid fa-arrow-left"></i>  Go to LevelSelection</a>
-             <h1 class="GuideHead">GuideAspire</h1>
-            <ul>
-                <li class="class-item" data-class="6">Class 6</li>
-                <li class="class-item" data-class="7">Class 7</li>
-                <li class="class-item" data-class="8">Class 8</li>
-                <li class="class-item" data-class="9">Class 9</li>
-                <li class="class-item" data-class="10">Class 10</li>
-                
-            </ul>
-        </nav>
+      /* CSS Variables for consistent theming */
+      :root {
+        --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        --warning-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        --danger-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
         
-        <!-- Main Content -->
-        <div class="main-content">
-            <!-- Top Section: Language Selection -->
-            <div class="top-bar">
-                <select id="language-select">
-                    <option value="english">English</option>
-                    <option value="telugu">Telugu</option>
-                </select>
-            </div>
-            
-            <!-- Days Navigation -->
-            <div class="days-container">
-                <div class="days-scroll" id="days-scroll">
-                    <!-- Days will be generated dynamically -->
+        --bg-primary: #0f1419;
+        --bg-secondary: #1a202c;
+        --bg-tertiary: #2d3748;
+        --bg-card: rgba(255, 255, 255, 0.95);
+        --bg-glass: rgba(255, 255, 255, 0.1);
+        
+        --text-primary: #1a202c;
+        --text-secondary: #4a5568;
+        --text-muted: #718096;
+        --text-light: #ffffff;
+        
+        --border-color: rgba(255, 255, 255, 0.1);
+        --border-radius: 16px;
+        --border-radius-lg: 24px;
+        --border-radius-sm: 8px;
+        
+        --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+        --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+        --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
+        --shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.15);
+        
+        --spacing-xs: 0.25rem;
+        --spacing-sm: 0.5rem;
+        --spacing-md: 1rem;
+        --spacing-lg: 1.5rem;
+        --spacing-xl: 2rem;
+        --spacing-2xl: 3rem;
+        
+        --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      /* Global Reset and Base Styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        line-height: 1.6;
+        overflow-x: hidden;
+        min-height: 100vh;
+      }
+
+      /* Scrollbar Styling */
+      ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: var(--bg-secondary);
+        border-radius: 3px;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: var(--primary-gradient);
+        border-radius: 3px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--secondary-gradient);
+      }
+
+      /* Container Layout */
+      .container {
+        display: flex;
+        min-height: 100vh;
+        position: relative;
+      }
+
+      /* Sidebar Styles */
+      .sidebar {
+        width: 280px;
+        background: var(--primary-gradient);
+        backdrop-filter: blur(20px);
+        border-right: 1px solid var(--border-color);
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        z-index: 1000;
+        display: flex;
+        flex-direction: column;
+        transition: var(--transition-smooth);
+      }
+
+      .sidebar-header {
+        padding: var(--spacing-xl);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .backsection {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-sm);
+        padding: var(--spacing-md) var(--spacing-lg);
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--text-light);
+        text-decoration: none;
+        border-radius: var(--border-radius-sm);
+        transition: var(--transition-smooth);
+        font-weight: 500;
+        font-size: 0.875rem;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        margin-bottom: var(--spacing-lg);
+      }
+
+      .backsection:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateX(4px);
+      }
+
+      .backsection i {
+        font-size: 0.875rem;
+        transition: var(--transition-fast);
+      }
+
+      .backsection:hover i {
+        transform: translateX(-2px);
+      }
+
+      .GuideHead {
+        font-family: 'Poppins', sans-serif;
+        font-size: 1.75rem;
+        font-weight: 800;
+        color: var(--text-light);
+        text-align: center;
+        margin-top: var(--spacing-md);
+        letter-spacing: -0.02em;
+        position: relative;
+      }
+
+      .GuideHead::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 3px;
+        background: var(--warning-gradient);
+        border-radius: 2px;
+      }
+
+      .sidebar-content {
+        flex: 1;
+        padding: var(--spacing-xl);
+        overflow-y: auto;
+      }
+
+      .sidebar ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-sm);
+      }
+
+      .class-item {
+        padding: var(--spacing-lg) var(--spacing-xl);
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: var(--border-radius);
+        color: var(--text-light);
+        cursor: pointer;
+        transition: var(--transition-smooth);
+        font-weight: 600;
+        font-size: 0.95rem;
+        text-align: center;
+        backdrop-filter: blur(10px);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .class-item::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: var(--success-gradient);
+        transition: var(--transition-smooth);
+        z-index: -1;
+      }
+
+      .class-item:hover::before,
+      .class-item.selected::before {
+        left: 0;
+      }
+
+      .class-item:hover {
+        transform: translateX(8px);
+        box-shadow: var(--shadow-lg);
+        border-color: rgba(255, 255, 255, 0.3);
+      }
+
+      .class-item.selected {
+        background: var(--success-gradient);
+        border-color: rgba(255, 255, 255, 0.4);
+        box-shadow: var(--shadow-lg);
+        transform: translateX(8px);
+      }
+
+      /* Main Content */
+      .main-content {
+        flex: 1;
+        margin-left: 280px;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        min-height: 100vh;
+        position: relative;
+        overflow-x: hidden;
+      }
+
+      .content-wrapper {
+        padding: var(--spacing-xl);
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      /* Header Section */
+      .header-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: var(--spacing-2xl);
+        gap: var(--spacing-lg);
+        flex-wrap: wrap;
+      }
+
+      .profile-section {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-md);
+        cursor: pointer;
+      }
+
+      .profile-display {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-md);
+        padding: var(--spacing-md) var(--spacing-lg);
+        background: var(--bg-card);
+        border-radius: var(--border-radius-lg);
+        box-shadow: var(--shadow-md);
+        transition: var(--transition-smooth);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .profile-display:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .profile-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid transparent;
+        background: var(--primary-gradient);
+        padding: 2px;
+        transition: var(--transition-smooth);
+      }
+
+      .profile-icon:hover {
+        transform: scale(1.05);
+      }
+
+      .profile-info {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-xs);
+      }
+
+      .profile-name {
+        font-weight: 600;
+        color: var(--text-primary);
+        font-size: 1rem;
+      }
+
+      .profile-email {
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+      }
+
+      #profileDropdownToggle {
+        font-size: 0.875rem;
+        color: var(--text-secondary);
+        transition: var(--transition-fast);
+        margin-left: var(--spacing-sm);
+      }
+
+      .profile-dropdown.active + #profileDropdownToggle {
+        transform: rotate(180deg);
+      }
+
+      .top-bar {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-md);
+      }
+
+      #language-select {
+        padding: var(--spacing-md) var(--spacing-lg);
+        background: var(--bg-card);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: var(--border-radius);
+        font-size: 0.95rem;
+        font-weight: 500;
+        color: var(--text-primary);
+        cursor: pointer;
+        transition: var(--transition-smooth);
+        box-shadow: var(--shadow-sm);
+        backdrop-filter: blur(10px);
+        min-width: 140px;
+      }
+
+      #language-select:hover,
+      #language-select:focus {
+        border-color: rgba(102, 126, 234, 0.5);
+        box-shadow: var(--shadow-md);
+        outline: none;
+      }
+
+      /* Profile Dropdown */
+      .profile-dropdown {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        margin-top: var(--spacing-sm);
+        background: var(--bg-card);
+        border-radius: var(--border-radius);
+        box-shadow: var(--shadow-xl);
+        z-index: 1000;
+        padding: var(--spacing-lg);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(20px);
+        animation: slideDown 0.3s ease-out;
+      }
+
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .profile-dropdown.active {
+        display: block;
+      }
+
+      .progress-summary {
+        padding: var(--spacing-lg);
+        background: var(--primary-gradient);
+        color: var(--text-light);
+        border-radius: var(--border-radius-sm);
+        margin-bottom: var(--spacing-lg);
+        font-size: 0.875rem;
+        font-weight: 500;
+        line-height: 1.5;
+      }
+
+      .profile-dropdown a,
+      .profile-dropdown button {
+        display: block;
+        width: 100%;
+        padding: var(--spacing-md) var(--spacing-lg);
+        color: var(--text-primary);
+        text-decoration: none;
+        border: none;
+        background: none;
+        text-align: left;
+        cursor: pointer;
+        font-size: 0.95rem;
+        font-weight: 500;
+        border-radius: var(--border-radius-sm);
+        transition: var(--transition-fast);
+        margin-bottom: var(--spacing-xs);
+      }
+
+      .profile-dropdown a:hover,
+      .profile-dropdown button:hover {
+        background: var(--primary-gradient);
+        color: var(--text-light);
+        transform: translateX(4px);
+      }
+
+      /* Days Container */
+      .days-container {
+        background: var(--bg-card);
+        border-radius: var(--border-radius-lg);
+        box-shadow: var(--shadow-lg);
+        padding: var(--spacing-2xl);
+        margin-bottom: var(--spacing-2xl);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .days-header {
+        margin-bottom: var(--spacing-xl);
+        text-align: center;
+      }
+
+      .section-header {
+        font-family: 'Poppins', sans-serif;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: var(--spacing-sm);
+        background: var(--primary-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .sub-section-header {
+        font-size: 1.125rem;
+        font-weight: 600;
+        color: var(--text-secondary);
+        padding: var(--spacing-md) var(--spacing-lg);
+        background: var(--warning-gradient);
+        border-radius: var(--border-radius);
+        color: var(--text-light);
+        box-shadow: var(--shadow-sm);
+      }
+
+      .nav-buttons-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: var(--spacing-xl);
+      }
+
+      .nav-button {
+        padding: var(--spacing-md) var(--spacing-xl);
+        background: var(--primary-gradient);
+        color: var(--text-light);
+        border: none;
+        border-radius: var(--border-radius);
+        cursor: pointer;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: var(--transition-smooth);
+        box-shadow: var(--shadow-md);
+        min-width: 120px;
+      }
+
+      .nav-button:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+        background: var(--secondary-gradient);
+      }
+
+      .nav-button[disabled] {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+        pointer-events: none;
+      }
+
+      .days-scroll {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: var(--spacing-lg);
+        padding: var(--spacing-lg);
+        background: rgba(255, 255, 255, 0.5);
+        border-radius: var(--border-radius);
+        backdrop-filter: blur(10px);
+      }
+
+      .day-item {
+        padding: var(--spacing-lg);
+        background: var(--primary-gradient);
+        color: var(--text-light);
+        border-radius: var(--border-radius);
+        cursor: pointer;
+        transition: var(--transition-smooth);
+        font-weight: 600;
+        font-size: 0.95rem;
+        text-align: center;
+        box-shadow: var(--shadow-md);
+        border: 2px solid transparent;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .day-item::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.1);
+        transition: var(--transition-fast);
+      }
+
+      .day-item:hover::before {
+        left: 0;
+      }
+
+      .day-item:hover:not(.locked) {
+        transform: translateY(-4px) scale(1.02);
+        box-shadow: var(--shadow-xl);
+      }
+
+      .day-item.completed {
+        background: var(--success-gradient);
+        border-color: rgba(255, 255, 255, 0.3);
+        position: relative;
+      }
+
+      .day-item.completed::after {
+        content: '✓';
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        font-size: 1rem;
+        background: rgba(255, 255, 255, 0.2);
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: completePulse 2s infinite;
+      }
+
+      @keyframes completePulse {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.1); opacity: 0.8; }
+      }
+
+      .day-item.unlocked {
+        background: var(--warning-gradient);
+        border-color: rgba(255, 255, 255, 0.3);
+      }
+
+      .day-item.locked {
+        background: linear-gradient(135deg, #a0a0a0 0%, #757575 100%);
+        cursor: not-allowed;
+        opacity: 0.7;
+      }
+
+      .day-item.locked:hover {
+        transform: none;
+        box-shadow: var(--shadow-md);
+      }
+
+      /* Video Section */
+      .video-section {
+        background: var(--bg-card);
+        border-radius: var(--border-radius-lg);
+        padding: var(--spacing-2xl);
+        box-shadow: var(--shadow-lg);
+        margin-bottom: var(--spacing-2xl);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      #topic-name {
+        font-family: 'Poppins', sans-serif;
+        font-size: 1.75rem;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: var(--spacing-xl);
+        background: var(--primary-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .video-container {
+        position: relative;
+        border-radius: var(--border-radius-lg);
+        overflow: hidden;
+        box-shadow: var(--shadow-xl);
+      }
+
+      .video-container iframe {
+        width: 100%;
+        height: 500px;
+        border: none;
+        border-radius: var(--border-radius-lg);
+      }
+
+      .overlay-top,
+      .overlay-bottom {
+        position: absolute;
+        left: 0;
+        width: 100%;
+        background: rgba(255, 255, 255, 0);
+        pointer-events: auto;
+        z-index: 2;
+        transition: var(--transition-smooth);
+      }
+
+      .overlay-top {
+        top: 0;
+        height: 100px;
+      }
+
+      .overlay-bottom {
+        bottom: 50px;
+        height: 130px;
+      }
+
+      .video-container.fullscreen .overlay-top {
+        height: 22vh;
+      }
+
+      .video-container.fullscreen .overlay-bottom {
+        bottom: 12vh;
+        height: 28vh;
+      }
+
+      /* Links Section */
+      .links-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: var(--spacing-lg);
+        margin-top: var(--spacing-2xl);
+      }
+
+      .links-section a,
+      .links-section button {
+        flex: 1;
+        min-width: 200px;
+        padding: var(--spacing-lg) var(--spacing-xl);
+        background: var(--primary-gradient);
+        color: var(--text-light);
+        border: none;
+        border-radius: var(--border-radius);
+        cursor: pointer;
+        transition: var(--transition-smooth);
+        text-decoration: none;
+        text-align: center;
+        font-weight: 600;
+        font-size: 1rem;
+        box-shadow: var(--shadow-md);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .links-section a::before,
+      .links-section button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: var(--secondary-gradient);
+        transition: var(--transition-smooth);
+        z-index: -1;
+      }
+
+      .links-section a:hover::before,
+      .links-section button:hover::before {
+        left: 0;
+      }
+
+      .links-section a:hover,
+      .links-section button:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-lg);
+      }
+
+      #complete-btn {
+        background: var(--success-gradient);
+      }
+
+      #complete-btn::before {
+        background: var(--warning-gradient);
+      }
+
+      /* Modal Styles */
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        z-index: 2000;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(10px);
+      }
+
+      .modal.active {
+        display: flex;
+      }
+
+      .modal-content {
+        background: var(--bg-card);
+        padding: var(--spacing-2xl);
+        border-radius: var(--border-radius-lg);
+        width: 100%;
+        max-width: 500px;
+        margin: var(--spacing-lg);
+        box-shadow: var(--shadow-xl);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        animation: modalSlide 0.3s ease-out;
+      }
+
+      @keyframes modalSlide {
+        from {
+          opacity: 0;
+          transform: translateY(-30px) scale(0.95);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      .modal-content h2 {
+        font-family: 'Poppins', sans-serif;
+        margin: 0 0 var(--spacing-xl);
+        color: var(--text-primary);
+        font-size: 1.5rem;
+        font-weight: 700;
+        text-align: center;
+        background: var(--primary-gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .modal-content label {
+        display: block;
+        margin: var(--spacing-lg) 0 var(--spacing-sm);
+        color: var(--text-secondary);
+        font-weight: 600;
+        font-size: 0.95rem;
+      }
+
+      .modal-content input {
+        width: 100%;
+        padding: var(--spacing-lg);
+        border: 2px solid rgba(102, 126, 234, 0.2);
+        border-radius: var(--border-radius);
+        margin-bottom: var(--spacing-lg);
+        font-size: 1rem;
+        color: var(--text-primary);
+        background: rgba(255, 255, 255, 0.8);
+        transition: var(--transition-fast);
+        backdrop-filter: blur(10px);
+      }
+
+      .modal-content input:focus {
+        border-color: rgba(102, 126, 234, 0.5);
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      }
+
+      .modal-content button[type="submit"] {
+        width: 100%;
+        margin-top: var(--spacing-lg);
+        padding: var(--spacing-lg);
+        background: var(--primary-gradient);
+        color: var(--text-light);
+        border: none;
+        border-radius: var(--border-radius);
+        cursor: pointer;
+        font-size: 1.1rem;
+        font-weight: 600;
+        transition: var(--transition-smooth);
+        box-shadow: var(--shadow-md);
+      }
+
+      .modal-content button[type="submit"]:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+        background: var(--secondary-gradient);
+      }
+
+      .close-btn {
+        position: absolute;
+        top: var(--spacing-lg);
+        right: var(--spacing-lg);
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: var(--text-secondary);
+        transition: var(--transition-fast);
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+      }
+
+      .close-btn:hover {
+        color: var(--text-primary);
+        background: rgba(0, 0, 0, 0.1);
+      }
+
+      /* File Input Styling */
+      #profilePictureInput {
+        display: none;
+      }
+
+      .profile-picture-label {
+        display: block;
+        padding: var(--spacing-md) var(--spacing-lg);
+        color: var(--text-primary);
+        background: rgba(102, 126, 234, 0.1);
+        border-radius: var(--border-radius-sm);
+        cursor: pointer;
+        text-align: center;
+        margin: var(--spacing-lg) 0;
+        transition: var(--transition-fast);
+        border: 2px dashed rgba(102, 126, 234, 0.3);
+      }
+
+      .profile-picture-label:hover {
+        background: rgba(102, 126, 234, 0.2);
+        border-color: rgba(102, 126, 234, 0.5);
+      }
+
+      /* Mobile Responsiveness */
+      @media (max-width: 1024px) {
+        .sidebar {
+          width: 250px;
+        }
+
+        .main-content {
+          margin-left: 250px;
+        }
+
+        .content-wrapper {
+          padding: var(--spacing-lg);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .sidebar {
+          width: 100%;
+          transform: translateX(-100%);
+          transition: transform 0.3s ease;
+        }
+
+        .sidebar.active {
+          transform: translateX(0);
+        }
+
+        .main-content {
+          margin-left: 0;
+        }
+
+        .header-section {
+          flex-direction: column;
+          align-items: stretch;
+          gap: var(--spacing-md);
+        }
+
+        .profile-section {
+          order: 2;
+        }
+
+        .top-bar {
+          order: 1;
+          justify-content: flex-end;
+        }
+
+        .days-scroll {
+          grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+          gap: var(--spacing-md);
+        }
+
+        .day-item {
+          padding: var(--spacing-md);
+          font-size: 0.875rem;
+        }
+
+        .video-container iframe {
+          height: 250px;
+        }
+
+        .links-section {
+          flex-direction: column;
+        }
+
+        .links-section a,
+        .links-section button {
+          min-width: unset;
+        }
+
+        .section-header {
+          font-size: 1.25rem;
+        }
+
+        .sub-section-header {
+          font-size: 1rem;
+        }
+
+        #topic-name {
+          font-size: 1.5rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .content-wrapper {
+          padding: var(--spacing-md);
+        }
+
+        .days-container,
+        .video-section {
+          padding: var(--spacing-lg);
+        }
+
+        .days-scroll {
+          grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+          gap: var(--spacing-sm);
+        }
+
+        .day-item {
+          padding: var(--spacing-sm);
+          font-size: 0.75rem;
+        }
+
+        .section-header {
+          font-size: 1.125rem;
+        }
+
+        .sub-section-header {
+          font-size: 0.875rem;
+          padding: var(--spacing-sm) var(--spacing-md);
+        }
+
+        #topic-name {
+          font-size: 1.25rem;
+        }
+
+        .video-container iframe {
+          height: 200px;
+        }
+
+        .modal-content {
+          margin: var(--spacing-sm);
+          padding: var(--spacing-lg);
+        }
+      }
+
+      /* Mobile Menu Toggle */
+      .mobile-menu-toggle {
+        display: none;
+        position: fixed;
+        top: var(--spacing-lg);
+        left: var(--spacing-lg);
+        z-index: 1001;
+        background: var(--primary-gradient);
+        color: var(--text-light);
+        border: none;
+        border-radius: 50%;
+        width: 48px;
+        height: 48px;
+        cursor: pointer;
+        box-shadow: var(--shadow-lg);
+        transition: var(--transition-smooth);
+      }
+
+      @media (max-width: 768px) {
+        .mobile-menu-toggle {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .mobile-menu-toggle:hover {
+          transform: scale(1.1);
+        }
+      }
+
+      /* Loading States */
+      .loading {
+        animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+      }
+
+      @keyframes pulse {
+        0%, 100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+      }
+
+      /* Focus States for Accessibility */
+      *:focus {
+        outline: 2px solid rgba(102, 126, 234, 0.5);
+        outline-offset: 2px;
+      }
+
+      button:focus,
+      select:focus,
+      input:focus,
+      a:focus {
+        outline: 2px solid rgba(102, 126, 234, 0.5);
+        outline-offset: 2px;
+      }
+
+      /* High contrast mode support */
+      @media (prefers-contrast: high) {
+        :root {
+          --bg-primary: #000000;
+          --bg-secondary: #1a1a1a;
+          --text-primary: #ffffff;
+          --border-color: #ffffff;
+        }
+      }
+
+      /* Reduced motion support */
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Mobile Menu Toggle -->
+    <button class="mobile-menu-toggle" id="mobileMenuToggle">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="container">
+      <!-- Left Navigation -->
+      <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+          <a href="CourseSelect.htm" class="backsection">
+            <i class="fa-solid fa-arrow-left"></i>
+            <span>Go to LevelSelection</span>
+          </a>
+          <h1 class="GuideHead">GuideAspire</h1>
+        </div>
+        <div class="sidebar-content">
+          <ul>
+            <li class="class-item" data-class="6">Class 6</li>
+            <li class="class-item" data-class="7">Class 7</li>
+            <li class="class-item" data-class="8">Class 8</li>
+            <li class="class-item" data-class="9">Class 9</li>
+            <li class="class-item" data-class="10">Class 10</li>
+          </ul>
+        </div>
+      </nav>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <div class="content-wrapper">
+          <!-- Header Section with Profile and Language Selection -->
+          <div class="header-section">
+            <!-- Profile Section -->
+            <div class="profile-section" id="profileSection">
+              <div class="profile-display" id="profileDisplay">
+                <img src="https://via.placeholder.com/40" alt="Profile" class="profile-icon" id="profileIcon">
+                <div class="profile-info">
+                  <span class="profile-name" id="userName">Loading...</span>
+                  <span class="profile-email" id="userEmailDisplay">Loading...</span>
                 </div>
+                <i class="fas fa-chevron-down" id="profileDropdownToggle"></i>
+              </div>
+
+              <div class="profile-dropdown" id="profileDropdown">
+                <div class="progress-summary" id="progressSummary">Progress: Loading...</div>
+                <button id="editProfileBtn">
+                  <i class="fas fa-user-edit"></i> Edit Profile
+                </button>
+                <button id="changePictureBtn">
+                  <i class="fas fa-camera"></i> Change Profile Picture
+                </button>
+                <input type="file" id="profilePictureInput" accept="image/*">
+                <button id="logoutBtn">
+                  <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+              </div>
             </div>
-            
-            <!-- Video Section -->
+
+            <!-- Language Selection -->
+            <div class="top-bar">
+              <select id="language-select">
+                <option value="english">🇺🇸 English</option>
+                <option value="telugu">🇮🇳 Telugu</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Days Navigation -->
+          <div class="days-container">
+            <div class="days-header">
+              <div class="section-header"></div>
+              <div class="sub-section-header"></div>
+            </div>
+            <div class="nav-buttons-container"></div>
+            <div class="days-scroll" id="days-scroll"></div>
+          </div>
+
+          <!-- Video Section -->
+          <div class="video-section">
             <h2 id="topic-name">Topic Name</h2>
-            <iframe id="video-frame" width="560" height="315" src="" frameborder="0" allowfullscreen></iframe>
-            
+            <div class="video-container">
+              <div class="overlay-top"></div>
+              <div class="overlay-bottom"></div>
+              <iframe
+                id="video-frame"
+                width="560"
+                height="315"
+                src=""
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+                allowfullscreen
+              ></iframe>
+            </div>
+
             <!-- Exercise and Project Links -->
             <div class="links-section">
-                <a id="exercise-link" href="#" target="_blank">Go to Exercise</a>
-                <a id="project-link" href="#" target="_blank">Go to Project</a>
-                <button id="complete-btn">Mark Day as Complete</button>
+              <a id="exercise-link" href="#" target="_blank">
+                <i class="fas fa-dumbbell"></i> Go to Exercise
+              </a>
+              <a id="project-link" href="#" target="_blank">
+                <i class="fas fa-project-diagram"></i> Go to Project
+              </a>
+              <button id="complete-btn">
+                <i class="fas fa-check-circle"></i> Mark Day as Complete
+              </button>
             </div>
+          </div>
         </div>
+      </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div class="modal" id="editProfileModal">
+      <div class="modal-content">
+        <button class="close-btn" id="closeModalBtn">×</button>
+        <h2>Edit Profile</h2>
+        <form id="editProfileForm">
+          <label for="editName">Full Name</label>
+          <input type="text" id="editName" name="name" required placeholder="Enter your full name">
+          
+          <label for="editEmail">Email Address</label>
+          <input type="email" id="editEmail" name="email" disabled placeholder="your@email.com">
+          
+          <label for="editPassword">New Password (optional)</label>
+          <input type="password" id="editPassword" name="password" placeholder="Leave blank to keep current password">
+          
+          <button type="submit">Save Changes</button>
+        </form>
+      </div>
     </div>
 
     <script>
-    document.addEventListener("DOMContentLoaded", function () {
-    const daysContainer = document.getElementById("days-scroll");
-    const videoFrame = document.getElementById("video-frame");
-    const topicName = document.getElementById("topic-name");
-    const exerciseLink = document.getElementById("exercise-link");
-    const projectLink = document.getElementById("project-link");
-    const completeBtn = document.getElementById("complete-btn");
-    const languageSelect = document.getElementById("language-select");
-    const classItems = document.querySelectorAll(".class-item");
-    const userEmail = localStorage.getItem("userEmail") || "guest";
-    
-    let selectedClass = 6;
-    let selectedDay = 1;
-    let progress = JSON.parse(localStorage.getItem(`progress_${userEmail}`)) || {};
+      document.addEventListener("DOMContentLoaded", function () {
+  // Mobile menu toggle
+  const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+  const sidebar = document.getElementById('sidebar');
 
-    const topics = {
-        6: ["Introduction to Learning", "Basic Shapes", "Numbers", "Alphabet", "Colors"],
-        7: ["Patterns", "Addition", "Subtraction", "Time", "Money"],
-        8: ["Multiplication", "Division", "Measurement", "Fractions", "Graphs"],
-       
-    };
+  mobileMenuToggle.addEventListener('click', () => {
+    sidebar.classList.toggle('active');
+  });
 
-    const exerciseLinks = {
-        6: ["https://exercise1.com", "https://exercise2.com"],
-        7: ["https://exercise3.com", "https://exercise4.com"],
-        8: ["https://exercise3.com", "https://exercise4.com"]
-    };
+  // Close sidebar when clicking outside on mobile
+  document.addEventListener('click', (e) => {
+    if (window.innerWidth <= 768 && !sidebar.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
+      sidebar.classList.remove('active');
+    }
+  });
 
-    const projectLinks = {
-        6: ["https://project1.com", "https://project2.com"],
-        7: ["https://project3.com", "https://project4.com"],
-        8: ["https://project3.com", "https://project4.com"]
-    };
+  // All existing JavaScript functionality
+  const daysContainer = document.getElementById("days-scroll");
+  const videoFrame = document.getElementById("video-frame");
+  const topicName = document.getElementById("topic-name");
+  const exerciseLink = document.getElementById("exercise-link");
+  const projectLink = document.getElementById("project-link");
+  const completeBtn = document.getElementById("complete-btn");
+  const languageSelect = document.getElementById("language-select");
+  const classItems = document.querySelectorAll(".class-item");
+  const profileSection = document.getElementById("profileSection");
+  const profileDropdown = document.getElementById("profileDropdown");
+  const profileDropdownToggle = document.getElementById("profileDropdownToggle");
+  const profileIcon = document.getElementById("profileIcon");
+  const userName = document.getElementById("userName");
+  const userEmailDisplay = document.getElementById("userEmailDisplay");
+  const progressSummary = document.getElementById("progressSummary");
+  const editProfileBtn = document.getElementById("editProfileBtn");
+  const changePictureBtn = document.getElementById("changePictureBtn");
+  const profilePictureInput = document.getElementById("profilePictureInput");
+  const editProfileModal = document.getElementById("editProfileModal");
+  const closeModalBtn = document.getElementById("closeModalBtn");
+  const editProfileForm = document.getElementById("editProfileForm");
+  const editName = document.getElementById("editName");
+  const editEmail = document.getElementById("editEmail");
+  const editPassword = document.getElementById("editPassword");
+  const logoutBtn = document.getElementById("logoutBtn");
 
-    function updateDays() {
-        daysContainer.innerHTML = "";
-        let currentProgress = progress[selectedClass] || 1; // Ensure day 1 is always unlocked
-    
-        for (let i = 1; i <= 50; i++) {
-            const day = document.createElement("div");
-            day.classList.add("day-item");
-            day.textContent = `Day ${i}`;
-    
-            if (i < currentProgress) {
-                day.classList.add("completed");
-                day.innerHTML += " ⭐";
-            } else if (i === currentProgress) {
-                day.classList.add("unlocked");
-            } else {
-                day.classList.add("locked");
-            }
-    
-            day.addEventListener("click", () => {
-                if (!day.classList.contains("locked")) {
-                    loadDay(i);
-                }
-            });
-    
-            daysContainer.appendChild(day);
+  // Retrieve and validate userEmail
+  const userEmail = localStorage.getItem("userEmail");
+
+  if (!userEmail || userEmail.trim() === "") {
+    console.error("No valid user email found in localStorage.");
+    alert("Please log in to track your progress.");
+    window.location.href = "/login";
+    return;
+  }
+
+  let selectedClass = 6;
+  let selectedDay = 1;
+  let progress = {};
+  let currentRangeStart = 1;
+
+  // Toggle profile dropdown
+  profileDropdownToggle.addEventListener("click", (e) => {
+    e.stopPropagation();
+    profileDropdown.classList.toggle("active");
+  });
+
+  // Close dropdown when clicking outside
+  document.addEventListener("click", (e) => {
+    if (!profileSection.contains(e.target)) {
+      profileDropdown.classList.remove("active");
+    }
+  });
+
+  // Fetch and display user profile
+  async function fetchUserProfile() {
+    try {
+      const response = await fetch(`/api/profile/${encodeURIComponent(userEmail)}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch profile");
+      }
+      const profile = await response.json();
+
+      userName.textContent = profile.name || "User";
+      userEmailDisplay.textContent = profile.email || userEmail;
+      editName.value = profile.name || "";
+      editEmail.value = profile.email || userEmail;
+
+      if (profile.profilePicture) {
+        profileIcon.src = profile.profilePicture;
+      } else {
+        const initials = profile.name ? profile.name.charAt(0).toUpperCase() : "U";
+        profileIcon.src = `https://ui-avatars.com/api/?name=${initials}&background=667eea&color=fff&rounded=true&size=48`;
+      }
+    } catch (error) {
+      console.error("Error fetching profile:", error);
+      userName.textContent = "Error";
+      userEmailDisplay.textContent = userEmail;
+    }
+  }
+
+  // Handle profile picture change
+  changePictureBtn.addEventListener("click", () => {
+    profilePictureInput.click();
+  });
+
+  profilePictureInput.addEventListener("change", async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("profilePicture", file);
+    formData.append("email", userEmail);
+
+    try {
+      const response = await fetch("/api/profile/picture", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to upload profile picture");
+      }
+
+      const result = await response.json();
+      profileIcon.src = result.profilePicture;
+      profileDropdown.classList.remove("active");
+      alert("Profile picture updated successfully!");
+    } catch (error) {
+      console.error("Error uploading profile picture:", error);
+      alert("Failed to update profile picture. Please try again.");
+    }
+  });
+
+  // Edit profile modal
+  editProfileBtn.addEventListener("click", () => {
+    editProfileModal.classList.add("active");
+    profileDropdown.classList.remove("active");
+  });
+
+  closeModalBtn.addEventListener("click", () => {
+    editProfileModal.classList.remove("active");
+  });
+
+  // Close modal when clicking outside
+  editProfileModal.addEventListener("click", (e) => {
+    if (e.target === editProfileModal) {
+      editProfileModal.classList.remove("active");
+    }
+  });
+
+  // Handle profile form submission
+  editProfileForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const name = editName.value.trim();
+    const password = editPassword.value.trim();
+
+    if (!name) {
+      alert("Name is required.");
+      return;
+    }
+
+    try {
+      const response = await fetch("/api/profile", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: userEmail,
+          name,
+          password: password || undefined,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to update profile");
+      }
+
+      alert("Profile updated successfully!");
+      editProfileModal.classList.remove("active");
+      fetchUserProfile();
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      alert(error.message || "Failed to update profile. Please try again.");
+    }
+  });
+
+  // Handle logout
+  logoutBtn.addEventListener("click", () => {
+    localStorage.removeItem("userEmail");
+    window.location.href = "/login";
+  });
+
+  // Fetch Progress Summary
+  async function fetchProgressSummary() {
+    try {
+      let summary = "Your Progress:<br><br>";
+      for (let classNum = 6; classNum <= 10; classNum++) {
+        const response = await fetch(`/progress/${encodeURIComponent(userEmail)}/${classNum}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
+        const completedDays = await response.json();
+        const completedCount = Array.isArray(completedDays) ? completedDays.length : 0;
+        summary += `Class ${classNum}: ${completedCount}/50 days completed<br>`;
+        progress[classNum] = Array.isArray(completedDays) ? completedDays : [];
+      }
+      progressSummary.innerHTML = summary;
+    } catch (error) {
+      console.error("Error fetching progress summary:", error);
+      progressSummary.textContent = "Error loading progress. Please try again.";
     }
-    
+  }
 
-    function loadDay(day) {
-        selectedDay = day;
-        topicName.textContent = `Class ${selectedClass} - ${topics[selectedClass][(day - 1) % topics[selectedClass].length]}`;
-        videoFrame.src = getVideoURL(selectedClass, day);
-        exerciseLink.href = exerciseLinks[selectedClass] ? exerciseLinks[selectedClass][(day - 1) % exerciseLinks[selectedClass].length] : "#";
-        projectLink.href = projectLinks[selectedClass] ? projectLinks[selectedClass][(day - 1) % projectLinks[selectedClass].length] : "#";
+  // Fetch Progress for a specific class
+  async function fetchProgress() {
+    try {
+      console.log(`Fetching progress for email: ${userEmail}, class: ${selectedClass}`);
+      const response = await fetch(`/progress/${encodeURIComponent(userEmail)}/${selectedClass}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const completedDays = await response.json();
+
+      // Ensure we have an array of numbers
+      progress[selectedClass] = Array.isArray(completedDays)
+        ? completedDays.map(Number).filter(day => !isNaN(day) && day >= 1 && day <= 50)
+        : [];
+        
+      console.log(`Fetched progress for class ${selectedClass}:`, progress[selectedClass]);
+      updateDays();
+    } catch (error) {
+      console.error("Error fetching progress:", error);
+      progress[selectedClass] = [];
+      updateDays();
+    }
+  }
+
+  // Update the updateDays function
+  function updateDays() {
+    const sectionHeader = document.querySelector(".section-header");
+    const subSectionHeader = document.querySelector(".sub-section-header");
+    const completedDays = progress[selectedClass] || [];
+
+    console.log(`Updating days for class ${selectedClass}, completed days:`, completedDays);
+
+    daysContainer.innerHTML = "";
+
+    const rangeStart = currentRangeStart;
+    const rangeEnd = Math.min(rangeStart + 9, 50);
+
+    sectionHeader.textContent = `Day ${rangeStart}-${rangeEnd}: ${getSectionTitle(rangeStart)}`;
+    const subRangeStart = Math.floor((selectedDay - 1) / 2) * 2 + 1;
+    const subRangeEnd = Math.min(subRangeStart + 1, rangeEnd);
+    subSectionHeader.textContent = `• Day ${subRangeStart}-${subRangeEnd}: ${getSubSectionTitle(subRangeStart)}`;
+
+    for (let i = rangeStart; i <= rangeEnd; i++) {
+      const day = document.createElement("div");
+      day.classList.add("day-item");
+      day.textContent = `Day ${i}`;
+
+      // Clear previous classes
+      day.classList.remove("completed", "unlocked", "locked");
+
+      if (completedDays.includes(i)) {
+        day.classList.add("completed");
+        console.log(`Day ${i}: Marked as completed`);
+      } else if (i === 1 || (completedDays.length > 0 && i === Math.max(...completedDays) + 1)) {
+        day.classList.add("unlocked");
+        console.log(`Day ${i}: Marked as unlocked (next available)`);
+      } else {
+        day.classList.add("locked");
+        console.log(`Day ${i}: Marked as locked`);
+      }
+
+      day.addEventListener("click", () => {
+        if (day.classList.contains("completed") || day.classList.contains("unlocked")) {
+          selectedDay = i;
+          loadDay(i);
+          updateDays();
+          // Close mobile menu after selection
+          if (window.innerWidth <= 768) {
+            sidebar.classList.remove('active');
+          }
+        } else {
+          console.log(`Day ${i} is locked and cannot be selected`);
+        }
+      });
+
+      daysContainer.appendChild(day);
     }
 
-    function getVideoURL(classNum, dayNum) {
-        const lang = languageSelect.value;
-        const baseURL = "https://www.youtube.com/embed/";
-        const videoIDs = {
-            english: ["dQw4w9WgXcQ", "3JZ_D3ELwOQ", "tgbNymZ7vqY"], 
-            telugu: ["rYEDA3JcQqw", "kJQP7kiw5Fk", "vTIIMJ9tUc8"] 
-        };
-        return `${baseURL}${videoIDs[lang][(classNum + dayNum) % videoIDs[lang].length]}`;
-    }
+    addNavigationButtons();
+  }
 
-   completeBtn.addEventListener("click", function () {
-    if (!progress[selectedClass] || progress[selectedClass] < selectedDay + 1) {
-        progress[selectedClass] = selectedDay + 1;
-        localStorage.setItem(`progress_${userEmail}`, JSON.stringify(progress));
+  function addNavigationButtons() {
+    const navButtonsContainer = document.querySelector(".nav-buttons-container");
+    navButtonsContainer.innerHTML = "";
+
+    if (currentRangeStart > 1) {
+      const prevButton = document.createElement("button");
+      prevButton.classList.add("nav-button", "prev-button");
+      prevButton.innerHTML = '<i class="fas fa-chevron-left"></i> Previous';
+      prevButton.addEventListener("click", () => {
+        currentRangeStart = Math.max(1, currentRangeStart - 10);
         updateDays();
+      });
+      navButtonsContainer.appendChild(prevButton);
     }
-});
 
+    if (currentRangeStart + 10 <= 50) {
+      const nextButton = document.createElement("button");
+      nextButton.classList.add("nav-button", "next-button");
+      nextButton.innerHTML = 'Next <i class="fas fa-chevron-right"></i>';
+      nextButton.addEventListener("click", () => {
+        currentRangeStart = Math.min(41, currentRangeStart + 10);
+        updateDays();
+      });
+      navButtonsContainer.appendChild(nextButton);
+    }
+  }
 
-    classItems.forEach(item => {
-        item.addEventListener("click", function () {
-            selectedClass = parseInt(this.getAttribute("data-class"));
-            selectedDay = 1; 
-            updateDays();
-            loadDay(1);
-        });
-    });
+  // Update section and subsection titles for Classes 6–10 (placeholders)
+  function getSectionTitle(day) {
+    if (day >= 1 && day <= 10) return "Advanced Analytical Skills";
+    if (day >= 11 && day <= 20) return "Professional Communication";
+    if (day >= 21 && day <= 30) return "Innovative Thinking";
+    if (day >= 31 && day <= 40) return "Advanced Technology Skills";
+    if (day >= 41 && day <= 50) return "Leadership and Life Skills";
+    return "";
+  }
 
-    languageSelect.addEventListener("change", function () {
+  function getSubSectionTitle(day) {
+    if (day % 2 === 1) {
+      if (day >= 1 && day <= 2) return "Complex Problem-Solving";
+      if (day >= 3 && day <= 4) return "Advanced Critical Thinking";
+      if (day >= 5 && day <= 6) return "Data Interpretation";
+      if (day >= 7 && day <= 8) return "Logical Analysis";
+      if (day >= 9 && day <= 10) return "Strategic Decision-Making";
+      if (day >= 11 && day <= 12) return "Professional Verbal Skills";
+      if (day >= 13 && day <= 14) return "Technical Writing";
+      if (day >= 15 && day <= 16) return "Effective Listening";
+      if (day >= 17 && day <= 18) return "Advanced Public Speaking";
+      if (day >= 19 && day <= 20) return "Interpersonal Communication";
+      if (day >= 21 && day <= 22) return "Innovation Strategies";
+      if (day >= 23 && day <= 24) return "Advanced Design Thinking";
+      if (day >= 25 && day <= 26) return "Creative Projects";
+      if (day >= 27 && day <= 28) return "Advanced Storytelling";
+      if (day >= 29 && day <= 30) return "Complex Creative Challenges";
+      if (day >= 31 && day <= 32) return "Advanced Digital Literacy";
+      if (day >= 33 && day <= 34) return "Intermediate Coding";
+      if (day >= 35 && day <= 36) return "Data Analysis Techniques";
+      if (day >= 37 && day <= 38) return "AI Applications";
+      if (day >= 39 && day <= 40) return "Cybersecurity Practices";
+      if (day >= 41 && day <= 42) return "Advanced Time Management";
+      if (day >= 43 && day <= 44) return "Emotional Intelligence (Advanced)";
+      if (day >= 45 && day <= 46) return "Change Management";
+      if (day >= 47 && day <= 48) return "Financial Planning";
+      if (day >= 49 && day <= 50) return "Leadership and Team Management";
+    }
+    return "";
+  }
+
+  async function loadDay(day) {
+    selectedDay = day;
+    const lang = languageSelect.value;
+    try {
+      // Fetch content (topic, quiz_link, project_link)
+      const contentRes = await fetch(`/api/content/${selectedClass}/${day}`);
+      if (!contentRes.ok) {
+        throw new Error(`HTTP error! Status: ${contentRes.status}`);
+      }
+      const content = await contentRes.json();
+      console.log(`Fetched content for Class ${selectedClass}, Day ${day}:`, content);
+
+      // Fetch video (youtube_id)
+      const videoRes = await fetch(`/api/video/${selectedClass}/${day}/${lang}`);
+      if (!videoRes.ok) {
+        throw new Error(`HTTP error! Status: ${videoRes.status}`);
+      }
+      const video = await videoRes.json();
+      console.log(`Fetched video for Class ${selectedClass}, Day ${day}, Language ${lang}:`, video);
+
+      // Update UI
+      topicName.textContent = content.topic || `Class ${selectedClass} - Day ${day}`;
+      videoFrame.src = video.youtube_id ? `https://www.youtube.com/embed/${video.youtube_id}?rel=0` : '';
+      exerciseLink.href = content.quiz_link || '#';
+      projectLink.href = content.project_link || '#';
+
+      // Disable links if empty
+      exerciseLink.style.pointerEvents = content.quiz_link ? 'auto' : 'none';
+      exerciseLink.style.opacity = content.quiz_link ? '1' : '0.5';
+      projectLink.style.pointerEvents = content.project_link ? 'auto' : 'none';
+      projectLink.style.opacity = content.project_link ? '1' : '0.5';
+    } catch (err) {
+      console.error('Error loading day content:', err);
+      topicName.textContent = `Class ${selectedClass} - Day ${day}`;
+      videoFrame.src = '';
+      exerciseLink.href = '#';
+      projectLink.href = '#';
+      exerciseLink.style.pointerEvents = 'none';
+      exerciseLink.style.opacity = '0.5';
+      projectLink.style.pointerEvents = 'none';
+      projectLink.style.opacity = '0.5';
+      alert(`Failed to load content for Day ${day}: ${err.message}`);
+    }
+  }
+
+  // Update the completeBtn event listener
+  completeBtn.addEventListener("click", async function () {
+    const completedDays = progress[selectedClass] || [];
+
+    try {
+      console.log("Sending progress data:", {
+        email: userEmail,
+        classNumber: selectedClass,
+        dayNumber: selectedDay,
+      });
+
+      const response = await fetch("/progress", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: userEmail,
+          classNumber: selectedClass,
+          dayNumber: selectedDay,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      // Refresh the progress data from the server
+      await fetchProgress();
+      
+      // Update the UI
+      updateDays();
+      
+      // Show feedback to user
+      alert("Day marked as completed!");
+      
+      // Move to next day if available
+      if (selectedDay < 50) {
+        selectedDay += 1;
         loadDay(selectedDay);
-    });
+      }
+    } catch (error) {
+      console.error("Error saving progress:", error);
+      alert("Failed to mark day as completed: " + error.message);
+    }
+  });
 
-    updateDays();
+  classItems.forEach((item) => {
+    item.addEventListener("click", async function () {
+      classItems.forEach((innerItem) => innerItem.classList.remove("selected"));
+      this.classList.add("selected");
+      selectedClass = parseInt(this.getAttribute("data-class"));
+      selectedDay = 1;
+      currentRangeStart = 1;
+      await fetchProgress();
+      loadDay(1);
+      await fetchProgressSummary();
+      // Close mobile menu after selection
+      if (window.innerWidth <= 768) {
+        sidebar.classList.remove('active');
+      }
+    });
+  });
+
+  languageSelect.addEventListener("change", function () {
+    loadDay(selectedDay);
+  });
+
+  async function initialize() {
+    await fetchUserProfile();
+
+    for (let classNum = 6; classNum <= 10; classNum++) {
+      selectedClass = classNum;
+      await fetchProgress();
+    }
+
+    // Set Class 6 as default
+    selectedClass = 6;
+    selectedDay = 1;
+    currentRangeStart = 1;
+    const firstClassItem = document.querySelector('.class-item[data-class="6"]');
+    if (firstClassItem) {
+      firstClassItem.classList.add('selected');
+    }
+
+    await fetchProgress();
+    console.log("initialize: Initial progress:", progress);
+    await fetchProgressSummary();
     loadDay(1);
-});
+  }
 
-// code for stylings change of side class list
-document.querySelectorAll('.class-item').forEach(item => {
-    item.addEventListener('click', function() {
-        // Remove the 'selected' class from all items
-        document.querySelectorAll('.class-item').forEach(innerItem => {
-            innerItem.classList.remove('selected');
-        });
+  initialize();
 
-        // Add the 'selected' class to the clicked item
-        this.classList.add('selected');
+  // Fullscreen handling
+  function handleFullscreenChange() {
+    const videoContainer = document.querySelector(".video-container");
+    if (document.fullscreenElement) {
+      videoContainer.classList.add("fullscreen");
+    } else {
+      videoContainer.classList.remove("fullscreen");
+    }
+  }
 
-        // Log the selected item's data-class attribute
-        const selectedClass = this.getAttribute('data-class');
-        console.log('Selected Class:', selectedClass);
-    });
+  document.addEventListener("fullscreenchange", handleFullscreenChange);
+  document.addEventListener("webkitfullscreenchange", handleFullscreenChange);
+  document.addEventListener("mozfullscreenchange", handleFullscreenChange);
+  document.addEventListener("MSFullscreenChange", handleFullscreenChange);
+
+  // Handle window resize
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 768) {
+      sidebar.classList.remove('active');
+    }
+  });
 });
     </script>
-</body>
+  </body>
 </html>

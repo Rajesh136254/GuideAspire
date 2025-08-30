@@ -1,39 +1,466 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Select Your Class - GuideAspire</title>
-    <link rel="icon" href="Homepage1.png" type="image/png" />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"> 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Class Selection - Learning Journey</title>
     <style>
-        body {
+        * {
             margin: 0;
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #6a11cb, #2575fc); /* Vibrant gradient background */
-            color: #fff;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.5;
+        }
+
+        .min-h-screen {
+            min-height: 100vh;
+        }
+
+        .bg-gradient-main {
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #3730a3 100%);
+        }
+
+        .relative {
+            position: relative;
+        }
+
+        .absolute {
+            position: absolute;
+        }
+
+        .overflow-hidden {
+            overflow: hidden;
+        }
+
+        .inset-0 {
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+        }
+
+        .opacity-10 {
+            opacity: 0.1;
+        }
+
+        .bg-blur-1 {
+            top: 25%;
+            left: 25%;
+            width: 16rem;
+            height: 16rem;
+            background: #60a5fa;
+            border-radius: 50%;
+            filter: blur(48px);
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        .bg-blur-2 {
+            bottom: 25%;
+            right: 25%;
+            width: 20rem;
+            height: 20rem;
+            background: #a78bfa;
+            border-radius: 50%;
+            filter: blur(48px);
+            animation: pulse 3s ease-in-out infinite;
+            animation-delay: 2s;
+        }
+
+        .bg-blur-3 {
+            top: 50%;
+            left: 50%;
+            width: 24rem;
+            height: 24rem;
+            background: #2dd4bf;
+            border-radius: 50%;
+            filter: blur(48px);
+            animation: pulse 3s ease-in-out infinite;
+            animation-delay: 1s;
+            transform: translate(-50%, -50%);
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 0.1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.3;
+                transform: scale(1.1);
+            }
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .home-button {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            z-index: 50;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
             display: flex;
-            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .home-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .z-10 {
+            z-index: 10;
+        }
+
+        .py-12 {
+            padding: 3rem 0;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mb-16 {
+            margin-bottom: 4rem;
+        }
+
+        .mb-8 {
+            margin-bottom: 2rem;
+        }
+
+        .mb-6 {
+            margin-bottom: 1.5rem;
+        }
+
+        .mb-4 {
+            margin-bottom: 1rem;
+        }
+
+        .mb-2 {
+            margin-bottom: 0.5rem;
+        }
+
+        .mb-3 {
+            margin-bottom: 0.75rem;
+        }
+
+        .mt-16 {
+            margin-top: 4rem;
+        }
+
+        .hero-image {
+            width: 8rem;
+            height: 8rem;
+            margin: 0 auto 1.5rem;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .graduation-cap {
+            width: 2rem;
+            height: 2rem;
+            color: #60a5fa;
+            margin: 0 auto 1rem;
+        }
+
+        .main-title {
+            font-size: 3rem;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+
+        .gradient-text {
+            background: linear-gradient(to right, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: #bfdbfe;
+            margin-bottom: 1rem;
+            max-width: 48rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .tagline {
+            display: flex;
             align-items: center;
             justify-content: center;
+            gap: 0.5rem;
+            font-size: 1.125rem;
+            color: #bfdbfe;
+        }
+
+        .star {
+            width: 1.25rem;
+            height: 1.25rem;
+            color: #fbbf24;
+            fill: currentColor;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            max-width: 90rem;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 768px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .main-title {
+                font-size: 4rem;
+            }
+            .subtitle {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .main-title {
+                font-size: 4.5rem;
+            }
+        }
+
+        .card {
+            position: relative;
+            overflow: hidden;
+            border: none;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(24px);
+            border-radius: 0.75rem;
+            transition: all 0.5s ease;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(1.05);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .card-image {
+            position: relative;
+            height: 12rem;
+            overflow: hidden;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover .card-image img {
+            transform: scale(1.1);
+        }
+
+        .gradient-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
+        }
+
+        .level-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .gradient-pink { background: linear-gradient(to right, #f472b6, #e11d48); }
+        .gradient-blue { background: linear-gradient(to right, #60a5fa, #4f46e5); }
+        .gradient-amber { background: linear-gradient(to right, #fbbf24, #ea580c); }
+        .gradient-purple { background: linear-gradient(to right, #a78bfa, #7c3aed); }
+        .gradient-emerald { background: linear-gradient(to right, #34d399, #0d9488); }
+        .gradient-cyan { background: linear-gradient(to right, #22d3ee, #3b82f6); }
+
+        .card-content {
+            padding: 2rem;
+            position: relative;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .card:hover .card-title {
+            color: #93c5fd;
+        }
+
+        .card-subtitle {
+            color: #93c5fd;
+            font-weight: 600;
+            font-size: 1.125rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .card-description {
+            color: #bfdbfe;
+            font-size: 0.875rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .start-button {
+            width: 100%;
+            padding: 0.75rem 1.5rem;
+            color: white;
+            font-weight: 600;
+            border-radius: 0.75rem;
+            border: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .start-button:hover {
+            box-shadow: 0 10px 25px -3px rgba(59, 130, 246, 0.25);
+        }
+
+        .hover-border {
+            position: absolute;
+            inset: 0;
+            border: 2px solid transparent;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .card:hover .hover-border {
+            border-color: rgba(96, 165, 250, 0.3);
+        }
+
+        .bottom-cta {
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        .cta-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(16px);
+            border-radius: 9999px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-text {
+            color: #bfdbfe;
+            font-weight: 500;
+        }
+
+        .final-text {
+            color: rgba(191, 219, 254, 0.8);
+            font-size: 1.125rem;
+            max-width: 32rem;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .loading-screen {
             min-height: 100vh;
-            overflow: hidden; /* Prevents scrollbars during animation */
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #3730a3 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .class-title {
-            font-size: 3rem;
-            margin-bottom: 3rem;
-            font-weight: 700;
-            text-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.4);
-            letter-spacing: 0.1rem;
-            animation: fadeInUp 1s ease-in-out; /* Add a subtle fade-in animation */
+        .loading-content {
+            text-align: center;
         }
 
-        @keyframes fadeInUp {
+        .spinner {
+            animation: spin 1s linear infinite;
+            border-radius: 50%;
+            height: 3rem;
+            width: 3rem;
+            border: 2px solid transparent;
+            border-bottom: 2px solid white;
+            margin: 0 auto 1rem;
+        }
+
+        .loading-text {
+            color: white;
+            font-size: 1.125rem;
+            font-weight: 500;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .slide-up {
+            animation: slideUp 0.8s ease-out;
+        }
+
+        .stagger-animation {
+            animation: slideUp 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(20px);
+                transform: translateY(-30px);
             }
             to {
                 opacity: 1;
@@ -41,187 +468,340 @@
             }
         }
 
-        .class-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Larger card size */
-            gap: 3rem;
-            max-width: 1200px;
-            width: 90%;
-            animation: fadeInUp 1.2s ease-in-out; /* Staggered animation */
-        }
-
-        .class-card {
-            background: rgba(255, 255, 255, 0.1); /* Semi-transparent white background */
-            border-radius: 1.5rem;
-            padding: 3rem;
-            backdrop-filter: blur(10px); /* Add a blur effect */
-            box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s, box-shadow 0.3s;
-            overflow: hidden;
-            position: relative; /* For pseudo-element */
-        }
-
-        .class-card:hover {
-            transform: translateY(-0.5rem);
-            box-shadow: 0 1.5rem 2.5rem rgba(0, 0, 0, 0.4);
-        }
-
-        .class-card::before { /* Gradient overlay on hover */
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.25)); /* Adjust opacity for effect */
-            opacity: 0;
-            transition: opacity 0.3s;
-            pointer-events: none;
-        }
-
-        .class-card:hover::before {
-            opacity: 1;
-        }
-
-        .class-link {
-            text-decoration: none;
-            color: #fff;
-            font-size: 1.4rem;
-            font-weight: 600;
-            padding: 1.5rem 2.5rem;
-            border-radius: 2rem;
-            background: rgba(0, 0, 0, 0.2); /* Semi-transparent dark background */
-            transition: background 0.3s, transform 0.3s;
-            display: inline-block;
-            width: fit-content;
-            margin: 0 auto;
-        }
-
-        .class-link:hover {
-            background: rgba(0, 0, 0, 0.4);
-            transform: scale(1.05);
-        }
-
-        @media (max-width: 768px) { /* Adjust breakpoint as needed */
-            .class-title {
-                font-size: 2.5rem;
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
             }
-            .class-container {
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Smaller cards on smaller screens */
-                gap: 2rem;
-            }
-            .class-card {
-                padding: 2rem;
-            }
-            .class-link {
-                font-size: 1.2rem;
-                padding: 1.2rem 2rem;
-            }
-        }
-        .grad1 {
-            margin: 0 auto;
-            display: block;
-            width: 200px; /* Or your desired width */
-        }
-/* Advanced Button Styling - No interference with other classes */
-.home-link {
-            position: fixed; /* Fixed position */
-            top: 20px; /* Distance from the top */
-            right: 20px; /* Distance from the right */
-            padding: 12px 24px; /* Comfortable padding */
-            background-color: #1abc9c; /* Vibrant teal background */
-            color: #ffffff; /* White text */
-            text-decoration: none; /* Remove underline */
-            font-size: 16px; /* Readable font size */
-            font-weight: 600; /* Bold text */
-            border-radius: 30px; /* Fully rounded corners */
-            box-shadow: 0 4px 12px rgba(26, 188, 156, 0.3); /* Soft shadow */
-            transition: all 0.4s ease; /* Smooth transitions */
-            z-index: 1000; /* Ensure it's above other elements */
-            display: inline-flex; /* Flexbox for alignment */
-            align-items: center; /* Center icon and text vertically */
-            gap: 8px; /* Space between icon and text */
-            border: none; /* Remove default border */
-            cursor: pointer; /* Pointer cursor on hover */
-            overflow: hidden; /* Hide overflow for animation */
-        }
-
-        /* Hover Effect - Advanced Animation */
-        .home-link::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 300%;
-            height: 300%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0) 70%);
-            transform: translate(-50%, -50%) scale(0);
-            transition: transform 0.6s ease;
-            z-index: 0;
-        }
-
-        .home-link:hover::before {
-            transform: translate(-50%, -50%) scale(1);
-        }
-
-        .home-link:hover {
-            background-color: #16a085; /* Darker teal on hover */
-            transform: translateY(-2px); /* Slight lift */
-            box-shadow: 0 6px 16px rgba(26, 188, 156, 0.4); /* Enhanced shadow */
-        }
-
-        .home-link:active {
-            transform: translateY(0); /* Reset lift on click */
-            box-shadow: 0 4px 12px rgba(26, 188, 156, 0.3); /* Reset shadow */
-        }
-
-        /* Icon Animation */
-        .home-link i {
-            font-size: 14px; /* Icon size */
-            transition: transform 0.4s ease; /* Smooth icon animation */
-        }
-
-        .home-link:hover i {
-            transform: translateX(5px); /* Move icon to the right on hover */
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .home-link {
-                padding: 10px 20px; /* Smaller padding for mobile */
-                font-size: 14px; /* Smaller font size for mobile */
-                top: 10px; /* Adjust top position for mobile */
-                right: 10px; /* Adjust right position for mobile */
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
 
+        .icon {
+            width: 1.25rem;
+            height: 1.25rem;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
 
-        
+        .large-icon {
+            width: 4rem;
+            height: 4rem;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            color: rgba(255, 255, 255, 0.8);
+        }
     </style>
 </head>
 <body>
-    <a href="GuideAspire.htm" class="home-link"><i class="fa-solid fa-house"></i>>Go to HOME</a>
-    <h2 class="class-title">Select Your Class Level</h2>
-    <div class="class-container">
-        <div class="class-card">
-            <a href="/class1-5" class="class-link">1st - 5th Grade</a>
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <p class="loading-text">Creating Your Learning Journey...</p>
         </div>
-        <div class="class-card">
-            <a href="/class6-10" class="class-link">6th - 10th Grade</a>
-        </div>
-        <div class="class-card">
-            <a href="/summer" class="class-link summer">Summer Special</a>
-        </div>
-        <div class="class-card">
-            <a href="/class11-12" class="class-link">11th - 12th Grade</a>
-        </div>
-        <div class="class-card">
-            <a href="/grad" class="class-link grad1">Graduation Level</a>
-        </div>
-        <div class="class-card">
-            <a href="/life-skills" class="class-link life">Life Beyond Academics</a>
+    </div>
+
+    <div id="mainContent" class="min-h-screen bg-gradient-main relative overflow-hidden" style="display: none;">
+        <!-- Animated Background Elements -->
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute bg-blur-1"></div>
+            <div class="absolute bg-blur-2"></div>
+            <div class="absolute bg-blur-3"></div>
         </div>
 
-        
+        <!-- Home Button -->
+        <a href="index.htm" class="home-button">
+            <svg class="icon" viewBox="0 0 24 24">
+                <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9,22 9,12 15,12 15,22"></polyline>
+            </svg>
+            Home
+        </a>
+
+        <div class="relative z-10 container py-12">
+            <!-- Hero Section -->
+            <div class="text-center mb-16 fade-in">
+                <div class="mb-8 relative">
+                    <div id="heroImage" class="hero-image" style="display: none;">
+                        <img src="" alt="Educational Transformation">
+                    </div>
+                    <svg class="graduation-cap" viewBox="0 0 24 24">
+                        <path d="M22 10v6M2 10l10-5 10 5-10 5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path d="m6 12 5 5 7-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                </div>
+                
+                <h1 class="main-title">
+                    Select Your 
+                    <span class="gradient-text"> Learning</span>
+                    <br>Journey
+                </h1>
+                
+                <p class="subtitle">
+                    Transforming Education into Career Success
+                </p>
+                
+                <div class="tagline">
+                    <svg class="star" viewBox="0 0 24 24">
+                        <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"></polygon>
+                    </svg>
+                    <span>Bridging Academics to Employability</span>
+                    <svg class="star" viewBox="0 0 24 24">
+                        <polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"></polygon>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Class Selection Grid -->
+            <div id="classGrid" class="grid">
+                <!-- Cards will be generated by JavaScript -->
+            </div>
+
+            <!-- Bottom CTA Section -->
+            <div class="bottom-cta slide-up" style="animation-delay: 0.5s;">
+                <div class="cta-badge">
+                    <svg class="icon" style="color: #93c5fd;" viewBox="0 0 24 24">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                    <span class="cta-text">Join 10,000+ Students Already Transforming Their Future</span>
+                </div>
+                
+                <p class="final-text">
+                    Don't let 12-16 years of education go to waste. Choose your path to career success and life readiness.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Class levels data
+        const classLevels = [
+            {
+                id: "class1-5",
+                title: "1st - 5th Grade",
+                subtitle: "Foundation Building",
+                description: "Building strong fundamentals and curiosity",
+                gradient: "gradient-pink",
+                imageUrl: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+            },
+            {
+                id: "class6-10", 
+                title: "6th - 10th Grade",
+                subtitle: "Skill Development",
+                description: "Developing practical skills and career awareness", 
+                gradient: "gradient-blue",
+                imageUrl: "https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+            },
+            {
+                id: "summer",
+                title: "Summer Special",
+                subtitle: "Intensive Growth",
+                description: "Accelerated learning and skill enhancement",
+                gradient: "gradient-amber",
+                imageUrl: "https://images.unsplash.com/photo-1544717297-fa95b6ee9643?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+            },
+            {
+                id: "class11-12",
+                title: "11th - 12th Grade", 
+                subtitle: "Career Preparation",
+                description: "Strategic career planning and college readiness",
+                gradient: "gradient-purple",
+                imageUrl: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+            },
+            {
+                id: "grad",
+                title: "Graduation Level",
+                subtitle: "Professional Readiness", 
+                description: "Job readiness and industry skills",
+                gradient: "gradient-emerald",
+                imageUrl: "https://images.pexels.com/photos/267885/pexels-photo-267885.jpeg?auto=compress&cs=tinysrgb&w=500&h=750&dpr=1"
+            },
+            {
+                id: "life",
+                title: "Life Beyond Academics",
+                subtitle: "Holistic Success",
+                description: "Life skills and entrepreneurial mindset",
+                gradient: "gradient-cyan",
+                imageUrl: "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+            }
+        ];
+
+        // State management
+        let images = {};
+        let isLoading = true;
+
+        // Mock GenerateImage function
+        async function GenerateImage(options) {
+            // Simulate API delay
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            // Return appropriate stock images based on prompt keywords
+            const { prompt } = options;
+            if (prompt.includes('hero') || prompt.includes('transformation')) {
+                return { url: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80' };
+            }
+            
+            // Return random educational image
+            const educationImages = [
+                'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+                'https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+                'https://images.unsplash.com/photo-1544717297-fa95b6ee9643?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+                'https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+                'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
+                'https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'
+            ];
+            return { url: educationImages[Math.floor(Math.random() * educationImages.length)] };
+        }
+
+        // Generate all images
+        async function generateAllImages() {
+            isLoading = true;
+            
+            const imagePromises = classLevels.map(async (level) => {
+                try {
+                    // Use predefined image URLs instead of generating
+                    console.log(`Loading image for ${level.id}: ${level.imageUrl}`);
+                    return { id: level.id, url: level.imageUrl };
+                } catch (error) {
+                    console.error(`Error generating image for ${level.id}:`, error);
+                    return { id: level.id, url: null };
+                }
+            });
+
+            // Generate hero image
+            const heroPromise = GenerateImage({
+                prompt: "Inspiring educational transformation concept, students of different ages progressing from elementary to professional success, modern digital learning environment, upward arrow symbolizing growth, premium educational photography"
+            });
+
+            try {
+                const [imageResults, heroResult] = await Promise.all([
+                    Promise.all(imagePromises),
+                    heroPromise
+                ]);
+
+                const imageMap = imageResults.reduce((acc, img) => {
+                    acc[img.id] = img.url;
+                    return acc;
+                }, {});
+                
+                imageMap.hero = heroResult.url;
+                images = imageMap;
+                console.log('Images loaded:', images);
+            } catch (error) {
+                console.error("Error generating images:", error);
+            }
+            
+            isLoading = false;
+            showMainContent();
+        }
+
+        // Show main content after loading
+        function showMainContent() {
+            document.getElementById('loadingScreen').style.display = 'none';
+            document.getElementById('mainContent').style.display = 'block';
+            
+            // Show hero image if available
+            if (images.hero) {
+                const heroImg = document.getElementById('heroImage');
+                heroImg.querySelector('img').src = images.hero;
+                heroImg.style.display = 'block';
+            }
+            
+            renderClassCards();
+            animateCards();
+        }
+
+        // Render class cards
+        function renderClassCards() {
+            const grid = document.getElementById('classGrid');
+            
+            classLevels.forEach((level, index) => {
+                const card = document.createElement('div');
+                card.className = 'stagger-animation';
+                card.style.animationDelay = `${index * 0.1}s`;
+                
+                card.innerHTML = `
+                    <div class="card">
+                        <div class="card-image">
+                            ${images[level.id] ? 
+                                `<img src="${images[level.id]}" alt="${level.title}" onerror="console.error('Failed to load image for ${level.id}: ${images[level.id]}')">` :
+                                `<div class="${level.gradient}" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
+                                    <svg class="large-icon" viewBox="0 0 24 24">
+                                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                                    </svg>
+                                </div>`
+                            }
+                            <div class="gradient-overlay"></div>
+                            <div class="level-badge ${level.gradient}">
+                                Level ${index + 1}
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div>
+                                <h3 class="card-title">${level.title}</h3>
+                                <p class="card-subtitle">${level.subtitle}</p>
+                                <p class="card-description">${level.description}</p>
+                                <button class="start-button ${level.gradient}" onclick="startLearning('${level.id}')">
+                                    <svg class="icon" viewBox="0 0 24 24">
+                                        <polyline points="22,12 18,12 15,21 9,3 6,12 2,12"></polyline>
+                                    </svg>
+                                    Start Learning
+                                </button>
+                            </div>
+                        </div>
+                        <div class="hover-border"></div>
+                    </div>
+                `;
+                
+                grid.appendChild(card);
+            });
+        }
+
+        // Animate cards on scroll
+        function animateCards() {
+            const cards = document.querySelectorAll('.card');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            cards.forEach(card => {
+                observer.observe(card);
+            });
+        }
+
+        // Start learning function
+        function startLearning(levelId) {
+            let url = levelId + '.htm';
+            if (levelId === 'life') {
+                url = 'life-skills.htm';
+            }
+            window.location.href = url;
+        }
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            generateAllImages();
+        });
+    </script>
 </body>
 </html>
